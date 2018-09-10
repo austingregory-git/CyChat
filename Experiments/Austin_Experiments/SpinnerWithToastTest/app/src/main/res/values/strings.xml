@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">SpinnerWithToastTest</string>
+    <string-array name="spinner_options">
+        <item>turn</item>
+        <item>jive</item>
+        <item>flip</item>
+    </string-array>
+</resources>
