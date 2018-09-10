@@ -11,6 +11,7 @@ import java.util.Scanner;
 public class Server
 {
 	static ArrayList<ServerIO> clients = new ArrayList<ServerIO>();
+	private static Scanner scan;
 
 	public static void main(String[] args)
 	{
@@ -27,7 +28,8 @@ public class Server
 				clientSocket = serverSocket.accept(); // waiting for client input
 				System.out.println("Enter Username");
 				
-				username = new Scanner(System.in).nextLine();
+				scan = new Scanner(System.in);
+				username = scan.nextLine();
 
 				System.out.println(username + " has connected to server");
 				
@@ -37,10 +39,8 @@ public class Server
 				Thread t = new Thread(sio);
 				t.start();
 			}
-
 		} catch (IOException e)
 		{
-			
 			System.out.println("SERVER SIDE: clientSocket excpetion");
 		}
 	}
