@@ -1,13 +1,15 @@
 package demo1;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
 
 public class Server
 {
-	private static ArrayList<Socket> clients = new ArrayList<Socket>();
+	static ArrayList<Socket> clients = new ArrayList<Socket>();
 	
 	public static void main(String[] args)
 	{
@@ -21,8 +23,6 @@ public class Server
 		} catch (IOException e)
 		{
 			System.out.println("Could not listen on port: 4040");
-			e.printStackTrace();
-			System.exit(-1);
 		}
 		
 		while(true)
@@ -36,18 +36,12 @@ public class Server
 				
 				System.out.println("Server connected to client " + clientNum);
 				
-				ClientIO c = new ClientIO(clientSocket, clientNum);
-				
-				System.out.println("40");
-				Thread t = new Thread(c);
+				Thread t = new Thread(new ClientIO(clientSocket, clientNum));
 				t.start();
-				System.out.println("43");
 				
 			} catch (IOException e)
 			{
 				System.out.println("SERVER SIDE: clientSocket excpetion");
-				e.printStackTrace();
-				System.exit(-1);
 			}
 		}
 	}
@@ -66,23 +60,28 @@ class ClientIO implements Runnable
 	
 	@Override
 	public void run()
-	{		
+	{
 		try
 		{
-			//TODO handle the inputStream and send the input to another client
-			
-			String str = null;
-			while(true)
+			InputStreamReader in = new InputStreamReader(s.getInputStream(), "UTF-8");
+			BufferedReader br = new BufferedReader(in);
+			String line = br.readLine();
+			while(line != null)
 			{
-				str = "" + n;
-				s.getOutputStream().write(str.getBytes("UTF-8"));
+				for(int i=0; i<Server.clients.size(); i++)
+				{
+					Socket chat = Server.clients.get(i);
+					if(!chat.equals(s))
+					{
+						chat.getOutputStream().write(line.getBytes("UTF-8"));
+					}
+				}
+				br.close();
 			}
 			
 		} catch (IOException e)
 		{
 			System.out.println("SERVER SIDE: ClientIO Exception");
-			e.printStackTrace();
-			System.exit(-1);
 		}
 	}
 }

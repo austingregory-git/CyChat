@@ -68,7 +68,7 @@ class ServerIO implements Runnable
 		while (true)
 		{
 			System.out.println("Client - waiting to read");
-			
+			String s = in.nextLine();
 		}
 	}
 }
