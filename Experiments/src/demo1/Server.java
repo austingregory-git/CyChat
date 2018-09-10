@@ -17,11 +17,12 @@ public class Server
 		
 		try
 		{
-			serverSocket = new ServerSocket(4444);
+			serverSocket = new ServerSocket(4040);
 			System.out.println(serverSocket);
 		} catch (IOException e)
 		{
-			System.out.println("Could not listen on port: 4444");
+			System.out.println("Could not listen on port: 4040");
+			e.printStackTrace();
 			System.exit(-1);
 		}	
 		
@@ -31,17 +32,20 @@ public class Server
 			
 			try
 			{
-				System.out.println("Waiting for client " + clientNum + " to connect!");
-				clientSocket = serverSocket.accept();
+				clientSocket = serverSocket.accept(); // waiting for client
+				System.out.println("Server connected to client " + clientNum);
 				
-				System.out.println("Server got connected to a client" + clientNum);
 				ClientIO c = new ClientIO(clientSocket, clientNum++);
+				
+				System.out.println("40");
 				Thread t = new Thread(c);
 				t.start();
+				System.out.println("43");
 				
 			} catch (IOException e)
 			{
 				System.out.println("SERVER SIDE: clientSocket excpetion");
+				e.printStackTrace();
 				System.exit(-1);
 			}
 		}
@@ -81,6 +85,8 @@ class ClientIO implements Runnable
 		} catch (IOException e)
 		{
 			System.out.println("SERVER SIDE: ClientIO Exception");
+			e.printStackTrace();
+			System.exit(-1);
 		}
 	}
 }

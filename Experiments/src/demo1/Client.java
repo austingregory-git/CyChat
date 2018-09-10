@@ -3,6 +3,7 @@ package demo1;
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.Scanner;
@@ -12,7 +13,7 @@ public class Client
 {
 	Socket serverSocket;
 	String serverHostName = "localhost";
-	int serverPortNumber = 4444;
+	int serverPortNumber = 4040;
 	ServerListener sl;
 
 	Client()
@@ -37,21 +38,6 @@ public class Client
 		}
 	}
 
-	public void handleMessage(String cmd, String s)
-	{
-		switch (cmd)
-		{
-		case "print":
-			System.out.println("client side: " + s);
-			break;
-		case "exit":
-			System.exit(-1);
-			break;
-		default:
-			System.out.println("client side: unknown command received:" + cmd);
-		}
-	}
-
 	public static void main(String[] args)
 	{
 		Client client = new Client();
@@ -62,7 +48,7 @@ public class Client
 class ServerListener implements Runnable
 {
 	Client c;
-	Scanner in; // this is used to read which is a blocking call
+	Scanner in;
 
 	ServerListener(Client c, Socket s)
 	{
@@ -82,9 +68,8 @@ class ServerListener implements Runnable
 		while (true)
 		{
 			System.out.println("Client - waiting to read");
-			String cmd = in.next();
+			
 			String s = in.nextLine();
-			c.handleMessage(cmd, s);
 		}
 	}
 }
