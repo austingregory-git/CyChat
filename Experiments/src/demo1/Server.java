@@ -1,87 +1,89 @@
 package demo1;
 
-import java.io.BufferedReader;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class Server
 {
-	static ArrayList<Socket> clients = new ArrayList<Socket>();
-	
+	static ArrayList<ServerIO> clients = new ArrayList<ServerIO>();
+
 	public static void main(String[] args)
 	{
-		ServerSocket serverSocket = null;
-		int clientNum = 0;
-		
 		try
 		{
-			serverSocket = new ServerSocket(4040);
+			ServerSocket serverSocket = new ServerSocket(4040);
 			System.out.println(serverSocket);
+			String username = null;
+
+			while (true)
+			{
+				Socket clientSocket = null;
+
+				clientSocket = serverSocket.accept(); // waiting for client input
+				System.out.println("Enter Username");
+				
+				username = new Scanner(System.in).nextLine();
+
+				System.out.println(username + " has connected to server");
+				
+				ServerIO sio = new ServerIO(clientSocket, username);
+				clients.add(sio);
+				
+				Thread t = new Thread(sio);
+				t.start();
+			}
+
 		} catch (IOException e)
 		{
-			System.out.println("Could not listen on port: 4040");
-		}
-		
-		while(true)
-		{
-			Socket clientSocket = null;
 			
-			try
-			{
-				clientSocket = serverSocket.accept(); // waiting for client
-				clients.add(clientSocket);
-				
-				System.out.println("Server connected to client " + clientNum);
-				
-				Thread t = new Thread(new ClientIO(clientSocket, clientNum));
-				t.start();
-				
-			} catch (IOException e)
-			{
-				System.out.println("SERVER SIDE: clientSocket excpetion");
-			}
+			System.out.println("SERVER SIDE: clientSocket excpetion");
 		}
 	}
 }
 
-class ClientIO implements Runnable
+class ServerIO implements Runnable
 {
-	Socket s;
-	int n;
-	
-	ClientIO(Socket socket, int num)
+	Socket socket;
+	String name;
+
+	ServerIO(Socket socket, String username)
 	{
-		s = socket;
-		n = num;
+		this.socket = socket;
+		name = username;
 	}
-	
+
 	@Override
 	public void run()
 	{
 		try
 		{
-			InputStreamReader in = new InputStreamReader(s.getInputStream(), "UTF-8");
-			BufferedReader br = new BufferedReader(in);
-			String line = br.readLine();
-			while(line != null)
+			DataInputStream inStream = new DataInputStream(this.socket.getInputStream());
+			DataOutputStream outStream = new DataOutputStream(this.socket.getOutputStream());
+			outStream.writeUTF("Client " + name);
+			outStream.flush();
+
+			while(true)
 			{
-				for(int i=0; i<Server.clients.size(); i++)
+				String input = inStream.readUTF();
+				System.out.println( name + ": " + input);
+				for(ServerIO t : Server.clients)
 				{
-					Socket chat = Server.clients.get(i);
-					if(!chat.equals(s))
+					if(!t.socket.equals(this.socket))
 					{
-						chat.getOutputStream().write(line.getBytes("UTF-8"));
+						DataOutputStream temp = new DataOutputStream(t.socket.getOutputStream());
+						temp.writeUTF(name + ":  " + input);
+						temp.flush();
 					}
 				}
-				br.close();
 			}
-			
 		} catch (IOException e)
 		{
-			System.out.println("SERVER SIDE: ClientIO Exception");
+			System.out.println("SERVER SIDE: ServerIO Exception");
 		}
 	}
 }

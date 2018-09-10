@@ -1,35 +1,33 @@
 package demo1;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
+import java.io.BufferedReader;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.io.InputStreamReader;
 import java.net.Socket;
-import java.util.Scanner;
 
 
 public class Client
 {
-	Socket serverSocket;
-	String serverHostName = "localhost";
-	int serverPortNumber = 4040;
-	ServerIO s;
-
-	Client()
+	public Client()
 	{
 		try
 		{
-			serverSocket = new Socket(serverHostName, serverPortNumber);
+			Socket serverSocket = new Socket("localhost", 4040);
 			
-			s = new ServerIO(this, serverSocket);
-			new Thread(s).start();
-			PrintWriter out;
+			DataOutputStream outStream = new DataOutputStream(serverSocket.getOutputStream());
+			BufferedReader read = new BufferedReader(new InputStreamReader(System.in));
 			
-			out = new PrintWriter(new BufferedOutputStream(serverSocket.getOutputStream()));
+			ClientIO cio = new ClientIO(serverSocket);
+			new Thread(cio).start();
 			
-			
-			out.println("This is message from client");
-			out.flush();
+			while(true)
+			{
+				String output = read.readLine();
+				outStream.writeUTF(output);
+				outStream.flush();
+			}
 			
 		} catch (IOException e)
 		{
@@ -39,23 +37,21 @@ public class Client
 
 	public static void main(String[] args)
 	{
-		Client client = new Client();
-		client.getClass();
+		new Client();
 	}
 }
 
-
-class ServerIO implements Runnable
+class ClientIO implements Runnable
 {
 	Client c;
-	Scanner in;
+	Socket socket;
+	DataInputStream input;
 
-	ServerIO(Client c, Socket s)
+	public ClientIO(Socket s)
 	{
 		try
 		{
-			this.c = c;
-			in = new Scanner(new BufferedInputStream(s.getInputStream()));
+			input = new DataInputStream(s.getInputStream());
 		} catch (IOException e)
 		{
 			e.printStackTrace();
@@ -67,8 +63,16 @@ class ServerIO implements Runnable
 	{
 		while (true)
 		{
-			System.out.println("Client - waiting to read");
-			String str = in.nextLine();
+			String str = null;
+			try
+			{
+				str = input.readUTF();
+			} catch (IOException e)
+			{
+				e.printStackTrace();
+			}
+			if(!str.equals(null))
+				System.out.println(str);
 		}
 	}
 }
