@@ -3,7 +3,6 @@ package demo1;
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.Scanner;
@@ -14,7 +13,7 @@ public class Client
 	Socket serverSocket;
 	String serverHostName = "localhost";
 	int serverPortNumber = 4040;
-	ServerListener sl;
+	ServerIO sl;
 
 	Client()
 	{
@@ -22,7 +21,7 @@ public class Client
 		{
 			serverSocket = new Socket(serverHostName, serverPortNumber);
 			
-			sl = new ServerListener(this, serverSocket);
+			sl = new ServerIO(this, serverSocket);
 			new Thread(sl).start();
 			PrintWriter out;
 			
@@ -41,16 +40,17 @@ public class Client
 	public static void main(String[] args)
 	{
 		Client client = new Client();
+		client.getClass();
 	}
 }
 
 
-class ServerListener implements Runnable
+class ServerIO implements Runnable
 {
 	Client c;
 	Scanner in;
 
-	ServerListener(Client c, Socket s)
+	ServerIO(Client c, Socket s)
 	{
 		try
 		{
@@ -69,7 +69,6 @@ class ServerListener implements Runnable
 		{
 			System.out.println("Client - waiting to read");
 			
-			String s = in.nextLine();
 		}
 	}
 }
