@@ -31,11 +31,11 @@ public class Server
 			
 			try
 			{
-				System.out.println("Waiting for client " + clientNum++ + " to connect!");
+				System.out.println("Waiting for client " + clientNum + " to connect!");
 				clientSocket = serverSocket.accept();
 				
 				System.out.println("Server got connected to a client" + clientNum);
-				ClientIO c = new ClientIO(clientSocket, clientNum);
+				ClientIO c = new ClientIO(clientSocket, clientNum++);
 				Thread t = new Thread(c);
 				t.start();
 				
