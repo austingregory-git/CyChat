@@ -13,7 +13,7 @@ public class Client
 	Socket serverSocket;
 	String serverHostName = "localhost";
 	int serverPortNumber = 4040;
-	ServerIO sl;
+	ServerIO s;
 
 	Client()
 	{
@@ -21,8 +21,8 @@ public class Client
 		{
 			serverSocket = new Socket(serverHostName, serverPortNumber);
 			
-			sl = new ServerIO(this, serverSocket);
-			new Thread(sl).start();
+			s = new ServerIO(this, serverSocket);
+			new Thread(s).start();
 			PrintWriter out;
 			
 			out = new PrintWriter(new BufferedOutputStream(serverSocket.getOutputStream()));
@@ -68,7 +68,7 @@ class ServerIO implements Runnable
 		while (true)
 		{
 			System.out.println("Client - waiting to read");
-			String s = in.nextLine();
+			String str = in.nextLine();
 		}
 	}
 }
