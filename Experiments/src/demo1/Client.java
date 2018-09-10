@@ -19,8 +19,9 @@ public class Client
 			DataOutputStream outStream = new DataOutputStream(serverSocket.getOutputStream());
 			BufferedReader read = new BufferedReader(new InputStreamReader(System.in));
 			
-			ClientIO cio = new ClientIO(serverSocket);
-			new Thread(cio).start();
+			ClientIO c_io = new ClientIO(serverSocket);
+			Thread t = new Thread(c_io);
+			t.start();
 			
 			while(true)
 			{
@@ -43,36 +44,33 @@ public class Client
 
 class ClientIO implements Runnable
 {
-	Client c;
 	Socket socket;
-	DataInputStream input;
 
 	public ClientIO(Socket s)
 	{
-		try
-		{
-			input = new DataInputStream(s.getInputStream());
-		} catch (IOException e)
-		{
-			e.printStackTrace();
-		}
+		socket = s;
 	}
 
 	@Override
 	public void run()
 	{
-		while (true)
+		DataInputStream input;
+		try
 		{
-			String str = null;
-			try
+			input = new DataInputStream(socket.getInputStream());
+			while (true)
 			{
+				String str = null;
 				str = input.readUTF();
-			} catch (IOException e)
-			{
-				e.printStackTrace();
+				
+				if(!str.equals(null))
+				{
+					System.out.println(str);
+				}
 			}
-			if(!str.equals(null))
-				System.out.println(str);
+		} catch (IOException e)
+		{
+			e.printStackTrace();
 		}
 	}
 }

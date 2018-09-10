@@ -23,20 +23,17 @@ public class Server
 
 			while (true)
 			{
-				Socket clientSocket = null;
-
-				clientSocket = serverSocket.accept(); // waiting for client input
-				System.out.println("Enter Username");
+				Socket clientSocket = serverSocket.accept(); //waiting for client to connect
+				System.out.print("Enter Username:  ");
 				
 				scan = new Scanner(System.in);
 				username = scan.nextLine();
-
 				System.out.println(username + " has connected to server");
 				
-				ServerIO sio = new ServerIO(clientSocket, username);
-				clients.add(sio);
+				ServerIO s_io = new ServerIO(clientSocket, username);
+				clients.add(s_io);//add to client list
 				
-				Thread t = new Thread(sio);
+				Thread t = new Thread(s_io);
 				t.start();
 			}
 		} catch (IOException e)
@@ -64,20 +61,21 @@ class ServerIO implements Runnable
 		{
 			DataInputStream inStream = new DataInputStream(this.socket.getInputStream());
 			DataOutputStream outStream = new DataOutputStream(this.socket.getOutputStream());
-			outStream.writeUTF("Client " + name);
+			outStream.writeUTF("Welcom to chatroom!");
+			outStream.writeUTF("You are Client " + name);
 			outStream.flush();
 
 			while(true)
 			{
 				String input = inStream.readUTF();
-				System.out.println( name + ": " + input);
+				System.out.println(name + ": " + input);
 				for(ServerIO t : Server.clients)
 				{
 					if(!t.socket.equals(this.socket))
 					{
-						DataOutputStream temp = new DataOutputStream(t.socket.getOutputStream());
-						temp.writeUTF(name + ":  " + input);
-						temp.flush();
+						DataOutputStream output = new DataOutputStream(t.socket.getOutputStream());
+						output.writeUTF(name + ":  " + input);
+						output.flush();
 					}
 				}
 			}
