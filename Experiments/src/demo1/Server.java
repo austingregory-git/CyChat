@@ -64,7 +64,8 @@ class ServerIO implements Runnable
 			outStream.writeUTF("Welcom to chatroom!");
 			outStream.writeUTF("You are Client " + name);
 			outStream.flush();
-
+			
+			
 			while(true)
 			{
 				String input = inStream.readUTF();
