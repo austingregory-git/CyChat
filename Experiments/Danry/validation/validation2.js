@@ -49,12 +49,16 @@ function check()
 
 function emailcheck(str)
 {
+    //return false;
     return /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$/.test(str);
 }
 
 function telcheck(str)
 {
-    return /^[0-9]{3}-[0-9]{3}-[0-9]{4}|\d{10}$/.test(str);
+    var digits = /^\d{10}$/.test(str);
+    var dash = /^[0-9]{3}-[0-9]{3}-[0-9]{4}$/.test(str);
+    return digits || dash;
+    //return /^[0-9]{3}-[0-9]{3}-[0-9]{4}|\d{10}$/.test(str);
 }
 
 function addcheck(str)
