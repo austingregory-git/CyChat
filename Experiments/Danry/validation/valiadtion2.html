@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Contact Information</title>
+    <script src="validation2.js"></script>
+</head>
+<body>
+<h1> Contact Information </h1><br/>
+
+<form name="submitionForm" onsubmit="return validation2()">
+    E-mail:
+        <input type="text" name="Email" id="email">
+        <img id="emailimg" src="" style="position: absolute" hidden
+            width="30" height="30">
+        <br/><br/>
+    Phone:
+        <input type="text" name="Phone" id="tel">
+        <img id="telimg" src="" style="position: absolute" hidden
+            width="30" height="30">
+        <br/><br/>
+    Address:
+        <input type="text" name="Address" id="add">
+        <img id="addimg" src="" style="position: absolute" hidden
+            width="30" height="30">
+        <br/><br/>
+
+        <input type="submit" value="Submit">
+</form>
+
+
+</body>
+</html>
