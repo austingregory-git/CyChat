@@ -1,6 +1,6 @@
 
 function enter()
 {
-    window.open("./cychatPage/validation1.html", "_self");
+    window.open("https://git.linux.iastate.edu/cs309/Fall2018/SD_1", "_self");
     return false;
 }
