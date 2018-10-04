@@ -1,12 +1,15 @@
 package com.example.nirmiter.volleypractice;
 
+import android.app.AlertDialog;
 import android.content.Intent;
+
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.android.volley.NoConnectionError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -34,7 +37,8 @@ public class MainActivity extends AppCompatActivity {
         buttonParse =  (Button) findViewById(R.id.jsonBTN);
         nextPage = findViewById(R.id.pageBTN);
 
-        mQueue = Volley.newRequestQueue(this);
+       //mQueue = Volley.newRequestQueue(this);
+        mQueue = VolleySingleton.getInstance(this).getRequestQueue();
 
         buttonParse.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -64,7 +68,7 @@ public class MainActivity extends AppCompatActivity {
                                 String fetchedString = employee.getString("name") + " " + employee.getString("password") +
                                         employee.getString("contact") + employee.getString("country");
 
-                                mTextViewResult.append(fetchedString + " ,");
+                                mTextViewResult.append(fetchedString + " , ");
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -76,6 +80,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onErrorResponse(VolleyError error) {
                 error.printStackTrace();
+
             }
         });
         mQueue.add(request);
