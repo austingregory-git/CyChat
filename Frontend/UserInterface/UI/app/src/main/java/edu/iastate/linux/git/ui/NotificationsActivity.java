@@ -7,10 +7,11 @@ import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
-public class RegistrationActivity extends AppCompatActivity {
+public class NotificationsActivity extends AppCompatActivity {
+
     private TextView mTextMessage;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
@@ -32,21 +33,39 @@ public class RegistrationActivity extends AppCompatActivity {
             return false;
         }
     };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_registration);
+        setContentView(R.layout.activity_notifications);
 
-        Button regB = (Button) findViewById(R.id.registerButton);
+        ImageButton homeB = (ImageButton) findViewById(R.id.homeButton);
+        ImageButton contactsB = (ImageButton) findViewById(R.id.contactsButton);
+        ImageButton notifsB = (ImageButton) findViewById(R.id.notificationsButton);
 
-        regB.setOnClickListener(new View.OnClickListener() {
+        homeB.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i1 = new Intent(RegistrationActivity.this, WelcomeActivity.class);
+                Intent i1 = new Intent(NotificationsActivity.this, HomeActivity.class);
                 startActivity(i1);
             }
         });
 
+        contactsB.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i2 = new Intent(NotificationsActivity.this, ContactsActivity.class);
+                startActivity(i2);
+            }
+        });
+
+        notifsB.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i3 = new Intent(NotificationsActivity.this, NotificationsActivity.class);
+                startActivity(i3);
+            }
+        });
     }
 
 }

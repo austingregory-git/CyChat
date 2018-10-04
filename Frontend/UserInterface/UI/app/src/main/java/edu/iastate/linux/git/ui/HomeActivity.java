@@ -1,13 +1,17 @@
 package edu.iastate.linux.git.ui;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
-class HomeActivity extends AppCompatActivity {
+public class HomeActivity extends AppCompatActivity {
 
     private TextView mTextMessage;
 
@@ -33,7 +37,36 @@ class HomeActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
+        setContentView(R.layout.activity_home);
+
+        ImageButton homeB = (ImageButton) findViewById(R.id.homeButton);
+        ImageButton contactsB = (ImageButton) findViewById(R.id.contactsButton);
+        ImageButton notifsB = (ImageButton) findViewById(R.id.notificationsButton);
+
+        homeB.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i1 = new Intent(HomeActivity.this, HomeActivity.class);
+                startActivity(i1);
+            }
+        });
+
+        contactsB.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i2 = new Intent(HomeActivity.this, ContactsActivity.class);
+                startActivity(i2);
+            }
+        });
+
+        notifsB.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i3 = new Intent(HomeActivity.this, NotificationsActivity.class);
+                startActivity(i3);
+            }
+        });
+
     }
 
 }

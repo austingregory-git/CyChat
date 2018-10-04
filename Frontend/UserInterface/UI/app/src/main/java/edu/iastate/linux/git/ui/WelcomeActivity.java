@@ -10,7 +10,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-public class RegistrationActivity extends AppCompatActivity {
+public class WelcomeActivity extends AppCompatActivity {
+
     private TextView mTextMessage;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
@@ -32,21 +33,21 @@ public class RegistrationActivity extends AppCompatActivity {
             return false;
         }
     };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_registration);
+        setContentView(R.layout.activity_welcome);
 
-        Button regB = (Button) findViewById(R.id.registerButton);
+        Button okB = (Button) findViewById(R.id.OKButton);
 
-        regB.setOnClickListener(new View.OnClickListener() {
+        okB.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i1 = new Intent(RegistrationActivity.this, WelcomeActivity.class);
+                Intent i1 = new Intent(WelcomeActivity.this, HomeActivity.class);
                 startActivity(i1);
             }
         });
-
     }
 
 }
