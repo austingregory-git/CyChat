@@ -52,7 +52,10 @@
             android:label="@string/title_activity_options" />
         <activity
             android:name=".MapActivity"
-            android:label="@string/title_activity_map"></activity>
+            android:label="@string/title_activity_map" />
+        <activity
+            android:name=".NotificationsActivity"
+            android:label="@string/title_activity_notifications"></activity>
     </application>
 
 </manifest>

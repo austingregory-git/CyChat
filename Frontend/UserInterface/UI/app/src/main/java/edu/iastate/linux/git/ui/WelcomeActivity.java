@@ -39,11 +39,7 @@ public class WelcomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome);
 
-        mTextMessage = (TextView) findViewById(R.id.message);
-        BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
-        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
-
-        Button okB = (Button) findViewById(R.id.registrationButton);
+        Button okB = (Button) findViewById(R.id.OKButton);
 
         okB.setOnClickListener(new View.OnClickListener() {
             @Override

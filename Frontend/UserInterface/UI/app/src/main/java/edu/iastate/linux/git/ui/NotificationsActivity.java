@@ -10,7 +10,7 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
-public class OptionsActivity extends AppCompatActivity {
+public class NotificationsActivity extends AppCompatActivity {
 
     private TextView mTextMessage;
 
@@ -37,7 +37,7 @@ public class OptionsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_options);
+        setContentView(R.layout.activity_notifications);
 
         ImageButton homeB = (ImageButton) findViewById(R.id.homeButton);
         ImageButton contactsB = (ImageButton) findViewById(R.id.contactsButton);
@@ -46,7 +46,7 @@ public class OptionsActivity extends AppCompatActivity {
         homeB.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i1 = new Intent(OptionsActivity.this, HomeActivity.class);
+                Intent i1 = new Intent(NotificationsActivity.this, HomeActivity.class);
                 startActivity(i1);
             }
         });
@@ -54,7 +54,7 @@ public class OptionsActivity extends AppCompatActivity {
         contactsB.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i2 = new Intent(OptionsActivity.this, ContactsActivity.class);
+                Intent i2 = new Intent(NotificationsActivity.this, ContactsActivity.class);
                 startActivity(i2);
             }
         });
@@ -62,7 +62,7 @@ public class OptionsActivity extends AppCompatActivity {
         notifsB.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i3 = new Intent(OptionsActivity.this, NotificationsActivity.class);
+                Intent i3 = new Intent(NotificationsActivity.this, NotificationsActivity.class);
                 startActivity(i3);
             }
         });

@@ -1,10 +1,13 @@
 package edu.iastate.linux.git.ui;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 public class SettingsActivity extends AppCompatActivity {
@@ -36,9 +39,33 @@ public class SettingsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
 
-        mTextMessage = (TextView) findViewById(R.id.message);
-        BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
-        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+        ImageButton homeB = (ImageButton) findViewById(R.id.homeButton);
+        ImageButton contactsB = (ImageButton) findViewById(R.id.contactsButton);
+        ImageButton notifsB = (ImageButton) findViewById(R.id.notificationsButton);
+
+        homeB.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i1 = new Intent(SettingsActivity.this, HomeActivity.class);
+                startActivity(i1);
+            }
+        });
+
+        contactsB.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i2 = new Intent(SettingsActivity.this, ContactsActivity.class);
+                startActivity(i2);
+            }
+        });
+
+        notifsB.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i3 = new Intent(SettingsActivity.this, NotificationsActivity.class);
+                startActivity(i3);
+            }
+        });
     }
 
 }
