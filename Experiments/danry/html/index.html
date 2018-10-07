@@ -23,12 +23,20 @@
 <p id="time"></p>
 <br/><br/>
 
-<script>
-document.getElementById("time").innerHTML = new Date();
-</script>
-<form name="homepage" onsubmit="return enter()">
+<form name="homepage" onsubmit="return index()">
+    First Name:
+        <input type="text" name="FirstName" id="firstName">
+        <img id="firstNameimg" src="" style="position: absolute" hidden
+            width="30" height="30">
+        <br/><br/>
+    Last Name:
+        <input type="text" name="LastName" id="lastName">
+        <img id="lastNameimg" src="" style="position: absolute" hidden
+            width="30" height="30">
+        <br/><br/>
 
-    <input type="submit" value="Enter">
+    <input id="gitlab" type="submit" value="Gitlab">
+    <input id="" type="submit" value="Submit">
 
 </form>
 </body>
