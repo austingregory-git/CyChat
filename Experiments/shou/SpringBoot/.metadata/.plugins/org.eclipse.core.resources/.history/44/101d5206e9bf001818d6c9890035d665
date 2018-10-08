@@ -1,0 +1,39 @@
+package test.controll;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.ArrayList;
+
+import org.springframework.stereotype.Service;
+
+@Service
+public class Server {
+	
+	
+	private List<UserInfor> users = new ArrayList<>(Arrays.asList( new UserInfor("guost", "qwe", "xiuyuan" ,21),
+			new UserInfor("asdf", "qwe", "Kane" ,21),
+			new UserInfor("guo", "qwe", "fk" ,21),
+			new UserInfor("steven", "qwe", "xwww" ,21)
+			
+			));
+	
+	
+	public List<UserInfor> show()
+	{
+		
+		return users;
+		
+	}
+	
+	public UserInfor Find(String username)
+	{
+		return users.stream().filter(u->u.getUsername().equals(username)).findFirst().get();
+	}
+	
+	public void addUser(UserInfor user)
+	{
+		users.add(user);
+	}
+	
+
+}

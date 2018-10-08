@@ -1,0 +1,27 @@
+package test.controll;
+
+import java.util.Arrays;
+import java.util.List;
+
+import org.springframework.stereotype.Service;
+
+@Service
+public class Server {
+	
+	
+	private List<UserInfor> users = Arrays.asList( new UserInfor("guost", "qwe", "xiuyuan" ,21),
+			new UserInfor("asdf", "qwe", "Kane" ,21),
+			new UserInfor("guo", "qwe", "fk" ,21),
+			new UserInfor("steven", "qwe", "xwww" ,21)
+			
+			);
+	
+	
+	public List<UserInfor> show()
+	{
+		
+		return users;
+		
+	}
+
+}
