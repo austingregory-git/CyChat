@@ -1,7 +1,5 @@
 package test.controll;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -13,38 +11,28 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-public class Controller {
+public class Controller
+{
 
-	
-	
-	private List<UserInfor> users = new ArrayList<>(Arrays.asList( new UserInfor(14,"guost", "qwe", "xiuyuan" ,21),
-			new UserInfor(11,"asdf", "qwe", "Kane" ,21),
-			new UserInfor(12,"guo", "qwe", "fk" ,21),
-			new UserInfor(13,"steven", "qwe", "xwww" ,21)
-			
-			));
-	
-	
 	@Autowired
 	private Server Userver;
-	
-	
+
 	@RequestMapping("/user")
 	public List<UserInfor> call()
 	{
-		return Userver.show();	
+		return Userver.findAll();
 	}
-	
+
 	@RequestMapping("/user/{id}")
-	public Optional<UserInfor> Find(@PathVariable int username)
+	public Optional<UserInfor> Find(@PathVariable int id)
 	{
-		return Userver.Find(username);
+		return Userver.findById(id);
 	}
-	
-	@RequestMapping(method=RequestMethod.POST , value = "/user")
+
+	@RequestMapping(method = RequestMethod.POST, value = "/user")
 	public void Add(@RequestBody UserInfor user)
 	{
-		Userver.addUser(user);
+		Userver.save(user);
 	}
-	
+
 }
