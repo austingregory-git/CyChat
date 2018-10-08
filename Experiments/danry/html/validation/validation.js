@@ -1,24 +1,26 @@
 function validation()
 {
-	var Id = document.getElementById("userid").value;
+	var id = document.getElementById("userid").value;
 	var username = document.getElementById("username").value;
 	var password = document.getElementById("password").value;
 	var age = document.getElementById("age").value;
 	var name = document.getElementById("name").value;
 	
-	post(Id, username, password, age, name);
-	document.getElementById("post").onclick = window.open("http://proj309-ds-01.misc.iastate.edu:8080/user");
-	
-	// document.getElementById("post").onclick = post(userid, username, password, age, name);
-	// window.open("http://proj309-ds-01.misc.iastate.edu:8080/user");
 // if (check())
 // {
 // setTimeout(feedback, 1500);
 // }
+	
+	post(id, username, password, age, name);
+	document.getElementById("post").onclick = window.open("http://proj309-ds-01.misc.iastate.edu:8080/user");
+	
+	// document.getElementById("post").onclick = post(userid, username, password, age, name);
+	// window.open("http://proj309-ds-01.misc.iastate.edu:8080/user");
+	
 	//return false;
 }
 
-function post(Id, username, password, age, name)
+function post(id, username, password, age, name)
 {
 	
 	var xhr = new XMLHttpRequest();
@@ -61,36 +63,27 @@ function post(Id, username, password, age, name)
 	        var json = JSON.parse(xhr.responseText);
 	    }
 	};
-// var data = JSON.stringify
-// ({
-// "id" : 9123,
-// "username" : "fdaf",
-// "password" : "abc34",
-// "age" : 0,
-// "name" : "babaana"
-// });
-	
 
 	var data = JSON.stringify
 	({
-		"id"   : Id,
+		"id"       : id,
 		"username" : String(username),
 		"password" : String(password),
 		"age"      : age,
 		"name"     : String(name)
-		});
+	});
 	//alert("2");
 	xhr.send(data);
 	//alert("123");
 }
 
-function get(username, userid, password, age, name)
+function get(id, username, password, age, name)
 {
 	// Sending a receiving data in JSON format using GET method
 	var xhr = new XMLHttpRequest();
 	var url = "url?data=" + encodeURIComponent(JSON.stringify(
 	{
-		"id"   : userid,
+		"id"       : id,
 		"username" : username,
 		"password" : password,
 		"age"      : age,
@@ -115,6 +108,7 @@ function feedback()
 {
 	alert("you have successfully sign up");
 }
+
 function check()
 {
 	var pass = true;
