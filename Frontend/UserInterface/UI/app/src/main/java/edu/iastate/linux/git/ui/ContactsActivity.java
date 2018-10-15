@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
@@ -66,6 +67,39 @@ public class ContactsActivity extends AppCompatActivity {
                 startActivity(i3);
             }
         });
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.topright_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch(item.getItemId()) {
+            case R.id.settings:
+                Intent i1 = new Intent(ContactsActivity.this, SettingsActivity.class);
+                startActivity(i1);
+                return(true);
+            case R.id.options:
+                Intent i2 = new Intent(ContactsActivity.this, OptionsActivity.class);
+                startActivity(i2);
+                return(true);
+            case R.id.map:
+                Intent i3 = new Intent(ContactsActivity.this, MapActivity.class);
+                startActivity(i3);
+                return(true);
+            case R.id.exit:
+                finish();
+                System.exit(0);
+                return(true);
+            case R.id.log_out:
+                Intent i4 = new Intent(ContactsActivity.this, LoginActivity.class);
+                startActivity(i4);
+                return(true);
+        }
+        return super.onOptionsItemSelected(item);
     }
 
 }
