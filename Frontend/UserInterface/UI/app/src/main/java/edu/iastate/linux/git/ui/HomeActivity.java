@@ -89,7 +89,7 @@ public class HomeActivity extends AppCompatActivity {
                 startActivity(i2);
                 return(true);
             case R.id.map:
-                Intent i3 = new Intent(HomeActivity.this, MapActivity.class);
+                Intent i3 = new Intent(HomeActivity.this, GoogleMapActivity.class);
                 startActivity(i3);
                 return(true);
             case R.id.exit:

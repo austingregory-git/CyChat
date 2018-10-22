@@ -16,4 +16,5 @@
     <string name="Exit">Exit</string>
     <string name="Log_Out">Log_Out</string>
     <string name="Map">Map</string>
+    <string name="title_activity_google_map">Map</string>
 </resources>

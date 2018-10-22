@@ -87,7 +87,7 @@ public class SettingsActivity extends AppCompatActivity {
                 startActivity(i2);
                 return(true);
             case R.id.map:
-                Intent i3 = new Intent(SettingsActivity.this, MapActivity.class);
+                Intent i3 = new Intent(SettingsActivity.this, GoogleMapActivity.class);
                 startActivity(i3);
                 return(true);
             case R.id.exit:
