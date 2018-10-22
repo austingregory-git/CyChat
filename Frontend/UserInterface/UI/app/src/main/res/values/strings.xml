@@ -11,4 +11,10 @@
     <string name="title_activity_options">OptionsActivity</string>
     <string name="title_activity_map">MapActivity</string>
     <string name="title_activity_notifications">NotificationsActivity</string>
+    <string name="Settings">Settings</string>
+    <string name="Options">Options</string>
+    <string name="Exit">Exit</string>
+    <string name="Log_Out">Log_Out</string>
+    <string name="Map">Map</string>
+    <string name="title_activity_google_map">Map</string>
 </resources>

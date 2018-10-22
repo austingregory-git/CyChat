@@ -1,42 +1,31 @@
-proj309-ds-01.misc.iastate.edu
+proj309-ds-01.misc.iastate.edu  
+<br /><br />
 
 
-
-mySQL
-
-mysql -uroot -p
-
-Abundant space 421 points!
+mySQL  
+mysql -uroot -p  
+Abundant space 421 points!  
+<br /><br />
 
 
-
-database cychat
-
-SD1
-
-SD_1cychat
+database cychat  
+SD1  
+SD_1cychat  
+<br /><br />
 
 
+Austin Gregory  
+agregory@iastate.edu  
+<br /><br />
 
+Nathan Irmiter  
+nirmiter@iastate.edu  
+<br /><br />
 
-Austin Gregory
+Xiuyuan Guo  
+xiuyuang@iastate.edu  
+<br /><br />
 
-agregory@iastate.edu
-
-
-
-Nathan Irmiter
-
-nirmiter@iastate.edu
-
-
-
-Xiuyuan Guo
-
-xiuyuang@iastate.edu
-
-
-
-Zhi Wang
-
-danryw@iastate.edu
+Zhi Wang  
+danryw@iastate.edu  
+<br /><br />
