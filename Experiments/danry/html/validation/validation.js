@@ -6,18 +6,8 @@ function validation()
 	var age = document.getElementById("age").value;
 	var name = document.getElementById("name").value;
 	
-// if (check())
-// {
-// setTimeout(feedback, 1500);
-// }
-	
 	post(id, username, password, age, name);
 	document.getElementById("post").onclick = window.open("http://proj309-ds-01.misc.iastate.edu:8080/user");
-	
-	// document.getElementById("post").onclick = post(userid, username, password, age, name);
-	// window.open("http://proj309-ds-01.misc.iastate.edu:8080/user");
-	
-	//return false;
 }
 
 function post(id, username, password, age, name)
@@ -29,7 +19,6 @@ function post(id, username, password, age, name)
 //	var method = "POST";
 //	if ("withCredentials" in xhr)
 //	{
-//		alert(0);
 //	    // Check if the XMLHttpRequest object has a "withCredentials" property.
 //	    // "withCredentials" only exists on XMLHTTPRequest2 objects.
 //	    xhr.open(method, url, true);
@@ -43,16 +32,12 @@ function post(id, username, password, age, name)
 //	    xhr.open(method, url);
 //
 //	  } else {
-//		  alert(4);
 //	    // Otherwise, CORS is not supported by the browser.
 //	    xhr = null;
 //	  }
 //	if (!xhr) {
-//		alert(5);
 //		  throw new Error('CORS not supported');
 //		}
-
-	
 
 	xhr.open("POST", url, true);
 	xhr.setRequestHeader("Content-Type", "application/json");
@@ -72,9 +57,7 @@ function post(id, username, password, age, name)
 		"age"      : age,
 		"name"     : String(name)
 	});
-	//alert("2");
 	xhr.send(data);
-	//alert("123");
 }
 
 function get(id, username, password, age, name)
@@ -214,123 +197,3 @@ function showWrong(id)
 	document.getElementById(id).hidden = false;
 	document.getElementById(id).src = "wrong.png";
 }
-
-
-
-
-// function validation()
-// {
-// if (check())
-// {
-// setTimeout(feedback, 1500);
-// }
-// return false;
-// }
-//
-// function feedback()
-// {
-// alert("you have successfully sign up");
-// }
-// function check()
-// {
-// var pass = true;
-//
-// var first = document.getElementById("firstName").value;
-// if (alphanumeric(first))
-// {
-// showCorrect("firstNameimg");
-// pass = pass && true;
-// } else
-// {
-// showWrong("firstNameimg");
-// pass = pass && false;
-// }
-// var last = document.getElementById("lastName").value;
-// if (alphanumeric(last))
-// {
-// showCorrect("lastNameimg");
-// pass = pass && true;
-// } else
-// {
-// showWrong("lastNameimg");
-// pass = pass && false;
-// }
-// var gender = document.getElementById("gender").value;
-// if (notEmpty(gender))
-// {
-// showCorrect("genderimg");
-// pass = pass && true;
-// } else
-// {
-// showWrong("genderimg");
-// pass = pass && false;
-// }
-// var email = document.getElementById("email").value;
-// if (emailcheck(email))
-// {
-// showCorrect("emailimg");
-// pass = pass && true;
-// } else
-// {
-// showWrong("emailimg");
-// pass = pass && false;
-// }
-//
-// return pass;
-// }
-//
-// function alphanumeric(str)
-// {
-// return /^[A-z0-9]+$/.test(str);
-// }
-//
-// function notEmpty(str)
-// {
-// return !str == "";
-// }
-//
-// function emailcheck(str)
-// {
-// // return false;
-// return /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$/.test(str);
-// }
-//
-// function telcheck(str)
-// {
-// var digits = /^\d{10}$/.test(str);
-// var dash = /^[0-9]{3}-[0-9]{3}-[0-9]{4}$/.test(str);
-// return digits || dash;
-// // return /^[0-9]{3}-[0-9]{3}-[0-9]{4}|\d{10}$/.test(str);
-// }
-//
-// function addcheck(str)
-// {
-// if (!/^[A-Za-z,]+$/.test(str))
-// return false;
-// if (str[0] == "," || str[str.length - 1] == ",")
-// return false;
-// var i;
-// var count = 0;
-// for (i = 0; i < str.length; i++)
-// {
-// if (str[i] == ",")
-// {
-// count++;
-// }
-// }
-//
-// return count == 1;
-// }
-//
-// function showCorrect(id)
-// {
-// document.getElementById(id).hidden = false;
-// document.getElementById(id).src = "correct.png";
-// }
-//
-// function showWrong(id)
-// {
-// document.getElementById(id).hidden = false;
-// document.getElementById(id).src = "wrong.png";
-// }
-//
