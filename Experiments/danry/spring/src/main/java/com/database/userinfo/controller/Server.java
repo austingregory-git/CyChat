@@ -1,4 +1,4 @@
-package com.mysqlserver.controll;
+package com.database.userinfo.controller;
 
 import java.util.List;
 import java.util.Optional;
@@ -11,14 +11,14 @@ public class Server
 {
 
 	@Autowired
-	private User_data data;
+	private UserData data;
 
 	public long count()
 	{
 		return data.count();
 	}
 	
-	public void delete(UserInfor entity)
+	public void delete(UserInfo entity)
 	{
 		data.delete(entity);
 	}
@@ -28,7 +28,7 @@ public class Server
 		data.deleteAll();
 	}
 	
-	public void deleteAll(List<UserInfor> entities)
+	public void deleteAll(List<UserInfo> entities)
 	{
 		data.deleteAll(entities);
 	}
@@ -43,29 +43,29 @@ public class Server
 		return data.existsById(id);
 	}
 	
-	public List<UserInfor> findAll()
+	public List<UserInfo> findAll()
 	{
-		return (List<UserInfor>) data.findAll();
+		return (List<UserInfo>) data.findAll();
 	}
 	
-	public List<UserInfor> findAllById(Iterable<Integer> ids)
+	public List<UserInfo> findAllById(Iterable<Integer> ids)
 	{
-		return (List<UserInfor>) data.findAllById(ids);
+		return (List<UserInfo>) data.findAllById(ids);
 	}
 
-	public Optional<UserInfor> findById(int id)
+	public Optional<UserInfo> findById(int id)
 	{
 		return data.findById(id);
 	}
 
-	public UserInfor save(UserInfor user)
+	public UserInfo save(UserInfo user)
 	{
 		return data.save(user);
 	}
 	
-	public <S> List<UserInfor> saveAll(List<UserInfor> users)
+	public <S> List<UserInfo> saveAll(List<UserInfo> users)
 	{
-		return (List<UserInfor>) data.saveAll(users);
+		return (List<UserInfo>) data.saveAll(users);
 	}
 
 }

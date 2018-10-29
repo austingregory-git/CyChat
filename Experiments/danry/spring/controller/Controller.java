@@ -1,4 +1,4 @@
-package com.mysqlserver.controll;
+package com.database.messages.controller;
 
 import java.util.List;
 import java.util.Optional;
@@ -15,24 +15,24 @@ public class Controller
 {
 
 	@Autowired
-	private Server Userver;
+	private Server server_userinfo;
 
-	@RequestMapping("/user")
-	public List<UserInfor> call()
+	@RequestMapping("/database")
+	public List<UserInfo> call()
 	{
-		return Userver.findAll();
+		return server_userinfo.findAll();
 	}
 
-	@RequestMapping("/user/{id}")
-	public Optional<UserInfor> Find(@PathVariable int id)
+	@RequestMapping("/database/{id}")
+	public Optional<UserInfo> Find(@PathVariable int id)
 	{
-		return Userver.findById(id);
+		return server_userinfo.findById(id);
 	}
 
-	@RequestMapping(method = RequestMethod.POST, value = "/user")
-	public void Add(@RequestBody UserInfor user)
+	@RequestMapping(method = RequestMethod.POST, value = "/database")
+	public void Add(@RequestBody UserInfo user)
 	{
-		Userver.save(user);
+		server_userinfo.save(user);
 	}
 
 }

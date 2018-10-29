@@ -1,10 +1,10 @@
-package com.mysqlserver.controll;
+package com.database.messages.controller;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
 @Entity
-public class UserInfor
+public class UserInfo
 {
 
 	@Id
@@ -14,7 +14,7 @@ public class UserInfor
 	private String Name;
 	private int Age;
 
-	public UserInfor(int id, String username, String password, String name, int age)
+	public UserInfo(int id, String username, String password, String name, int age)
 	{
 		this.id = id;
 		this.username = username;
