@@ -74,7 +74,9 @@
 
         <activity
             android:name=".GoogleMapActivity"
-            android:label="@string/title_activity_google_map"></activity>
+            android:label="@string/title_activity_google_map" />
+        <activity android:name=".ScheduleActivity" />
+        <activity android:name=".MyWeekActivity"></activity>
     </application>
 
 </manifest>

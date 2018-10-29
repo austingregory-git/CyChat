@@ -52,7 +52,7 @@ public class GoogleMapActivity extends AppCompatActivity implements OnMapReadyCa
 
     private void enableMyLocation() {
         if(ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            PermissionClass.requestPermission(this, LOCATION_PERMISSION_REQUEST_CODE, Manifest.permission.ACCESS_FINE_LOCATION, true);
+            edu.iastate.linux.git.ui.Utils.PermissionClass.requestPermission(this, LOCATION_PERMISSION_REQUEST_CODE, Manifest.permission.ACCESS_FINE_LOCATION, true);
         }
         else if(mMap != null) {
             mMap.setMyLocationEnabled(true);
@@ -80,13 +80,17 @@ public class GoogleMapActivity extends AppCompatActivity implements OnMapReadyCa
                 Intent i3 = new Intent(GoogleMapActivity.this, GoogleMapActivity.class);
                 startActivity(i3);
                 return(true);
+            case R.id.schedule:
+                Intent i4 = new Intent(GoogleMapActivity.this, ScheduleActivity.class);
+                startActivity(i4);
+                return(true);
             case R.id.exit:
                 finish();
                 System.exit(0);
                 return(true);
             case R.id.log_out:
-                Intent i4 = new Intent(GoogleMapActivity.this, LoginActivity.class);
-                startActivity(i4);
+                Intent i5 = new Intent(GoogleMapActivity.this, LoginActivity.class);
+                startActivity(i5);
                 return(true);
         }
         return super.onOptionsItemSelected(item);
@@ -99,7 +103,7 @@ public class GoogleMapActivity extends AppCompatActivity implements OnMapReadyCa
             return;
         }
 
-        if (PermissionClass.isPermissionGranted(permissions, grantResults,
+        if (edu.iastate.linux.git.ui.Utils.PermissionClass.isPermissionGranted(permissions, grantResults,
                 Manifest.permission.ACCESS_FINE_LOCATION)) {
             // Enable the my location layer if the permission has been granted.
             enableMyLocation();
@@ -119,7 +123,7 @@ public class GoogleMapActivity extends AppCompatActivity implements OnMapReadyCa
     }
 
     private void showPermissionDenied() {
-        PermissionClass.PermissionDeniedDialog.newInstance(true).show(getSupportFragmentManager(), "Permission Denied");
+        edu.iastate.linux.git.ui.Utils.PermissionClass.PermissionDeniedDialog.newInstance(true).show(getSupportFragmentManager(), "Permission Denied");
     }
 
     @Override

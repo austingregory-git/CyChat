@@ -17,4 +17,27 @@
     <string name="Log_Out">Log_Out</string>
     <string name="Map">Map</string>
     <string name="title_activity_google_map">Map</string>
+    <string name="Schedule">Schedule</string>
+
+    <string-array name="scheduleArray">
+        <item> My Week </item>
+        <item> Calendar </item>
+        <item> Events near me </item>
+    </string-array>
+
+    <string-array name="descriptionArray">
+        <item> mwDesc </item>
+        <item> calendarDesc </item>
+        <item> eventsDesc </item>
+    </string-array>
+
+    <string-array name="weekArray">
+        <item> Monday </item>
+        <item> Tuesday </item>
+        <item> Wednesday </item>
+        <item> Thursday </item>
+        <item> Friday </item>
+        <item> Saturday </item>
+        <item> Sunday </item>
+    </string-array>
 </resources>

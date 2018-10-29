@@ -90,13 +90,17 @@ public class SettingsActivity extends AppCompatActivity {
                 Intent i3 = new Intent(SettingsActivity.this, GoogleMapActivity.class);
                 startActivity(i3);
                 return(true);
+            case R.id.schedule:
+                Intent i4 = new Intent(SettingsActivity.this, ScheduleActivity.class);
+                startActivity(i4);
+                return(true);
             case R.id.exit:
                 finish();
                 System.exit(0);
                 return(true);
             case R.id.log_out:
-                Intent i4 = new Intent(SettingsActivity.this, LoginActivity.class);
-                startActivity(i4);
+                Intent i5 = new Intent(SettingsActivity.this, LoginActivity.class);
+                startActivity(i5);
                 return(true);
         }
         return super.onOptionsItemSelected(item);

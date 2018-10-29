@@ -1,0 +1,47 @@
+<android.support.v7.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_height="wrap_content"
+    android:layout_width="match_parent"
+    android:elevation="4dp">
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:layout_width="80dp"
+            android:layout_height="100dp"
+            android:id="@+id/imageMain"
+            android:layout_marginLeft="10dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/textMain"
+            android:text="Table"
+            android:layout_marginLeft="6dp"
+            android:textStyle="bold"
+            android:layout_toRightOf="@+id/imageMain"
+            android:textSize="22sp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/textDescription"
+            android:text="Description"
+            android:layout_marginLeft="6dp"
+            android:layout_below="@+id/textMain"
+            android:layout_toRightOf="@+id/imageMain"
+            android:textSize="16sp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/textClick"
+            android:text="Click here! "
+            android:textSize="12sp"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/textDescription"
+            android:layout_alignBottom="@+id/imageMain"/>
+
+    </RelativeLayout>
+</android.support.v7.widget.CardView>
