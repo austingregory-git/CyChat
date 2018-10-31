@@ -14,6 +14,7 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 
@@ -54,6 +55,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    /*
     private void jsonParse() {
         String url = "https://api.myjson.com/bins/nh6ew";
 
@@ -67,6 +69,40 @@ public class MainActivity extends AppCompatActivity {
                                 JSONObject employee = jsonArray.getJSONObject(i);
                                 String fetchedString = employee.getString("name") + " " + employee.getString("password") +
                                         employee.getString("contact") + employee.getString("country");
+
+                                mTextViewResult.append(fetchedString + " , ");
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }, new Response.ErrorListener()
+
+        {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
+
+            }
+        });
+        mQueue.add(request);
+
+
+    }*/
+
+    private void jsonParse() {
+        String url = "http://proj309-ds-01.misc.iastate.edu:8080/user";
+
+        JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, url, null,
+                new Response.Listener<JSONArray>() {
+                    @Override
+                    public void onResponse(JSONArray response) {
+                        try {
+                            JSONArray jsonArray = response;
+                            for(int i = 0; i < jsonArray.length(); i++){
+                                JSONObject employee = jsonArray.getJSONObject(i);
+                                String fetchedString = employee.getString("id") + " " + employee.getString("password") +
+                                        employee.getString("username") + employee.getString("age") + employee.getString("name") + " ";
 
                                 mTextViewResult.append(fetchedString + " , ");
                             }
