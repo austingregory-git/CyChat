@@ -2,6 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="edu.iastate.linux.git.ui">
 
+<<<<<<< HEAD
 
     <!--
          The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
@@ -13,6 +14,10 @@
     <uses-permission android:name="android.permission.INTERNET" />
 
 
+=======
+    <uses-permission android:name="android.permission.INTERNET" />
+
+>>>>>>> Registration
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -64,6 +69,7 @@
         <activity
             android:name=".NotificationsActivity"
             android:label="@string/title_activity_notifications" />
+<<<<<<< HEAD
 
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
@@ -83,6 +89,9 @@
 
         <activity android:name=".UserProfileActivity"></activity>
 
+=======
+        <activity android:name=".UserProfileActivity"></activity>
+>>>>>>> Registration
     </application>
 
 </manifest>
