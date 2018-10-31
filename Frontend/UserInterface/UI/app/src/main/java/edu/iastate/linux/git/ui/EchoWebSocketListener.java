@@ -7,6 +7,7 @@ import okhttp3.WebSocketListener;
 import okio.ByteString;
 
 final class EchoWebSocketListener extends WebSocketListener {
+    /*
     private static final int NORMAL_CLOSURE_STATUS = 1000;
 
     @Override
@@ -46,4 +47,5 @@ final class EchoWebSocketListener extends WebSocketListener {
             }
         });
     }
+    */
 }

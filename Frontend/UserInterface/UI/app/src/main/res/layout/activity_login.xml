@@ -8,10 +8,6 @@
     android:paddingRight="16dp"
     tools:context=".LoginActivity">
 
-<<<<<<< HEAD
-
-=======
->>>>>>> Registration
     <EditText
         android:id="@+id/usernameLogin"
         android:layout_width="184dp"
@@ -65,9 +61,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-<<<<<<< HEAD
+
 </android.support.constraint.ConstraintLayout>
 
-=======
-</android.support.constraint.ConstraintLayout>
->>>>>>> Registration

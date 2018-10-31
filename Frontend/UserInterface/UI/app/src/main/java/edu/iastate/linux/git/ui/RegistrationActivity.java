@@ -75,78 +75,11 @@ public class RegistrationActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                     registerUser();
-                //Commenting out what I know works for our registration activity to try and get a single user
-//
-//                if (realName.length() > 0 && userName.length() > 0 && userPass.length() > 0 && userAge.length() > 0 && userID.length() > 0) {
-//                   // if (isStringInt(userAge.toString()) && isStringInt(userID.toString())) {
-//                        try {
-//                            String tempage = userAge.getText().toString();
-//                            int tempAge = Integer.parseInt(tempage);
-//                            String tempid = userID.getText().toString();
-//                            int tempID = Integer.parseInt(tempid);
-//                            String name = realName.getText().toString();
-//                            String pass = userPass.getText().toString();
-//                            String yousername = userName.getText().toString();
-//                            JSONObject registerUser = new JSONObject();
-//                            registerUser.put("id", tempID);
-//                            registerUser.put("username", yousername);
-//                            //Log.d("usertag",yousername);
-//                            registerUser.put("password", pass);
-//                            //Log.d("passtag",registerUser.toString());
-//                            Log.d("passtag",pass);
-//                            registerUser.put("age", tempAge);
-//                            registerUser.put("name", name);
-//                            //Log.d("nametag",registerUser.toString());
-//                            Log.d("nametag",name);
-//
-//                            Log.d("jsonfull",registerUser.toString());
-//                            Toast.makeText(RegistrationActivity.this, "MakeJSONObject", Toast.LENGTH_SHORT).show();
-//
-//                            //TODO Bug Fix, End of input at character 0 but bug not affecting functionality
-//                            JsonObjectRequest jsonObject = new JsonObjectRequest(Request.Method.POST, url, registerUser, new Response.Listener<JSONObject>() {
-//
-//                                @Override
-//                                public void onResponse(JSONObject response) {
-//                                    Log.d("Danrysresponse",response.toString());
-//                                    Toast.makeText(getApplicationContext(), "Response: " + response.toString(), Toast.LENGTH_SHORT).show();
-//                                }
-//
-//
-//                            }, new Response.ErrorListener() {
-//                                @Override
-//                                public void onErrorResponse(VolleyError error) {
-//                                    error.printStackTrace();
-//                                    Log.d("Nateserror",error.toString());
-//                                   // Toast.makeText(RegistrationActivity.this, "Error...", Toast.LENGTH_SHORT).show();
-//                                }
-//                            });
-//                            //What is the use of this HashMap?
-//                            /*
-//                        {
-//                            @Override
-//                            public Map<String, String> getHeaders() throws AuthFailureError {
-//                            final Map<String, String> headers = new HashMap<>();
-//                            headers.put("Authorization", "Basic " + "c2FnYXJAa2FydHBheS5jb206cnMwM2UxQUp5RnQzNkQ5NDBxbjNmUDgzNVE3STAyNzI=");//put your token here
-//                            return headers;
-//                        }
-//                        };*/
-//                            VolleySingleton.getInstance(RegistrationActivity.this).addToRequestQue(jsonObject);
-//                        } catch (JSONException e) {
-//                            e.printStackTrace();
-//                        }
-//
-//
-//                        Intent i1 = new Intent(RegistrationActivity.this, WelcomeActivity.class);
-//                        startActivity(i1);
-//                    }
-//                }
-//           // }
-//        });
-
 
             }
         });
     }
+
     private void registerUser() {
         final int iD = Integer.parseInt(userID.getText().toString().trim());
         final String username = userName.getText().toString().trim();
@@ -158,7 +91,7 @@ public class RegistrationActivity extends AppCompatActivity {
         final String userStatus = String.valueOf(rb.getText());
 
         Log.d("userstatus",userStatus);
-        // && Integer.toString(iD) != ""
+
         //first we will do the validations
         Log.d("identity",Integer.toString(iD));
         if (Integer.toString(iD) == "" || !isStringInt(Integer.toString(iD)))
@@ -267,14 +200,6 @@ public class RegistrationActivity extends AppCompatActivity {
             return false;
         }
     }
-    /*
-    public void rbclick(View v)
-    {
-        int radiobuttonid = rg.getCheckedRadioButtonId();
-        rb = (RadioButton) findViewById(radiobuttonid);
 
-        Toast.makeText(getBaseContext(),rb.getText(),Toast.LENGTH_LONG).show();
-    }
-    */
 }
 

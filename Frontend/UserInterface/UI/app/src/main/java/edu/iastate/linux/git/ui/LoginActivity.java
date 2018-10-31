@@ -5,10 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
-<<<<<<< HEAD
 import android.view.Menu;
-=======
->>>>>>> Registration
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.MenuItem;
@@ -19,10 +16,7 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
-<<<<<<< HEAD
-=======
 
->>>>>>> Registration
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -31,32 +25,22 @@ import com.android.volley.toolbox.JsonArrayRequest;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-<<<<<<< HEAD
 
-=======
->>>>>>> Registration
 
 public class LoginActivity extends AppCompatActivity {
 
     private TextView mTextMessage;
-<<<<<<< HEAD
 
-=======
->>>>>>> Registration
     TextView userName, password;
     Button login, register;
     Spinner menu;
     String url = "http://proj309-ds-01.misc.iastate.edu:8080/user";
      boolean flag = false;
-<<<<<<< HEAD
 
-=======
->>>>>>> Registration
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-<<<<<<< HEAD
 
 
         userName = findViewById(R.id.usernameLogin);
@@ -65,36 +49,22 @@ public class LoginActivity extends AppCompatActivity {
         register = (Button) findViewById(R.id.registrationButton);
 
 
-=======
-        //menu = (Spinner) findViewById(R.id.spinOptions);
-        //loadSpinner();
-
-        userName = findViewById(R.id.usernameLogin);
-        password = findViewById(R.id.passwordLogin);
-        login = (Button) findViewById(R.id.loginButton);
-        register = (Button) findViewById(R.id.registrationButton);
-
->>>>>>> Registration
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-<<<<<<< HEAD
-
-=======
->>>>>>> Registration
+                //Adding this so we can progress while server is down, else delete and default to the conditional
+                Intent i1 = new Intent(LoginActivity.this, HomeActivity.class);
+                startActivity(i1);
                 if (properLogin()) {
                    // flag = false;
 
-                    Intent i1 = new Intent(LoginActivity.this, HomeActivity.class);
-                    startActivity(i1);
+                    //Intent i1 = new Intent(LoginActivity.this, HomeActivity.class);
+                    //startActivity(i1);
                 }
                 else{
                     //Toast.makeText(getApplicationContext(), "Make sure you're using a valid username and password", Toast.LENGTH_LONG).show();
-<<<<<<< HEAD
 
-=======
->>>>>>> Registration
                 }
             }
         });
@@ -108,23 +78,6 @@ public class LoginActivity extends AppCompatActivity {
         });
 
     }
-
-<<<<<<< HEAD
-
-}
-
-=======
->>>>>>> Registration
-    //Extra code from Austin
-    /*
-    private void loadSpinner() {
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
-                R.array.spinner_options, android.R.layout.simple_spinner_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        menu.setAdapter(adapter);
-
-    }
-    */
 
     public boolean properLogin()
     {
@@ -179,8 +132,5 @@ public class LoginActivity extends AppCompatActivity {
 
     }
     }
-<<<<<<< HEAD
 
-=======
->>>>>>> Registration
 
