@@ -116,6 +116,9 @@ out/
 .gradle
 .gradle/
 build/
+build.gradle
+gradle-wrapper.properties
+
 
 # Signing files
 .signing/
