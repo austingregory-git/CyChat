@@ -60,11 +60,11 @@ public class CurrentLoggedInUser {
         );
     }
     //this method will logout the user
-    public void logout() {
+    public static void logout() {
         SharedPreferences sharedPreferences = myContext.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.clear();
         editor.apply();
-        myContext.startActivity(new Intent(myContext, LoginActivity.class));
+        //myContext.startActivity(new Intent(myContext, LoginActivity.class));
     }
 }

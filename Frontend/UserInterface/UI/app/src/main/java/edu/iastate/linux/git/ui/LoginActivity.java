@@ -34,7 +34,7 @@ public class LoginActivity extends AppCompatActivity {
     TextView userName, password;
     Button login, register;
     Spinner menu;
-    String url = "http://proj309-ds-01.misc.iastate.edu:8080/user";
+   // String url = "http://proj309-ds-01.misc.iastate.edu:8080/user";
      boolean flag = false;
 
     @Override
@@ -84,7 +84,7 @@ public class LoginActivity extends AppCompatActivity {
         final String loginName = userName.getText().toString();
         final String loginPass = password.getText().toString();
 
-        JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, url, null,
+        JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, URLConstants.JSON_URL, null,
                 new Response.Listener<JSONArray>() {
                     @Override
                     public void onResponse(JSONArray response) {

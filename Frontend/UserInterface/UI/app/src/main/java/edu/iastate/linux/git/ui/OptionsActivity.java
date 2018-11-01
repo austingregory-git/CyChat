@@ -1,5 +1,6 @@
 package edu.iastate.linux.git.ui;
 
+import android.app.VoiceInteractor;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -10,6 +11,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
+
+import static edu.iastate.linux.git.ui.CurrentLoggedInUser.*;
 
 public class OptionsActivity extends AppCompatActivity {
 
@@ -90,13 +93,19 @@ public class OptionsActivity extends AppCompatActivity {
                 Intent i3 = new Intent(OptionsActivity.this, GoogleMapActivity.class);
                 startActivity(i3);
                 return(true);
+            case R.id.chatroom:
+                Intent i5 = new Intent(OptionsActivity.this, ChatRoom.class);
+                startActivity(i5);
+                return(true);
             case R.id.exit:
                 finish();
                 System.exit(0);
                 return(true);
             case R.id.log_out:
+               // CurrentLoggedInUser.logout();
                 Intent i4 = new Intent(OptionsActivity.this, LoginActivity.class);
                 startActivity(i4);
+
                 return(true);
         }
         return super.onOptionsItemSelected(item);

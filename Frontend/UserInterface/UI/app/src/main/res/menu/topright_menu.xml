@@ -14,6 +14,10 @@
         android:icon="@drawable/ic_home_black_24dp"
         android:title="@string/Map"
         app:showAsAction="never"/>
+    <item android:id="@+id/chatroom"
+        android:icon="@drawable/ic_home_black_24dp"
+        android:title="ChatRoom"
+        app:showAsAction="never"/>
     <item android:id="@+id/exit"
         android:icon="@drawable/ic_home_black_24dp"
         android:title="@string/Exit"

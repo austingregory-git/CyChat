@@ -39,7 +39,7 @@ public class RegistrationActivity extends AppCompatActivity {
     private TextView userID;
     RadioGroup rg;
     RadioButton rb;
-    private String url = "http://proj309-ds-01.misc.iastate.edu:8080/user";
+   // private String url = "http://proj309-ds-01.misc.iastate.edu:8080/user";
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
 
@@ -160,7 +160,7 @@ public class RegistrationActivity extends AppCompatActivity {
             Log.d("UserPass",CurrentLoggedInUser.getInstance(this).getUser().getUserPassword());
             Log.d("UserAge",Integer.toString(CurrentLoggedInUser.getInstance(this).getUser().getAge()));
             //Now for the object request
-            JsonObjectRequest jsonObject = new JsonObjectRequest(Request.Method.POST, url, registerUser, new Response.Listener<JSONObject>() {
+            JsonObjectRequest jsonObject = new JsonObjectRequest(Request.Method.POST, URLConstants.JSON_URL, registerUser, new Response.Listener<JSONObject>() {
 
                                 @Override
                                 public void onResponse(JSONObject response) {

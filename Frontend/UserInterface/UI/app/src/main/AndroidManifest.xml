@@ -8,7 +8,6 @@
          location permissions for the 'MyLocation' functionality. 
     -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
@@ -77,10 +76,9 @@
 
         <activity
             android:name=".GoogleMapActivity"
-            android:label="@string/title_activity_google_map"></activity>
-
-        <activity android:name=".UserProfileActivity"></activity>
-
+            android:label="@string/title_activity_google_map" />
+        <activity android:name=".UserProfileActivity" />
+        <activity android:name=".ChatRoom"></activity>
     </application>
 
 </manifest>
