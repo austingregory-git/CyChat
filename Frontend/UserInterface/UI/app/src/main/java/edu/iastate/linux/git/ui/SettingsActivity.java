@@ -90,6 +90,10 @@ public class SettingsActivity extends AppCompatActivity {
                 Intent i3 = new Intent(SettingsActivity.this, GoogleMapActivity.class);
                 startActivity(i3);
                 return(true);
+            case R.id.chatroom:
+                Intent i5 = new Intent(SettingsActivity.this, ChatRoom.class);
+                startActivity(i5);
+                return(true);
             case R.id.exit:
                 finish();
                 System.exit(0);

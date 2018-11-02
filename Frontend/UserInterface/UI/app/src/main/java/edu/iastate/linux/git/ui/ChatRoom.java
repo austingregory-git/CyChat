@@ -21,7 +21,7 @@ import java.net.URISyntaxException;
 
 public class ChatRoom extends AppCompatActivity {
 
-    String formattedURL;
+    //String formattedURL;
     Button sendChat, connectToServer;
     TextView viewChats;
     EditText sendMSG;
@@ -122,6 +122,10 @@ public class ChatRoom extends AppCompatActivity {
             case R.id.map:
                 Intent i3 = new Intent(ChatRoom.this, GoogleMapActivity.class);
                 startActivity(i3);
+                return(true);
+            case R.id.chatroom:
+                Intent i5 = new Intent(ChatRoom.this, ChatRoom.class);
+                startActivity(i5);
                 return(true);
             case R.id.exit:
                 finish();
