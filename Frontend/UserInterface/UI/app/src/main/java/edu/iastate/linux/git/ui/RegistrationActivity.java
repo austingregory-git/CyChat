@@ -35,7 +35,8 @@ public class RegistrationActivity extends AppCompatActivity {
     private TextView  realName;
     private TextView  userName;
     private TextView userPass;
-    private TextView userAge;
+    private TextView userEmail;
+    private TextView userType;
     private TextView userID;
     RadioGroup rg;
     RadioButton rb;
@@ -68,7 +69,7 @@ public class RegistrationActivity extends AppCompatActivity {
         realName = findViewById(R.id.regName);
         userName = findViewById(R.id.regUsername);
         userPass = findViewById(R.id.regPassword);
-        userAge = findViewById(R.id.regAge);
+        userEmail = findViewById(R.id.regEmail);
         userID = findViewById(R.id.regId);
         rg = (RadioGroup) findViewById(R.id.rgroup);
         regB.setOnClickListener(new View.OnClickListener() {
@@ -84,13 +85,13 @@ public class RegistrationActivity extends AppCompatActivity {
         final int iD = Integer.parseInt(userID.getText().toString().trim());
         final String username = userName.getText().toString().trim();
         final String password = userPass.getText().toString().trim();
-        final int userage = Integer.parseInt(userAge.getText().toString().trim());
+        final String useremail = userEmail.getText().toString().trim();
         final String realname = realName.getText().toString().trim();
 
         rb = findViewById(rg.getCheckedRadioButtonId());
-        final String userStatus = String.valueOf(rb.getText());
+        final String userType = String.valueOf(rb.getText());
 
-        Log.d("userstatus",userStatus);
+        Log.d("userstatus",userType);
 
         //first we will do the validations
         Log.d("identity",Integer.toString(iD));
@@ -140,25 +141,30 @@ public class RegistrationActivity extends AppCompatActivity {
             registerUser.put("id", iD);
             registerUser.put("username", username);
             registerUser.put("password",password);
-            registerUser.put("age",userage);
+            registerUser.put("email",useremail);
+            registerUser.put("type",userType);
             registerUser.put("name",realname);
 
+
+            Log.d("email",registerUser.toString());
             //creating a new user object
-            User user = new User(
+            User user = new User
+                    (
                     registerUser.getInt("id"),
                     registerUser.getString("username"),
                     registerUser.getString("password"),
-                    registerUser.getInt("age"),
+                    registerUser.getString("email"),
+                    registerUser.getString("type"),
                     registerUser.getString("name")
-                    //registerUser.getString("usertype")
-                                    );
-
+                    );
+            Log.d("email",user.getEmail().getClass().getName());
+            Log.d("email",registerUser.getString("email").getClass().getName());
             //storing the user in shared preferences
             CurrentLoggedInUser.getInstance(getApplicationContext()).userLogin(user);
             Log.d("UserID",Integer.toString(CurrentLoggedInUser.getInstance(this).getUser().getId()));
             Log.d("UserName",CurrentLoggedInUser.getInstance(this).getUser().getUserName());
             Log.d("UserPass",CurrentLoggedInUser.getInstance(this).getUser().getUserPassword());
-            Log.d("UserAge",Integer.toString(CurrentLoggedInUser.getInstance(this).getUser().getAge()));
+
             //Now for the object request
             JsonObjectRequest jsonObject = new JsonObjectRequest(Request.Method.POST, URLConstants.JSON_URL, registerUser, new Response.Listener<JSONObject>() {
 
