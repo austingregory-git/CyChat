@@ -78,7 +78,9 @@
         <activity android:name=".ScheduleActivity" />
         <activity android:name=".MyWeekActivity" />
         <activity android:name=".CalendarActivity" />
-        <activity android:name=".EventsActivity"></activity>
+        <activity android:name=".EventsActivity" />
+        <activity android:name=".MyDayActivity" />
+        <activity android:name=".CaldroidActivity"></activity>
     </application>
 
 </manifest>

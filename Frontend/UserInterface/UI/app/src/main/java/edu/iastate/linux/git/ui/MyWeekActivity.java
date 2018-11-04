@@ -26,6 +26,7 @@ public class MyWeekActivity extends AppCompatActivity {
 
     private ListView lv;
     public static SharedPreferences sharedPreferences;
+    public static String selectedDay;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,6 +70,7 @@ public class MyWeekActivity extends AppCompatActivity {
 
     private void initViews() {
         lv = (ListView) findViewById(R.id.listMyWeek);
+        sharedPreferences = getSharedPreferences("MY_DAY", MODE_PRIVATE);
     }
 
     private void initListView() {
@@ -81,13 +83,41 @@ public class MyWeekActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 switch(position) {
-                    case 0: break;
-                    case 1: break;
-                    case 2: break;
-                    case 3: break;
-                    case 4: break;
-                    case 5: break;
-                    case 6: break;
+                    case 0: {
+                        startActivity(new Intent(MyWeekActivity.this, MyDayActivity.class));
+                        sharedPreferences.edit().putString(selectedDay, "Monday").apply();
+                        break;
+                    }
+                    case 1: {
+                        startActivity(new Intent(MyWeekActivity.this, MyDayActivity.class));
+                        sharedPreferences.edit().putString(selectedDay, "Tuesday").apply();
+                        break;
+                    }
+                    case 2: {
+                        startActivity(new Intent(MyWeekActivity.this, MyDayActivity.class));
+                        sharedPreferences.edit().putString(selectedDay, "Wednesday").apply();
+                        break;
+                    }
+                    case 3: {
+                        startActivity(new Intent(MyWeekActivity.this, MyDayActivity.class));
+                        sharedPreferences.edit().putString(selectedDay, "Thursday").apply();
+                        break;
+                    }
+                    case 4: {
+                        startActivity(new Intent(MyWeekActivity.this, MyDayActivity.class));
+                        sharedPreferences.edit().putString(selectedDay, "Friday").apply();
+                        break;
+                    }
+                    case 5: {
+                        startActivity(new Intent(MyWeekActivity.this, MyDayActivity.class));
+                        sharedPreferences.edit().putString(selectedDay, "Saturday").apply();
+                        break;
+                    }
+                    case 6: {
+                        startActivity(new Intent(MyWeekActivity.this, MyDayActivity.class));
+                        sharedPreferences.edit().putString(selectedDay, "Sunday").apply();
+                        break;
+                    }
                     default: break;
                 }
             }

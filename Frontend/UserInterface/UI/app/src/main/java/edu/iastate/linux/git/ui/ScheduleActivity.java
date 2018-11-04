@@ -81,7 +81,7 @@ public class ScheduleActivity extends AppCompatActivity {
                         break;
                     }
                     case 1: {
-                        Intent i = new Intent(ScheduleActivity.this, CalendarActivity.class);
+                        Intent i = new Intent(ScheduleActivity.this, CaldroidActivity.class);
                         startActivity(i);
                         break;
                     }
