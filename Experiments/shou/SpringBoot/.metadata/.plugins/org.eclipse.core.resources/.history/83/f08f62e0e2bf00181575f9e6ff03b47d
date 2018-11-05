@@ -1,7 +1,0 @@
-package test.controll;
-
-import org.springframework.data.repository.CrudRepository;
-
-public interface Userdata extends CrudRepository<UserInfor , String>{
-
-}

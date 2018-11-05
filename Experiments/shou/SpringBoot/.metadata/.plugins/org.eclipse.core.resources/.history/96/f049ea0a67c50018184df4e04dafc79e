@@ -1,4 +1,0 @@
-#spring.jpa.hibernate.ddl-auto=create
-#spring.datasource.url=jdbc:mysql://proj309-ds-01.misc.iastate.edu/Xiuyuan
-#spring.datasource.username=SD1
-#spring.datasource.password=SD_1cychat
