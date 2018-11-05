@@ -34,6 +34,22 @@
         <item> Check out events near you (in progress) </item>
     </string-array>
 
+    <string-array name="chatNames">
+        <item> Austin </item>
+        <item> Nathan </item>
+        <item> Xiuyuan </item>
+        <item> Zhi </item>
+    </string-array>
+
+    <string-array name="chatMsg">
+        <item> Hey! </item>
+        <item> Sup bro </item>
+        <item> Howdy :) </item>
+        <item> Greetings! </item>
+    </string-array>
+
+
+
     <string-array name="weekArray">
         <item> Monday </item>
         <item> Tuesday </item>

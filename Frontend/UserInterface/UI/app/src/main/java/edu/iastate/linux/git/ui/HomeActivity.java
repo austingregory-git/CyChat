@@ -1,21 +1,33 @@
 package edu.iastate.linux.git.ui;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+
+import edu.iastate.linux.git.ui.Utils.LetterImageView;
 
 public class HomeActivity extends AppCompatActivity {
 
     private TextView mTextMessage;
+    private RecyclerView rv;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -41,6 +53,13 @@ public class HomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
+        //initButtonNavigation();
+        initViews();
+        initListView();
+
+    }
+
+    private void initButtonNavigation() {
         ImageButton homeB = (ImageButton) findViewById(R.id.homeButton);
         ImageButton contactsB = (ImageButton) findViewById(R.id.contactsButton);
         ImageButton notifsB = (ImageButton) findViewById(R.id.notificationsButton);
@@ -68,7 +87,69 @@ public class HomeActivity extends AppCompatActivity {
                 startActivity(i3);
             }
         });
+    }
 
+    private void initViews() {
+        rv = (RecyclerView) findViewById(R.id.recyclerView);
+        LinearLayoutManager llm = new LinearLayoutManager(getApplicationContext());
+        rv.setLayoutManager(llm);
+    }
+
+    private void initListView() {
+        String[] chatNames = getResources().getStringArray(R.array.chatNames);
+        String[] chatMsg = getResources().getStringArray(R.array.chatMsg);
+
+        ChatAdapter mAdapter = new ChatAdapter(HomeActivity.this, chatNames, chatMsg);
+        rv.setAdapter(mAdapter);
+    }
+
+    public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.MyViewHolder> {
+
+        private Context context;
+        //private LayoutInflater lf;
+        //private TextView title, desc;
+        private LetterImageView liv;
+        private String[] chatNames, chatMsg;
+
+        public ChatAdapter(Context context, String[] names, String[] msg) {
+            this.context = context;
+            this.chatNames = names;
+            this.chatMsg = msg;
+        }
+
+        @NonNull
+        @Override
+        public ChatAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+            // inflate the item Layout
+            View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.chat_item, parent, false);
+            MyViewHolder vh = new MyViewHolder(v); // pass the view to View Holder
+
+            return vh;
+        }
+
+        @Override
+        public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
+            holder.name.setText(chatNames[position]);
+            holder.msg.setText(chatMsg[position]);
+        }
+
+        @Override
+        public int getItemCount() {
+            return chatNames.length;
+        }
+
+        class MyViewHolder extends RecyclerView.ViewHolder {
+            TextView name;// init the item view's
+            TextView msg;
+            public MyViewHolder(View itemView) {
+                super(itemView);
+                // get the reference of item view's
+                name = (TextView) itemView.findViewById(R.id.textChatName);
+                msg = (TextView) itemView.findViewById(R.id.textChatMsg);
+                liv = (LetterImageView) itemView.findViewById(R.id.imageChat);
+
+            }
+        }
     }
 
     @Override

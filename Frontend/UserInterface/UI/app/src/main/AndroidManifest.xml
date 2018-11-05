@@ -9,6 +9,8 @@
     -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -75,12 +77,13 @@
         <activity
             android:name=".GoogleMapActivity"
             android:label="@string/title_activity_google_map" />
+        <activity android:name=".UserProfileActivity" />
         <activity android:name=".ScheduleActivity" />
         <activity android:name=".MyWeekActivity" />
         <activity android:name=".CalendarActivity" />
         <activity android:name=".EventsActivity" />
         <activity android:name=".MyDayActivity" />
-        <activity android:name=".CaldroidActivity"></activity>
+        <activity android:name=".CaldroidActivity" />
     </application>
 
 </manifest>
