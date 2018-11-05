@@ -8,29 +8,38 @@
     android:paddingBottom="10dp"
     >
 
-        <edu.iastate.linux.git.ui.Utils.LetterImageView
-            android:id="@+id/imageChat"
-            android:layout_width="70dp"
-            android:layout_height="70dp"
-            android:layout_margin="8dp" />
-
-        <TextView
-            android:id="@+id/textChatName"
-            android:layout_width="wrap_content"
+        <RelativeLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="6dp"
-            android:text="Name"
-            android:textSize="22sp"
-            android:textStyle="bold" />
+                android:padding="16dp" >
 
-        <TextView
-            android:id="@+id/textChatMsg"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="20dp"
-            android:text="Msg"
-            android:textSize="16sp"
-            android:textStyle="bold" />
+
+                <edu.iastate.linux.git.ui.Utils.LetterImageView
+                    android:id="@+id/imageChat"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:layout_margin="8dp" />
+
+                <TextView
+                    android:id="@+id/textChatName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="6dp"
+                    android:layout_toRightOf="@+id/imageChat"
+                    android:text="Name"
+                    android:textSize="22sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/textChatMsg"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="6dp"
+                    android:layout_toRightOf="@+id/imageChat"
+                    android:layout_alignBottom="@+id/imageChat"
+                    android:text="Msg"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+        </RelativeLayout>
 
 </LinearLayout>

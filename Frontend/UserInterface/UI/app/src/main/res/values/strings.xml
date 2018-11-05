@@ -48,7 +48,71 @@
         <item> Greetings! </item>
     </string-array>
 
+    <string-array name="contactNames">
+        <item> Austin </item>
+        <item> Nathan </item>
+        <item> Xiuyuan </item>
+        <item> Zhi </item>
+        <item> Tim </item>
+        <item> Jim </item>
+        <item> Tom </item>
+        <item> Shelby </item>
+    </string-array>
 
+    <string-array name="contactDet">
+        <item> agregory </item>
+        <item> nirmiter </item>
+        <item> xguo </item>
+        <item> zwang </item>
+        <item> tswag </item>
+        <item> jjupiter </item>
+        <item> tswang </item>
+        <item> solson </item>
+    </string-array>
+
+    <string-array name="AustinMessages">
+        <item> Hey bro, </item>
+        <item> This is the 2nd msg </item>
+        <item> 3rd! </item>
+        <item> 4th </item>
+        <item> 5th </item>
+        <item> big ballers </item>
+        <item> swag </item>
+        <item> last msg </item>
+    </string-array>
+
+    <string-array name="NateMessages">
+        <item> Yo its nate, </item>
+        <item> 2nd ;) </item>
+        <item> 3rd! </item>
+        <item> 4th </item>
+        <item> 5th </item>
+        <item> big money </item>
+        <item> swag </item>
+        <item> last msg </item>
+    </string-array>
+
+    <string-array name="XiuyuanMessages">
+        <item> SUP! </item>
+        <item> 2nd!!!!! </item>
+        <item> 3rd! </item>
+        <item> 4th </item>
+        <item> 5th </item>
+        <item> big cash </item>
+        <item> swag </item>
+        <item> last msg </item>
+    </string-array>
+
+    <string-array name="ZhiMessages">
+        <item> howdy there partner, </item>
+        <item> 2 </item>
+        <item> 3rd! </item>
+        <item> 4th </item>
+        <item> 5th </item>
+        <item> big soup </item>
+        <item> swag </item>
+        <item> last msg </item>
+    </string-array>
 
     <string-array name="weekArray">
         <item> Monday </item>

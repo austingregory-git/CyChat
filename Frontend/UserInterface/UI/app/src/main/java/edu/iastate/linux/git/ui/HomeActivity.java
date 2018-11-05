@@ -2,6 +2,7 @@ package edu.iastate.linux.git.ui;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -22,12 +23,17 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import edu.iastate.linux.git.ui.Utils.ChatAdapter;
 import edu.iastate.linux.git.ui.Utils.LetterImageView;
+
+import static edu.iastate.linux.git.ui.MyWeekActivity.selectedDay;
 
 public class HomeActivity extends AppCompatActivity {
 
     private TextView mTextMessage;
     private RecyclerView rv;
+    public static SharedPreferences sharedPreferences;
+    public static String selectedConversation;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -53,7 +59,7 @@ public class HomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-        //initButtonNavigation();
+        initButtonNavigation();
         initViews();
         initListView();
 
@@ -91,6 +97,7 @@ public class HomeActivity extends AppCompatActivity {
 
     private void initViews() {
         rv = (RecyclerView) findViewById(R.id.recyclerView);
+        sharedPreferences = getSharedPreferences("MY_CONVO", MODE_PRIVATE);
         LinearLayoutManager llm = new LinearLayoutManager(getApplicationContext());
         rv.setLayoutManager(llm);
     }
@@ -101,20 +108,53 @@ public class HomeActivity extends AppCompatActivity {
 
         ChatAdapter mAdapter = new ChatAdapter(HomeActivity.this, chatNames, chatMsg);
         rv.setAdapter(mAdapter);
+
+        mAdapter.setOnItemClickListener(new ChatAdapter.ClickListener() {
+            @Override
+            public void OnItemClick(int position, View v) {
+                switch(position) {
+                    case 0: {
+                        startActivity(new Intent(HomeActivity.this, ChatActivity.class));
+                        sharedPreferences.edit().putString(selectedConversation, "AustinMessages").apply();
+                        break;
+                    }
+                    case 1: {
+                        startActivity(new Intent(HomeActivity.this, ChatActivity.class));
+                        sharedPreferences.edit().putString(selectedConversation, "NateMessages").apply();
+                        break;
+                    }
+                    case 2: {
+                        startActivity(new Intent(HomeActivity.this, ChatActivity.class));
+                        sharedPreferences.edit().putString(selectedConversation, "XiuyuanMessages").apply();
+                        break;
+                    }
+                    case 3: {
+                        startActivity(new Intent(HomeActivity.this, ChatActivity.class));
+                        sharedPreferences.edit().putString(selectedConversation, "ZhiMessages").apply();
+                        break;
+                    }
+                    default: break;
+                }
+            }
+        });
+
     }
 
-    public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.MyViewHolder> {
+
+    /*public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.MyViewHolder> {
 
         private Context context;
-        //private LayoutInflater lf;
-        //private TextView title, desc;
-        private LetterImageView liv;
         private String[] chatNames, chatMsg;
+        public static ClickListener clickListener;
 
         public ChatAdapter(Context context, String[] names, String[] msg) {
             this.context = context;
             this.chatNames = names;
             this.chatMsg = msg;
+        }
+
+        public void setOnItemClickListener(ClickListener clickListener) {
+            ChatAdapter.clickListener = clickListener;
         }
 
         @NonNull
@@ -131,6 +171,8 @@ public class HomeActivity extends AppCompatActivity {
         public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
             holder.name.setText(chatNames[position]);
             holder.msg.setText(chatMsg[position]);
+            holder.liv.setOval(true);
+            holder.liv.setLetter(chatNames[position].charAt(0));
         }
 
         @Override
@@ -138,19 +180,26 @@ public class HomeActivity extends AppCompatActivity {
             return chatNames.length;
         }
 
-        class MyViewHolder extends RecyclerView.ViewHolder {
-            TextView name;// init the item view's
-            TextView msg;
+        public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+            public TextView name;// init the item view's
+            public TextView msg;
+            public LetterImageView liv;
             public MyViewHolder(View itemView) {
                 super(itemView);
+                itemView.setOnClickListener(this);
                 // get the reference of item view's
                 name = (TextView) itemView.findViewById(R.id.textChatName);
                 msg = (TextView) itemView.findViewById(R.id.textChatMsg);
                 liv = (LetterImageView) itemView.findViewById(R.id.imageChat);
 
             }
+
+            @Override
+            public void onClick(View v) {
+                clickListener.onItemClick(getAdapterPosition(), v);
+            }
         }
-    }
+    }*/
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
