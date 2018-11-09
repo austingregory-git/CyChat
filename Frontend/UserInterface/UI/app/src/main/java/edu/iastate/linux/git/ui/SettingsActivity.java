@@ -94,6 +94,10 @@ public class SettingsActivity extends AppCompatActivity {
                 Intent i5 = new Intent(SettingsActivity.this, ChatRoom.class);
                 startActivity(i5);
                 return(true);
+            case R.id.userprofile:
+                Intent i6 = new Intent(SettingsActivity.this,UserProfileActivity.class);
+                startActivity(i6);
+                return(true);
             case R.id.exit:
                 finish();
                 System.exit(0);

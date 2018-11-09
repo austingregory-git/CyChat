@@ -30,7 +30,7 @@ import org.json.JSONObject;
 public class LoginActivity extends AppCompatActivity {
 
     private TextView mTextMessage;
-
+    String friendID;
     TextView userName, password;
     Button login, register;
     Spinner menu;
@@ -78,6 +78,44 @@ public class LoginActivity extends AppCompatActivity {
         });
 
     }
+    /*
+    public String getFriendID(){
+
+        final String friendName = "";
+        JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, URLConstants.JSON_URL, null,
+                new Response.Listener<JSONArray>() {
+                    @Override
+                    public void onResponse(JSONArray response) {
+                        try {
+                            JSONArray jsonArray = response;
+                            for(int i = 0; i < jsonArray.length(); i++){
+                                JSONObject employee = jsonArray.getJSONObject(i);
+                                //Log.d("object",employee.toString());
+                                if (friendName.equals(employee.getString("name"))) {
+                                    friendID = Integer.toString(employee.getInt("id"));
+
+
+                                }
+
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }, new Response.ErrorListener()
+
+        {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
+
+            }
+        });
+        VolleySingleton.getInstance(LoginActivity.this).addToRequestQue(request);
+        return friendID;
+    }
+    */
+
 
     public boolean properLogin()
     {

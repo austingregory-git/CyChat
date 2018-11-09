@@ -5,17 +5,21 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
+import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.StringRequest;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -23,30 +27,12 @@ import org.json.JSONObject;
 
 public class ContactsActivity extends AppCompatActivity {
 
-    private TextView mTextMessage;
     private TextView friendslist;
     private String temp = "";
-/*
-    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
-            = new BottomNavigationView.OnNavigationItemSelectedListener() {
+    private Button addFriend;
+    private TextView friendIDNumber;
+    private String friendTempNum = "";
 
-        @Override
-        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-            switch (item.getItemId()) {
-                case R.id.navigation_home:
-                    mTextMessage.setText(R.string.title_home);
-                    return true;
-                case R.id.navigation_dashboard:
-                    mTextMessage.setText(R.string.title_dashboard);
-                    return true;
-                case R.id.navigation_notifications:
-                    mTextMessage.setText(R.string.title_notifications);
-                    return true;
-            }
-            return false;
-        }
-    };
-*/
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,12 +41,32 @@ public class ContactsActivity extends AppCompatActivity {
         ImageButton homeB = (ImageButton) findViewById(R.id.homeButton);
         ImageButton contactsB = (ImageButton) findViewById(R.id.contactsButton);
         ImageButton notifsB = (ImageButton) findViewById(R.id.notificationsButton);
+        addFriend = findViewById(R.id.addFriendButton);
+        friendIDNumber = findViewById(R.id.friendIDEditText);
+
 
 
         friendslist = (TextView)findViewById(R.id.friendDisplay);
-        // if(friendlist.getText().toString().isEmpty()){
-            displayFriends();
-        //}
+        friendslist.setMovementMethod(new ScrollingMovementMethod());
+        displayFriends();
+
+        addFriend.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                friendTempNum = friendIDNumber.getText().toString();
+                if(friendTempNum.length() > 0)
+                {
+                    addNewFriend();
+                    friendIDNumber.setText("");
+                }
+                else
+                    {
+                        Toast.makeText(getApplicationContext(), "Add their ID number!", Toast.LENGTH_SHORT).show();
+                     }
+
+            }
+        });
+
 
         homeB.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -89,8 +95,8 @@ public class ContactsActivity extends AppCompatActivity {
 
     private void displayFriends()
     {
-        String newURL = URLConstants.FRIEND_DISPLAY_URL + CurrentLoggedInUser.getInstance(getApplicationContext()).getUser().getId();
 
+        String newURL = URLConstants.FRIEND_DISPLAY_URL + CurrentLoggedInUser.getInstance(getApplicationContext()).getUser().getId();
         JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, newURL, null,
                 new Response.Listener<JSONArray>() {
                     @Override
@@ -99,13 +105,13 @@ public class ContactsActivity extends AppCompatActivity {
                             JSONArray jsonArray = response;
                             for(int i = 0; i < jsonArray.length(); i++){
                                 JSONObject employee = jsonArray.getJSONObject(i);
-                                //Log.d("object",employee.toString());
-                                temp += "Friend " + i + ": " + "UserID:" + employee.getInt("id") + "\n" + "UserName: " + employee.getString("username") + "\n" +
-                                        "UserType: " + employee.getString("type") + "\n" + "UserEmail: " + employee.getString("email") + "\n" + "Name: " + employee.getString("name") + "\n";
+                                temp += "Friend " + i + ": \n" + "    UserID:" + employee.getInt("id") + "\n" + "    UserName: " + employee.getString("username") + "\n" +
+                                        "    UserType: " + employee.getString("type") + "\n" + "    UserEmail: " + employee.getString("email") + "\n" + "    Name: " + employee.getString("name") + "\n\n\n";
                                 Log.d("employee",employee.toString());
 
                             }
-                            Log.d("temp",temp);
+                            friendslist.setText(temp);
+
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -123,9 +129,6 @@ public class ContactsActivity extends AppCompatActivity {
             }
         });
         VolleySingleton.getInstance(ContactsActivity.this).addToRequestQue(request);
-        Log.d("temp",temp);
-        friendslist.setText(temp);
-
     }
 
     @Override
@@ -153,6 +156,10 @@ public class ContactsActivity extends AppCompatActivity {
                 Intent i5 = new Intent(ContactsActivity.this, ChatRoom.class);
                 startActivity(i5);
                 return(true);
+            case R.id.userprofile:
+                Intent i6 = new Intent(ContactsActivity.this,UserProfileActivity.class);
+                startActivity(i6);
+                return(true);
             case R.id.exit:
                 finish();
                 System.exit(0);
@@ -164,12 +171,26 @@ public class ContactsActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
-/*
-    @Override
-    protected void onResume() {
 
-        super.onResume();
-        this.onCreate(null);
+    private void addNewFriend()
+    {
+
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, URLConstants.ADD_FRIEND + CurrentLoggedInUser.getInstance(getApplicationContext()).getUser().getId() + "/" + friendTempNum,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        // Display the first 500 characters of the response string.
+                        Toast.makeText(getApplicationContext(), "Friend added!", Toast.LENGTH_SHORT).show();
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(getApplicationContext(), "Your friend couldn't be found!", Toast.LENGTH_LONG).show();
+            }
+        });
+
+
+                VolleySingleton.getInstance(ContactsActivity.this).addToRequestQue(stringRequest);
     }
-    */
+
 }

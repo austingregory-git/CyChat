@@ -8,10 +8,10 @@ public class CurrentLoggedInUser {
 
     private static final String SHARED_PREF_NAME = "simplifiedcodingsharedpref";
     private static final String KEY_USERNAME = "username";
-    private static final String KEY_ID = "age";
+    private static final String KEY_ID = "id";
     private static final String KEY_REALNAME = "name";
     private static final String KEY_EMAIL = "email";
-    private static final String KEY_STATUS = "id";
+    private static final String KEY_STATUS = "type";
     private static final String KEY_PASSWORD = "password";
 
     private static CurrentLoggedInUser myInstance;
