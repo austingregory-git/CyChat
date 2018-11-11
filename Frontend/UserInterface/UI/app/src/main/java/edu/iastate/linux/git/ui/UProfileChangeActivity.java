@@ -16,10 +16,8 @@ import android.widget.Toast;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -37,7 +35,7 @@ public class UProfileChangeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_uprofile_change);
 
         changeInput = findViewById(R.id.changedInfoText);
-        confirmInput = findViewById(R.id.confirmChangeText);
+        confirmInput = findViewById(R.id.classStartText);
         changesButton = findViewById(R.id.changeButton);
         rg = findViewById(R.id.rgroup);
 

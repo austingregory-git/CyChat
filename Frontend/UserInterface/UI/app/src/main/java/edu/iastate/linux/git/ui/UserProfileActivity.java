@@ -12,7 +12,7 @@ import android.widget.EditText;
 public class UserProfileActivity extends AppCompatActivity {
 
     EditText userID, userName, realName, userEmail, userClassification;
-    Button changeInfo;
+    Button changeInfo,addClass;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,11 +25,11 @@ public class UserProfileActivity extends AppCompatActivity {
         userEmail = findViewById(R.id.TextDisplayEmail);
         userClassification = findViewById(R.id.TextDisplayClassification);
         changeInfo = findViewById(R.id.infoChangeButton);
+        addClass = findViewById(R.id.addClassButton);
 
         userID.setText(Integer.toString(CurrentLoggedInUser.getInstance(getApplicationContext()).getUser().getId()));
         userName.setText(CurrentLoggedInUser.getInstance(getApplicationContext()).getUser().getUserName());
         realName.setText(CurrentLoggedInUser.getInstance(getApplicationContext()).getUser().getRealName());
-        //TODO implement this method and the proper user object
         userEmail.setText(CurrentLoggedInUser.getInstance(getApplicationContext()).getUser().getEmail());
         userClassification.setText(CurrentLoggedInUser.getInstance(getApplicationContext()).getUser().getUserType());
 
@@ -38,6 +38,14 @@ public class UserProfileActivity extends AppCompatActivity {
         realName.setFocusable(false);
         userEmail.setFocusable(false);
         userClassification.setFocusable(false);
+
+        addClass.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                Intent i3 = new Intent(UserProfileActivity.this, AddClassActivity.class);
+                startActivity(i3);
+            }
+        });
 
         changeInfo.setOnClickListener(new View.OnClickListener() {
             @Override

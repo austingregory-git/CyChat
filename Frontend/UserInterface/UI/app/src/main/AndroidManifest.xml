@@ -79,7 +79,8 @@
             android:label="@string/title_activity_google_map" />
         <activity android:name=".UserProfileActivity" />
         <activity android:name=".ChatRoom" />
-        <activity android:name=".UProfileChangeActivity"></activity>
+        <activity android:name=".UProfileChangeActivity" />
+        <activity android:name=".AddClassActivity"></activity>
     </application>
 
 </manifest>
