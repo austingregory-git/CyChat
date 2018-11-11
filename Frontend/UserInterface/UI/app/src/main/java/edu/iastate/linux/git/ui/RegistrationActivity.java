@@ -103,39 +103,7 @@ public class RegistrationActivity extends AppCompatActivity {
             return;
         }
 
-        /*
-        if (TextUtils.isDigitsOnly(Integer.toString(iD)))
-        {
-            Log.d("identity",Integer.toString(iD));
-            userID.setError("Please enter an integer");
-            userID.requestFocus();
-            return;
-        }
-        if (TextUtils.isEmpty(username)) {
-            userName.setError("Please enter username");
-            userName.requestFocus();
-            return;
-        }
 
-        if (TextUtils.isEmpty(password)) {
-            userPass.setError("Please enter your email");
-            userPass.requestFocus();
-            return;
-        }
-
-        if (TextUtils.isEmpty(Integer.toString(userage)) || isStringInt(Integer.toString(userage)) )
-        {
-            userAge.setError("Please enter an integer");
-            userAge.requestFocus();
-            return;
-        }
-
-        if (TextUtils.isEmpty(realname)) {
-            realName.setError("Enter your real name ");
-            realName.requestFocus();
-            return;
-        }
-        */
         try{
             final JSONObject registerUser = new JSONObject();
             registerUser.put("id", iD);

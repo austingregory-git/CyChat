@@ -5,11 +5,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 
 public class UserProfileActivity extends AppCompatActivity {
 
     EditText userID, userName, realName, userEmail, userClassification;
+    Button changeInfo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,6 +24,7 @@ public class UserProfileActivity extends AppCompatActivity {
         realName = findViewById(R.id.TextDisplayName);
         userEmail = findViewById(R.id.TextDisplayEmail);
         userClassification = findViewById(R.id.TextDisplayClassification);
+        changeInfo = findViewById(R.id.infoChangeButton);
 
         userID.setText(Integer.toString(CurrentLoggedInUser.getInstance(getApplicationContext()).getUser().getId()));
         userName.setText(CurrentLoggedInUser.getInstance(getApplicationContext()).getUser().getUserName());
@@ -28,6 +32,20 @@ public class UserProfileActivity extends AppCompatActivity {
         //TODO implement this method and the proper user object
         userEmail.setText(CurrentLoggedInUser.getInstance(getApplicationContext()).getUser().getEmail());
         userClassification.setText(CurrentLoggedInUser.getInstance(getApplicationContext()).getUser().getUserType());
+
+        userID.setFocusable(false);
+        userName.setFocusable(false);
+        realName.setFocusable(false);
+        userEmail.setFocusable(false);
+        userClassification.setFocusable(false);
+
+        changeInfo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i3 = new Intent(UserProfileActivity.this, UProfileChangeActivity.class);
+                startActivity(i3);
+            }
+        });
     }
 
     @Override

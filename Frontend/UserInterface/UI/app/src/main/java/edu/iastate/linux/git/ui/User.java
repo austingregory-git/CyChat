@@ -44,4 +44,10 @@ public class User {
     {
         return userType;
     }
+    public void setEmail(String x){
+        this.userEmail = x;
+    }
+    public void setPassword(String x){
+        this.userPassword = x;
+    }
 }

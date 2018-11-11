@@ -58,6 +58,8 @@ public class ContactsActivity extends AppCompatActivity {
                 {
                     addNewFriend();
                     friendIDNumber.setText("");
+                    friendslist.setText("");
+                    displayFriends();
                 }
                 else
                     {

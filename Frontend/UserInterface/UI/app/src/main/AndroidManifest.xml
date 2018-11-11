@@ -78,7 +78,8 @@
             android:name=".GoogleMapActivity"
             android:label="@string/title_activity_google_map" />
         <activity android:name=".UserProfileActivity" />
-        <activity android:name=".ChatRoom"></activity>
+        <activity android:name=".ChatRoom" />
+        <activity android:name=".UProfileChangeActivity"></activity>
     </application>
 
 </manifest>
