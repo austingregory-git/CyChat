@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -14,6 +15,15 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import edu.iastate.linux.git.ui.Utils.LetterImageView;
 
@@ -36,6 +46,8 @@ public class MyDayActivity extends AppCompatActivity {
     public static String[] sundayTime;
     public static String[] sel_day;
     public static String[] sel_time;
+    public static String[] tempSub;
+    public static String[] tempTime;
 
 
 
@@ -101,11 +113,42 @@ public class MyDayActivity extends AppCompatActivity {
         saturdayTime = getResources().getStringArray(R.array.saturdayTime);
         sundayTime = getResources().getStringArray(R.array.sundayTime);
 
+        String newURL = "http://www.json-generator.com/api/json/get/ceyeFecdCG?indent=2";
+        JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, newURL, null,
+                new Response.Listener<JSONArray>() {
+                    @Override
+                    public void onResponse(JSONArray response) {
+                        tempSub = new String[response.length()];
+                        tempTime = new String[response.length()];
+                        try {
+                            for(int i=0; i<response.length(); i++) {
+                                JSONObject obj = response.getJSONObject(i);
+                                tempSub[i] = obj.getString("Subject");
+                                tempTime[i] = obj.getString("Time");
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                        catch (IllegalStateException e){
+                            e.printStackTrace();
+                        }
+                    }
+                }, new Response.ErrorListener()
+
+        {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
+
+            }
+        });
+
+
         String currDay = MyWeekActivity.sharedPreferences.getString(MyWeekActivity.selectedDay, null);
 
         if(currDay.equalsIgnoreCase("Monday")) {
-            sel_day = Monday;
-            sel_time = mondayTime;
+            sel_day = tempSub;
+            sel_time = tempTime;
         }
         else if(currDay.equalsIgnoreCase("Tuesday")) {
             sel_day = Tuesday;
