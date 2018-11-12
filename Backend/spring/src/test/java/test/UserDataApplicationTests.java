@@ -1,4 +1,4 @@
-/*
+
 package test;
 
 import org.junit.Test;
@@ -12,7 +12,7 @@ public class UserDataApplicationTests {
 
 	@Test
 	public void contextLoads() {
-	}
+		int a = 0;
 
+	}
 }
-*/
