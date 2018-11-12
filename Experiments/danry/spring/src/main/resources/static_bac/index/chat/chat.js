@@ -24,14 +24,17 @@ function setup(check)
 function connect()
 {
 	sender = document.getElementById("senderid").value;
+	//alert(sender);
 	
 	reciver = document.getElementById("reciverid").value;
+	//alert(reciver);
+	
 	
 	var socket = new SockJS('/ws');
 	stomp = Stomp.over(socket);
 	stomp.connect(
 	{},onConnect);
-
+	
 }
 
 function onConnect()
@@ -50,51 +53,37 @@ function onConnect()
 	
 	//alert(temp);
 	
-//	stomp.subscribe("/topic/greet/" + sender + "/" + reciver ,function (name) {
-//		
-//		if((name.body).indexOf("There are no user") != -1)
-//		{
-//			alert(name.body);
-//			disconnect();
-//		}
-//	
-//		if((name.body).indexOf("are Not Friend") != -1)
-//		{
-//			alert(name.body);
-//			disconnect();
-//		}
-//		
-//		var temp = (name.body).split("+");
-//		
-//		for(var i in temp)
-//		{
-//			showName(temp[i]);	
-//		}
-//		
-//		
-//		
-//	});
+	stomp.subscribe("/topic/greet/" + sender + "/" + reciver ,function (name) {
+		
+		if((name.body).indexOf("There are no user") != -1)
+		{
+			alert(name.body);
+			disconnect();
+		}
 	
-//	stomp.subscribe("/topic/g." + ur,function (name) {
-//		showName(name.body);
-//	});	
-	
-	stomp.subscribe("/topic/chat/" + $("#reciverid").val() , function(name)
-	{	
+		if((name.body).indexOf("are Not Friend") != -1)
+		{
+			alert(name.body);
+			disconnect();
+		}
+		
 		var temp = (name.body).split("+");
 		
 		for(var i in temp)
 		{
-			showName(temp[i]);
+			showName(temp[i]);	
 		}
-	});	
-	
-	stomp.subscribe("/topic/group." + $("#reciverid").val(),function (name) {
-		showName(name.body);
+		
+		
+		
 	});
 	
-//	stomp.send("/app/check/" + sender +"/" +reciver,{} , sender.toString() + " " + reciver.toString() );
-	stomp.send("/app/his/" + $("#reciverid").val(), {}, $("#reciverid").val().toString());
+	stomp.subscribe("/topic/g." + ur,function (name) {
+		showName(name.body);
+	});	
+	
+	
+	stomp.send("/app/check/" + sender +"/" +reciver,{} , sender.toString() + " " + reciver.toString() );
 }
 
 //function onMess()
@@ -119,7 +108,7 @@ function sendMess()
 		{
 			"message" : $("#message").val(),
 			"sender" : $("#senderid").val(),
-			"groupid" : $("#reciverid").val(),
+			"reciver" : $("#reciverid").val(),
 			"time" : startTime()
 		}
 	
@@ -140,20 +129,6 @@ function sendName() {
 
 	stomp.send("/app/check",{},JSON.stringify(data));
 	
-}
-
-function sendG()
-{
-	var data = 
-		{
-			"message" : $("#message").val(),
-			"groupid" : 444,
-			"sender"  : $("#senderid").val(),
-			"name"	  : "hh",
-			"time"	  : startTime(),
-		}
-	
-	stomp.send("/app/group." + $("#reciverid").val(),{},JSON.stringify(data));
 }
 
 function showName(temp) {
@@ -197,7 +172,7 @@ $(function () {
     });*/
     $( "#connect" ).click(function() { connect();});
     $( "#disconnect" ).click(function() { disconnect(); });
-    $( "#Submit" ).click(function() { sendG(); });
+    $( "#Submit" ).click(function() { sendMess(); });
     $("#test").click(function(){showName("haha")});
 }
 );
