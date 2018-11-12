@@ -1,22 +1,22 @@
 package edu.iastate.linux.git.ui;
 
 public class User {
-    private int id, age;
-    private String userName, realName, userPassword, userType;
+    private int id;
+    private String userName, realName, userPassword, userType, userEmail;
 
-    public User(int id, String username, String password, int age, String realName)
+    public User(int id, String username, String password, String type,String email, String realName)
     {
         this.id = id;
         this.userName = username;
         this.userPassword = password;
-        this.age = age;
+        this.userEmail = email;
         this.realName = realName;
-        //this.userType = userType;
+        this.userType = type;
     }
     //test method for user
     public String toString()
     {
-        String x = Integer.toString(id) + ", " + userName + ", " + userPassword + ", " + Integer.toString(age) + ", " + realName;
+        String x = Integer.toString(id) + ", " + userName + ", " + userPassword + ", " + userType + ", "+ userEmail + ", " + realName;
         return x;
     }
     public int getId()
@@ -32,9 +32,9 @@ public class User {
     {
         return userPassword;
     }
-    public int getAge()
+    public String getEmail()
     {
-        return age;
+        return userEmail;
     }
     public String getRealName()
     {

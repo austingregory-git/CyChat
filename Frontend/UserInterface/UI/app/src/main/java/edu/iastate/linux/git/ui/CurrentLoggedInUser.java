@@ -8,9 +8,10 @@ public class CurrentLoggedInUser {
 
     private static final String SHARED_PREF_NAME = "simplifiedcodingsharedpref";
     private static final String KEY_USERNAME = "username";
-    private static final String KEY_AGE = "age";
-    private static final String KEY_REALNAME = "name";
     private static final String KEY_ID = "id";
+    private static final String KEY_REALNAME = "name";
+    private static final String KEY_EMAIL = "email";
+    private static final String KEY_STATUS = "type";
     private static final String KEY_PASSWORD = "password";
 
     private static CurrentLoggedInUser myInstance;
@@ -36,7 +37,8 @@ public class CurrentLoggedInUser {
         editor.putInt(KEY_ID, user.getId());
         editor.putString(KEY_USERNAME, user.getUserName());
         editor.putString(KEY_PASSWORD, user.getUserPassword());
-        editor.putInt(KEY_AGE, user.getAge());
+        editor.putString(KEY_STATUS, user.getUserType());
+        editor.putString(KEY_EMAIL, user.getEmail());
         editor.putString(KEY_REALNAME, user.getRealName());
         editor.apply();
     }
@@ -55,16 +57,17 @@ public class CurrentLoggedInUser {
                 sharedPreferences.getInt(KEY_ID, -1),
                 sharedPreferences.getString(KEY_USERNAME, null),
                 sharedPreferences.getString(KEY_PASSWORD,null),
-                sharedPreferences.getInt(KEY_AGE, -1),
+                sharedPreferences.getString(KEY_STATUS,null),
+                sharedPreferences.getString(KEY_EMAIL, null),
                 sharedPreferences.getString(KEY_REALNAME, null)
         );
     }
     //this method will logout the user
-    public void logout() {
+    public static void logout() {
         SharedPreferences sharedPreferences = myContext.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.clear();
         editor.apply();
-        myContext.startActivity(new Intent(myContext, LoginActivity.class));
+        //myContext.startActivity(new Intent(myContext, LoginActivity.class));
     }
 }
