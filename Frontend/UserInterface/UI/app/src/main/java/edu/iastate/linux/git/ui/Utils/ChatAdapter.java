@@ -8,16 +8,19 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+
 import edu.iastate.linux.git.ui.HomeActivity;
 import edu.iastate.linux.git.ui.R;
 
 public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.MyViewHolder> {
 
     private Context context;
-    private String[] chatNames, chatMsg;
+    //private String[] chatNames, chatMsg;
+    private ArrayList<String> chatNames, chatMsg;
     private static ClickListener clickListener;
 
-    public ChatAdapter(Context context, String[] names, String[] msg) {
+    public ChatAdapter(Context context, ArrayList<String> names, ArrayList<String> msg) {
         this.context = context;
         this.chatNames = names;
         this.chatMsg = msg;
@@ -39,15 +42,15 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.MyViewHolder> 
 
     @Override
     public void onBindViewHolder(@NonNull ChatAdapter.MyViewHolder holder, int position) {
-        holder.name.setText(chatNames[position]);
-        holder.msg.setText(chatMsg[position]);
+        holder.name.setText(chatNames.get(position));
+        holder.msg.setText(chatMsg.get(position));
         holder.liv.setOval(true);
-        holder.liv.setLetter(chatNames[position].charAt(0));
+        holder.liv.setLetter(chatNames.get(position).charAt(0));
     }
 
     @Override
     public int getItemCount() {
-        return chatNames.length;
+        return chatNames.size();
     }
 
     class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {

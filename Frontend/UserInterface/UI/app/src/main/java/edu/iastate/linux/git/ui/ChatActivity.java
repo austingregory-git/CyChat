@@ -81,22 +81,22 @@ public class ChatActivity extends AppCompatActivity {
         XiuyuanMessages = getResources().getStringArray(R.array.XiuyuanMessages);
         ZhiMessages = getResources().getStringArray(R.array.ZhiMessages);
 
-        if((MyWeekActivity.sharedPreferences.getString(HomeActivity.selectedConversation, null) != null)) {
-            String currConvo = MyWeekActivity.sharedPreferences.getString(HomeActivity.selectedConversation, null);
 
-            if(currConvo.equalsIgnoreCase("AustinMessages")) {
-                sel_convo = AustinMessages;
-            }
-            else if(currConvo.equalsIgnoreCase("NateMessages")) {
-                sel_convo = NateMessages;
-            }
-            else if(currConvo.equalsIgnoreCase("XiuyuanMessages")) {
-                sel_convo = XiuyuanMessages;
-            }
-            else if(currConvo.equalsIgnoreCase("ZhiMessages")) {
-                sel_convo = ZhiMessages;
-            }
+        String currConvo = HomeActivity.sharedPreferences.getString(HomeActivity.selectedConversation, null);
+
+        if(currConvo.equalsIgnoreCase("AustinMessages")) {
+            sel_convo = AustinMessages;
         }
+        else if(currConvo.equalsIgnoreCase("NateMessages")) {
+            sel_convo = NateMessages;
+        }
+        else if(currConvo.equalsIgnoreCase("XiuyuanMessages")) {
+            sel_convo = XiuyuanMessages;
+        }
+        else if(currConvo.equalsIgnoreCase("ZhiMessages")) {
+            sel_convo = ZhiMessages;
+        }
+
 
 
         SimpleAdapter sa = new SimpleAdapter(this, sel_convo);
