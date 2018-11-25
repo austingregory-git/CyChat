@@ -68,12 +68,13 @@ public class ChatRoom extends AppCompatActivity {
                 Draft[] drafts = {new Draft_6455()};
 
                 //URL that will be used to access the Socket server
-                //String w = URLConstants.SOCKET_URL + Integer.toString(CurrentLoggedInUser.getInstance(getApplicationContext()).getUser().getId());
-                String w = "ws://echo.websocket.org";
+                String w = URLConstants.SOCKET_URL;
+                //String w = "ws://echo.websocket.org";
                 // 10.26.44.40
                 try {
                     Log.d("Socket:","Trying socket");
-                    cc = new WebSocketClient(new URI(w),(Draft) drafts[0]) {
+                    //cc = new WebSocketClient(new URI(w),drafts[0]);
+                     cc = new WebSocketClient(new URI(w)) {
                         @Override
                         public void onOpen(ServerHandshake serverHandshake) {
                             Log.d("OPEN", "run() returned: " + "is connecting");
@@ -85,7 +86,7 @@ public class ChatRoom extends AppCompatActivity {
                             Log.d("stuff", "run() returned: " + msg);
                             String s = output.getText().toString();
                             //Do I need to clear sendMSG here as welL?
-                            output.setText(s + " Server:" + msg);
+                            output.setText(s + "Server:  " + msg + "\n");
 
                         }
 
@@ -119,7 +120,8 @@ public class ChatRoom extends AppCompatActivity {
                 }
                 catch (Exception e)
                 {
-                    Log.d("ExceptionSendMessage:", e.getMessage().toString());
+                    e.printStackTrace();
+                    //Log.d("ExceptionSendMessage:", e.getMessage());
                 }
             }
         });

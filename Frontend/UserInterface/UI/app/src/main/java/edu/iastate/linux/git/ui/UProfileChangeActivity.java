@@ -72,11 +72,13 @@ public class UProfileChangeActivity extends AppCompatActivity {
             tempObj.put("password",CurrentLoggedInUser.getInstance(getApplicationContext()).getUser().getUserPassword());
             tempObj.put("email",userChangeInput);
             CurrentLoggedInUser.getInstance(getApplicationContext()).getUser().setEmail(userChangeInput);
+            Log.d("newUser",CurrentLoggedInUser.getInstance(getApplicationContext()).getUser().toString());
         }
         else {
             tempObj.put("password",userChangeInput);
             tempObj.put("email",CurrentLoggedInUser.getInstance(getApplicationContext()).getUser().getEmail());
             CurrentLoggedInUser.getInstance(getApplicationContext()).getUser().setPassword(userChangeInput);
+            Log.d("newUser",CurrentLoggedInUser.getInstance(getApplicationContext()).getUser().toString());
         }
         tempObj.put("type",CurrentLoggedInUser.getInstance(getApplicationContext()).getUser().getUserType());
         tempObj.put("name",CurrentLoggedInUser.getInstance(getApplicationContext()).getUser().getRealName());

@@ -58,7 +58,7 @@ public class ContactsActivity extends AppCompatActivity {
                 {
                     addNewFriend();
                     friendIDNumber.setText("");
-                    friendslist.setText("");
+
                     displayFriends();
                 }
                 else
@@ -97,6 +97,7 @@ public class ContactsActivity extends AppCompatActivity {
 
     private void displayFriends()
     {
+        friendslist.setText("");
 
         String newURL = URLConstants.FRIEND_DISPLAY_URL + CurrentLoggedInUser.getInstance(getApplicationContext()).getUser().getId();
         JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, newURL, null,
