@@ -47,6 +47,7 @@ public class HomeActivity extends AppCompatActivity {
     public static String selectedConversation;
     public static ArrayList<String> chatNames = new ArrayList<String>();
     public static ArrayList<String> chatMsg = new ArrayList<String>();
+    public static ArrayList<String> chatTime = new ArrayList<String>();
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -119,7 +120,7 @@ public class HomeActivity extends AppCompatActivity {
         //String[] chatNames = getResources().getStringArray(R.array.chatNames);
         //String[] chatMsg = getResources().getStringArray(R.array.chatMsg);
 
-        String newURL = "http://www.json-generator.com/api/json/get/cefmxnWfEy?indent=2";
+        String newURL = "http://www.json-generator.com/api/json/get/bVRpsiJaOG?indent=2";
         //String testURL = "http://pastebin.com/raw/Em972E5s";
         RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
         JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, newURL, null,
@@ -135,6 +136,9 @@ public class HomeActivity extends AppCompatActivity {
                                 }
                                 if(!chatMsg.contains(obj.getString("Message"))) {
                                     chatMsg.add(obj.getString("Message"));
+                                }
+                                if(!chatTime.contains(obj.getString("Time"))) {
+                                    chatTime.add(obj.getString("Time"));
                                 }
 
                             }
@@ -157,7 +161,7 @@ public class HomeActivity extends AppCompatActivity {
         requestQueue.add(request);
 
 
-        ChatAdapter mAdapter = new ChatAdapter(HomeActivity.this, chatNames, chatMsg);
+        ChatAdapter mAdapter = new ChatAdapter(HomeActivity.this, chatNames, chatMsg, chatTime);
         rv.setAdapter(mAdapter);
 
         mAdapter.setOnItemClickListener(new ChatAdapter.ClickListener() {

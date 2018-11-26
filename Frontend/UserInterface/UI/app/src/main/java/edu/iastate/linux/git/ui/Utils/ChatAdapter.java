@@ -17,13 +17,14 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.MyViewHolder> 
 
     private Context context;
     //private String[] chatNames, chatMsg;
-    private ArrayList<String> chatNames, chatMsg;
+    private ArrayList<String> chatNames, chatMsg, chatTime;
     private static ClickListener clickListener;
 
-    public ChatAdapter(Context context, ArrayList<String> names, ArrayList<String> msg) {
+    public ChatAdapter(Context context, ArrayList<String> names, ArrayList<String> msg, ArrayList<String> time) {
         this.context = context;
         this.chatNames = names;
         this.chatMsg = msg;
+        this.chatTime = time;
     }
 
     public void setOnItemClickListener(ClickListener clickListener) {
@@ -44,6 +45,7 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.MyViewHolder> 
     public void onBindViewHolder(@NonNull ChatAdapter.MyViewHolder holder, int position) {
         holder.name.setText(chatNames.get(position));
         holder.msg.setText(chatMsg.get(position));
+        holder.time.setText(chatTime.get(position));
         holder.liv.setOval(true);
         holder.liv.setLetter(chatNames.get(position).charAt(0));
     }
@@ -56,6 +58,7 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.MyViewHolder> 
     class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         TextView name;// init the item view's
         TextView msg;
+        TextView time;
         LetterImageView liv;
         public MyViewHolder(View itemView) {
             super(itemView);
@@ -63,6 +66,7 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.MyViewHolder> 
             // get the reference of item view's
             name = (TextView) itemView.findViewById(R.id.textChatName);
             msg = (TextView) itemView.findViewById(R.id.textChatMsg);
+            time = (TextView) itemView.findViewById(R.id.textChatTime);
             liv = (LetterImageView) itemView.findViewById(R.id.imageChat);
 
         }

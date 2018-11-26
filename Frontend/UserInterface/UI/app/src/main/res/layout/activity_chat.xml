@@ -8,15 +8,10 @@
     android:paddingRight="4dp"
     tools:context=".ChatActivity">
 
-    <ListView
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/chatRecyclerView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/listChat"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginStart="10dp"
-        android:dividerHeight="10dp" />
+        android:layout_height="match_parent" />
 
     <ImageButton
         android:id="@+id/homeButton"
