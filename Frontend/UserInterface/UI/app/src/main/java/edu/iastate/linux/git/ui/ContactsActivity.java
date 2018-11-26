@@ -19,8 +19,20 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 
 import edu.iastate.linux.git.ui.Utils.LetterImageView;
 
@@ -28,6 +40,8 @@ public class ContactsActivity extends AppCompatActivity {
 
     private TextView mTextMessage;
     private RecyclerView rv;
+    public static ArrayList<String> contactNames = new ArrayList<String>();
+    public static ArrayList<String> contactDet = new ArrayList<String>();
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -96,8 +110,49 @@ public class ContactsActivity extends AppCompatActivity {
     }
 
     private void initListView() {
-        String[] contactNames = getResources().getStringArray(R.array.contactNames);
-        String[] contactDet = getResources().getStringArray(R.array.contactDet);
+        //String[] contactNames = getResources().getStringArray(R.array.contactNames);
+        //String[] contactDet = getResources().getStringArray(R.array.contactDet);
+
+        String newURL = URLConstants.FRIEND_DISPLAY_URL + CurrentLoggedInUser.getInstance(getApplicationContext()).getUser().getId();
+
+        RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
+        JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, newURL, null,
+                new Response.Listener<JSONArray>() {
+                    @Override
+                    public void onResponse(JSONArray response) {
+
+                        try {
+                            for(int i=0; i<response.length(); i++) {
+                                JSONObject obj = response.getJSONObject(i);
+
+                                if(!contactNames.contains(obj.getString("name"))) {
+                                    contactNames.add(obj.getString("name"));
+                                }
+
+                                if(!contactDet.contains(obj.getString("username"))) {
+                                    contactDet.add(obj.getString("username"));
+                                }
+
+                                //Log.d("FromMessage", chatFromMsg.get(0));
+
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                        catch (IllegalStateException e){
+                            e.printStackTrace();
+                        }
+                    }
+                }, new Response.ErrorListener()
+
+        {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
+
+            }
+        });
+        requestQueue.add(request);
 
         ContactsAdapter mAdapter = new ContactsAdapter(ContactsActivity.this, contactNames, contactDet);
         rv.setAdapter(mAdapter);
@@ -109,12 +164,12 @@ public class ContactsActivity extends AppCompatActivity {
         //private LayoutInflater lf;
         //private TextView title, desc;
         private LetterImageView liv;
-        private String[] contactNames, contactDet;
+        private ArrayList<String> contactNames, contactDet;
 
-        public ContactsAdapter(Context context, String[] names, String[] msg) {
+        public ContactsAdapter(Context context, ArrayList<String> names, ArrayList<String> det) {
             this.context = context;
             this.contactNames = names;
-            this.contactDet = msg;
+            this.contactDet = det;
         }
 
         @NonNull
@@ -129,15 +184,15 @@ public class ContactsActivity extends AppCompatActivity {
 
         @Override
         public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-            holder.name.setText(contactNames[position]);
-            holder.det.setText(contactDet[position]);
+            holder.name.setText(contactNames.get(position));
+            holder.det.setText(contactDet.get(position));
             holder.liv.setOval(true);
-            holder.liv.setLetter(contactNames[position].charAt(0));
+            holder.liv.setLetter(contactNames.get(position).charAt(0));
         }
 
         @Override
         public int getItemCount() {
-            return contactNames.length;
+            return contactNames.size();
         }
 
         class MyViewHolder extends RecyclerView.ViewHolder {

@@ -17,13 +17,25 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.android.volley.Request;
+import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.Volley;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.lang.reflect.Array;
+import java.net.URL;
+import java.net.URLConnection;
+import java.text.ParseException;
+import java.util.ArrayList;
 
 import edu.iastate.linux.git.ui.Utils.LetterImageView;
 
@@ -37,17 +49,25 @@ public class MyDayActivity extends AppCompatActivity {
     public static String[] Friday;
     public static String[] Saturday;
     public static String[] Sunday;
-    public static String[] mondayTime;
-    public static String[] tuesdayTime;
-    public static String[] wednesdayTime;
-    public static String[] thursdayTime;
-    public static String[] fridayTime;
-    public static String[] saturdayTime;
-    public static String[] sundayTime;
-    public static String[] sel_day;
-    public static String[] sel_time;
-    public static String[] tempSub;
-    public static String[] tempTime;
+    public static ArrayList<String> mondayTime = new ArrayList<String>();
+    public static ArrayList<String> tuesdayTime = new ArrayList<String>();
+    public static ArrayList<String> wednesdayTime = new ArrayList<String>();
+    public static ArrayList<String> thursdayTime = new ArrayList<String>();
+    public static ArrayList<String> fridayTime = new ArrayList<String>();
+    public static ArrayList<String> saturdayTime = new ArrayList<String>();
+    public static ArrayList<String> sundayTime = new ArrayList<String>();
+    public static ArrayList<String> mondaySub = new ArrayList<String>();
+    public static ArrayList<String> tuesdaySub = new ArrayList<String>();
+    public static ArrayList<String> wednesdaySub = new ArrayList<String>();
+    public static ArrayList<String> thursdaySub = new ArrayList<String>();
+    public static ArrayList<String> fridaySub = new ArrayList<String>();
+    public static ArrayList<String> saturdaySub = new ArrayList<String>();
+    public static ArrayList<String> sundaySub = new ArrayList<String>();
+    public static ArrayList<String> sel_day;
+    public static ArrayList<String> sel_time;
+    public static ArrayList<String> tempSub = new ArrayList<String>();
+    public static ArrayList<String> tempTime = new ArrayList<String>();
+
 
 
 
@@ -97,7 +117,7 @@ public class MyDayActivity extends AppCompatActivity {
     }
 
     private void initListView() {
-        Monday = getResources().getStringArray(R.array.Monday);
+        /*Monday = getResources().getStringArray(R.array.Monday);
         Tuesday = getResources().getStringArray(R.array.Tuesday);
         Wednesday = getResources().getStringArray(R.array.Wednesday);
         Thursday = getResources().getStringArray(R.array.Thursday);
@@ -111,20 +131,78 @@ public class MyDayActivity extends AppCompatActivity {
         thursdayTime = getResources().getStringArray(R.array.thursdayTime);
         fridayTime = getResources().getStringArray(R.array.fridayTime);
         saturdayTime = getResources().getStringArray(R.array.saturdayTime);
-        sundayTime = getResources().getStringArray(R.array.sundayTime);
+        sundayTime = getResources().getStringArray(R.array.sundayTime);*/
 
-        String newURL = "http://www.json-generator.com/api/json/get/ceyeFecdCG?indent=2";
+        //String newURL = "http://www.json-generator.com/api/json/get/ceyeFecdCG?indent=2";
+        //String newURL = "http://www.json-generator.com/api/json/get/cdORCPfemq?indent=2";
+        String newURL = "http://www.json-generator.com/api/json/get/cuuTfuQWcy?indent=2";
+        //String testURL = "http://pastebin.com/raw/Em972E5s";
+        RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
         JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, newURL, null,
                 new Response.Listener<JSONArray>() {
                     @Override
                     public void onResponse(JSONArray response) {
-                        tempSub = new String[response.length()];
-                        tempTime = new String[response.length()];
+
                         try {
                             for(int i=0; i<response.length(); i++) {
                                 JSONObject obj = response.getJSONObject(i);
-                                tempSub[i] = obj.getString("Subject");
-                                tempTime[i] = obj.getString("Time");
+                                String day = obj.getString("Day");
+                                if(day.equalsIgnoreCase("Monday")) {
+                                    if(!mondaySub.contains(obj.getString("Subject"))) {
+                                        mondaySub.add(obj.getString("Subject"));
+                                    }
+                                    if(!mondayTime.contains(obj.getString("Time"))) {
+                                        mondayTime.add(obj.getString("Time"));
+                                    }
+                                }
+                                else if(day.equalsIgnoreCase("Tuesday")) {
+                                    if(!tuesdaySub.contains(obj.getString("Subject"))) {
+                                        tuesdaySub.add(obj.getString("Subject"));
+                                    }
+                                    if(!tuesdayTime.contains(obj.getString("Time"))) {
+                                        tuesdayTime.add(obj.getString("Time"));
+                                    }
+                                }
+                                else if(day.equalsIgnoreCase("Wednesday")) {
+                                    if(!wednesdaySub.contains(obj.getString("Subject"))) {
+                                        wednesdaySub.add(obj.getString("Subject"));
+                                    }
+                                    if(!wednesdayTime.contains(obj.getString("Time"))) {
+                                        wednesdayTime.add(obj.getString("Time"));
+                                    }
+                                }
+                                else if(day.equalsIgnoreCase("Thursday")) {
+                                    if(!thursdaySub.contains(obj.getString("Subject"))) {
+                                        thursdaySub.add(obj.getString("Subject"));
+                                    }
+                                    if(!thursdayTime.contains(obj.getString("Time"))) {
+                                        thursdayTime.add(obj.getString("Time"));
+                                    }
+                                }
+                                else if(day.equalsIgnoreCase("Friday")) {
+                                    if(!fridaySub.contains(obj.getString("Subject"))) {
+                                        fridaySub.add(obj.getString("Subject"));
+                                    }
+                                    if(!fridayTime.contains(obj.getString("Time"))) {
+                                        fridayTime.add(obj.getString("Time"));
+                                    }
+                                }
+                                else if(day.equalsIgnoreCase("Saturday")) {
+                                    if(!saturdaySub.contains(obj.getString("Subject"))) {
+                                        saturdaySub.add(obj.getString("Subject"));
+                                    }
+                                    if(!saturdayTime.contains(obj.getString("Time"))) {
+                                        saturdayTime.add(obj.getString("Time"));
+                                    }
+                                }
+                                else if(day.equalsIgnoreCase("Sunday")) {
+                                    if(!sundaySub.contains(obj.getString("Subject"))) {
+                                        sundaySub.add(obj.getString("Subject"));
+                                    }
+                                    if(!sundayTime.contains(obj.getString("Time"))) {
+                                        sundayTime.add(obj.getString("Time"));
+                                    }
+                                }
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -142,42 +220,42 @@ public class MyDayActivity extends AppCompatActivity {
 
             }
         });
+        requestQueue.add(request);
 
 
         String currDay = MyWeekActivity.sharedPreferences.getString(MyWeekActivity.selectedDay, null);
 
         if(currDay.equalsIgnoreCase("Monday")) {
-            sel_day = tempSub;
-            sel_time = tempTime;
+            sel_day = (ArrayList<String>) mondaySub.clone();
+            sel_time = (ArrayList<String>) mondayTime.clone();
         }
         else if(currDay.equalsIgnoreCase("Tuesday")) {
-            sel_day = Tuesday;
-            sel_time = tuesdayTime;
+            sel_day = (ArrayList<String>) tuesdaySub.clone();
+            sel_time = (ArrayList<String>) tuesdayTime.clone();
         }
         else if(currDay.equalsIgnoreCase("Wednesday")) {
-            sel_day = Wednesday;
-            sel_time = wednesdayTime;
+            sel_day = (ArrayList<String>) wednesdaySub.clone();
+            sel_time = (ArrayList<String>) wednesdayTime.clone();
         }
         else if(currDay.equalsIgnoreCase("Thursday")) {
-            sel_day = Thursday;
-            sel_time = thursdayTime;
+            sel_day = (ArrayList<String>) thursdaySub.clone();
+            sel_time = (ArrayList<String>) thursdayTime.clone();
         }
         else if(currDay.equalsIgnoreCase("Friday")) {
-            sel_day = Friday;
-            sel_time = fridayTime;
+            sel_day = (ArrayList<String>) fridaySub.clone();
+            sel_time = (ArrayList<String>) fridayTime.clone();
         }
         else if(currDay.equalsIgnoreCase("Saturday")) {
-            sel_day = Saturday;
-            sel_time = saturdayTime;
+            sel_day = (ArrayList<String>) saturdaySub.clone();
+            sel_time = (ArrayList<String>) saturdayTime.clone();
         }
         else {
-            sel_day = Sunday;
-            sel_time = sundayTime;
+            sel_day = (ArrayList<String>) sundaySub.clone();
+            sel_time = (ArrayList<String>) sundayTime.clone();
         }
 
         SimpleAdapter sa = new SimpleAdapter(this, sel_day, sel_time);
         lv.setAdapter(sa);
-
 
     }
 
@@ -187,10 +265,10 @@ public class MyDayActivity extends AppCompatActivity {
         private LayoutInflater lf;
         private TextView subject, time;
         private LetterImageView liv;
-        private String[] subjectArray;
-        private String[] timeArray;
+        private ArrayList<String> subjectArray;
+        private ArrayList<String> timeArray;
 
-        public SimpleAdapter(Context context, String[] subjectArray, String[] timeArray) {
+        public SimpleAdapter(Context context, ArrayList<String> subjectArray, ArrayList<String> timeArray) {
             mContext = context;
             this.subjectArray = subjectArray;
             this.timeArray = timeArray;
@@ -199,12 +277,12 @@ public class MyDayActivity extends AppCompatActivity {
 
         @Override
         public int getCount() {
-            return subjectArray.length;
+            return subjectArray.size();
         }
 
         @Override
         public Object getItem(int position) {
-            return subjectArray[position];
+            return subjectArray.get(position);
         }
 
         @Override
@@ -222,11 +300,11 @@ public class MyDayActivity extends AppCompatActivity {
             time = (TextView) convertView.findViewById(R.id.textTime);
             liv = (LetterImageView) convertView.findViewById(R.id.imageDayDetails);
 
-            subject.setText(subjectArray[position]);
-            time.setText(timeArray[position]);
+            subject.setText(subjectArray.get(position));
+            time.setText(timeArray.get(position));
 
             liv.setOval(true);
-            liv.setLetter(subjectArray[position].charAt(0));
+            liv.setLetter(subjectArray.get(position).charAt(0));
 
             return convertView;
         }
