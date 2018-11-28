@@ -29,6 +29,7 @@ public interface User_data extends CrudRepository<UserInfor , Integer> {
 	@Query(value = "SELECT max(u.from) from friend u" , nativeQuery = true)
 	int Getfriend();	
 	
+	
 //	@Modifying
 //	@Query(value = "INSERT INTO cychat.friend (from,to) VALUES (:Ufrom , :Uto)" , nativeQuery = true)
 //	@Transactional

@@ -47,12 +47,27 @@ public class Controller {
 		return Userver.Find(id);
 	}
 	
+	@RequestMapping("/database/{name}")
+	public List<UserInfor> FindName(@PathVariable String name)
+	{
+		return Userver.FindbyName(name);
+	}
+	
 	@RequestMapping("/database/delete/{id}")
 	public String Delete(@PathVariable int id)
 	{
 		Userver.Delete(id);
 		return "Delete Successfully";
 		
+	}
+	
+	@RequestMapping("/isnull")
+	public String isNull()
+	{
+		if(Userver == null)
+			return "ISNULL";
+		else
+			return "not null";
 	}
 	
 	@RequestMapping(method=RequestMethod.POST , value = "/database")
@@ -66,6 +81,13 @@ public class Controller {
 	{
 		return Userver.getNameV(name);
 	}
+	
+	@RequestMapping("/database/message/{id}")
+	public List<ChatHistory> getSenderMess(@PathVariable int id)
+	{
+		return Userver.getSenderMessage(id);
+	}
+	
 //	
 //	@RequestMapping("/database/Ave")
 //	public int getAveAge()
