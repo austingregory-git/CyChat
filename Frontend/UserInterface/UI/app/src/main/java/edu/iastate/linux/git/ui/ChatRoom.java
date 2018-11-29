@@ -10,7 +10,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-
+import android.widget.Toast;
 import org.java_websocket.client.WebSocketClient;
 import org.java_websocket.drafts.Draft;
 import org.java_websocket.drafts.Draft_6455;
@@ -19,6 +19,8 @@ import org.java_websocket.handshake.ServerHandshake;
 import java.net.URI;
 import java.net.URISyntaxException;
 
+//import nbouma.com.wstompclient.implementation.StompClient;
+//import nbouma.com.wstompclient.model.Frame;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -34,6 +36,7 @@ public class ChatRoom extends AppCompatActivity {
     EditText sendMSG;
     private WebSocketClient cc;
     private OkHttpClient client;
+    //private StompClient stompclient;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,16 +68,20 @@ public class ChatRoom extends AppCompatActivity {
             @Override
             public void onClick(View view)
             {
+
+
                 Draft[] drafts = {new Draft_6455()};
 
                 //URL that will be used to access the Socket server
-                String w = URLConstants.SOCKET_URL;
+                //TODO add on reciever's ID for specific friend
+                String w = URLConstants.SOCKET_URL + CurrentLoggedInUser.getInstance(getApplicationContext()).getUser().getId() + "/112";
                 //String w = "ws://echo.websocket.org";
-                // 10.26.44.40
+                Log.d("url",w);
+
                 try {
                     Log.d("Socket:","Trying socket");
                     //cc = new WebSocketClient(new URI(w),drafts[0]);
-                     cc = new WebSocketClient(new URI(w)) {
+                     cc = new WebSocketClient(new URI(w),(Draft) drafts[0]) {
                         @Override
                         public void onOpen(ServerHandshake serverHandshake) {
                             Log.d("OPEN", "run() returned: " + "is connecting");
@@ -109,66 +116,74 @@ public class ChatRoom extends AppCompatActivity {
                     e.printStackTrace();
                 }
                 cc.connect();
+
+
+                //trying Stomp
+                //connect to server
+                /*
+                stompclient = new StompClient(w) { //example "ws://localhost:8080/message-server"
+                    @Override
+                    protected void onStompError(String errorMessage) {
+                        Log.d("something", "error : " + errorMessage);
+                    }
+
+                    @Override
+                    protected void onConnection(boolean connected) {
+                        Log.d("something", "connected : " + String.valueOf(connected));
+                    }
+
+                    @Override
+                    protected void onDisconnection(String reason) {
+                        Log.d("something", "disconnected : " + reason);
+                    }
+
+                   // @Override
+                  //  protected void onStompMessage(Frame frame) {
+                   //
+                   // }
+
+                    @Override
+                    protected void onStompMessage(final Frame frame) {
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Toast.makeText(getApplicationContext(), frame.getBody(), Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    }
+                };*/
+               // stompclient.unSubscribe("destination");
             }
-        });
+
+
+
+            //  disconnect from stomp server and websocket
+
+//          stompClient.unSubscribe("destination");
+
+
+
+
+
+            });
+        //});
 
         sendChat.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
                 try{
                     cc.send(sendMSG.getText().toString());
+
                 }
                 catch (Exception e)
                 {
                     e.printStackTrace();
-                    //Log.d("ExceptionSendMessage:", e.getMessage());
+                    Log.d("ExceptionSendMessage:", e.getMessage());
                 }
             }
         });
 
     }
-    /*
-    private final class EchoWebSocketListener extends WebSocketListener {
-        private static final int NORMAL_CLOSURE_STATUS = 1000;
-        @Override
-        public void onOpen(WebSocket webSocket, Response response) {
-            webSocket.send("Hello, it's SSaurel !");
-            webSocket.send("What's up ?");
-            webSocket.send(ByteString.decodeHex("deadbeef"));
-           // webSocket.close(NORMAL_CLOSURE_STATUS, "Goodbye !");
-        }
-        @Override
-        public void onMessage(WebSocket webSocket, String text) {
-            output("Receiving : " + text);
-        }
-        @Override
-        public void onMessage(WebSocket webSocket, ByteString bytes) {
-            output("Receiving bytes : " + bytes.hex());
-        }
-        @Override
-        public void onClosing(WebSocket webSocket, int code, String reason) {
-            webSocket.close(NORMAL_CLOSURE_STATUS, null);
-            output("Closing : " + code + " / " + reason);
-        }
-        @Override
-        public void onFailure(WebSocket webSocket, Throwable t, Response response) {
-            output("Error : " + t.getMessage());
-        }
-    }
-    private void start() {
-        Request request = new Request.Builder().url("wss://echo.websocket.org").build();
-        EchoWebSocketListener listener = new EchoWebSocketListener();
-        WebSocket ws = client.newWebSocket(request, listener);
-        client.dispatcher().executorService().shutdown();
-    }
-    private void output(final String txt) {
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                output.setText(output.getText().toString() + "\n\n" + txt);
-            }
-        });
-    }*/
 
 
     @Override
