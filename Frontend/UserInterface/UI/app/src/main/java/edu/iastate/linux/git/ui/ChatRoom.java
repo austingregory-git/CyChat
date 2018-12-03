@@ -3,10 +3,12 @@ package edu.iastate.linux.git.ui;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -31,7 +33,7 @@ import okio.ByteString;
 public class ChatRoom extends AppCompatActivity {
 
 
-    Button sendChat, start;
+    Button sendChat;
     TextView output;
     EditText sendMSG;
     private WebSocketClient cc;
@@ -46,8 +48,9 @@ public class ChatRoom extends AppCompatActivity {
         sendChat = findViewById(R.id.sendTXTButton);
         output = findViewById(R.id.chatDisplayTXT);
         sendMSG = findViewById(R.id.sendMSGedittext);
-        start = findViewById(R.id.connectButton);
         client = new OkHttpClient();
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
+        output.setMovementMethod(new ScrollingMovementMethod());
        /* start.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -63,6 +66,55 @@ public class ChatRoom extends AppCompatActivity {
             }
         });*/
 
+       //trying instasocket
+
+        Draft[] drafts = {new Draft_6455()};
+
+        //URL that will be used to access the Socket server
+        //TODO add on reciever's ID for specific friend
+        String w = URLConstants.SOCKET_URL + CurrentLoggedInUser.getInstance(getApplicationContext()).getUser().getId() + "/112";
+        //String w = "ws://echo.websocket.org";
+        Log.d("url",w);
+
+        try {
+            Log.d("Socket:","Trying socket");
+            //cc = new WebSocketClient(new URI(w),drafts[0]);
+            cc = new WebSocketClient(new URI(w),(Draft) drafts[0]) {
+                @Override
+                public void onOpen(ServerHandshake serverHandshake) {
+                    Log.d("OPEN", "run() returned: " + "is connecting");
+                }
+
+                @Override
+                public void onMessage(String msg)
+                {
+                    Log.d("stuff", "run() returned: " + msg);
+                    String s = output.getText().toString();
+                    //Do I need to clear sendMSG here as welL?
+                    output.setText(s + "--: " + msg + "\n");
+
+                }
+
+                @Override
+                public void onClose(int code, String reason, boolean remote)
+                {
+                    Log.d("CLOSE", "onClose() returned:" + " is connecting");
+                }
+
+                @Override
+                public void onError(Exception e)
+                {
+                    Log.d("Exception: ", e.toString());
+                }
+            };
+        }
+        catch (URISyntaxException e)
+        {
+            Log.d("Exception", e.getMessage().toString());
+            e.printStackTrace();
+        }
+        cc.connect();
+        /*
         start.setOnClickListener(new View.OnClickListener()
         {
             @Override
@@ -117,62 +169,15 @@ public class ChatRoom extends AppCompatActivity {
                 }
                 cc.connect();
 
-
-                //trying Stomp
-                //connect to server
-                /*
-                stompclient = new StompClient(w) { //example "ws://localhost:8080/message-server"
-                    @Override
-                    protected void onStompError(String errorMessage) {
-                        Log.d("something", "error : " + errorMessage);
-                    }
-
-                    @Override
-                    protected void onConnection(boolean connected) {
-                        Log.d("something", "connected : " + String.valueOf(connected));
-                    }
-
-                    @Override
-                    protected void onDisconnection(String reason) {
-                        Log.d("something", "disconnected : " + reason);
-                    }
-
-                   // @Override
-                  //  protected void onStompMessage(Frame frame) {
-                   //
-                   // }
-
-                    @Override
-                    protected void onStompMessage(final Frame frame) {
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                Toast.makeText(getApplicationContext(), frame.getBody(), Toast.LENGTH_SHORT).show();
-                            }
-                        });
-                    }
-                };*/
-               // stompclient.unSubscribe("destination");
             }
-
-
-
-            //  disconnect from stomp server and websocket
-
-//          stompClient.unSubscribe("destination");
-
-
-
-
-
             });
-        //});
-
+            */
         sendChat.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
                 try{
                     cc.send(sendMSG.getText().toString());
+                    sendMSG.setText("");
 
                 }
                 catch (Exception e)
