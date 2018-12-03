@@ -104,7 +104,6 @@
         app:layout_constraintBottom_toTopOf="@+id/regUsername"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        android:background="@drawable/picture"
         app:layout_constraintTop_toTopOf="parent" />
 
     <RadioGroup

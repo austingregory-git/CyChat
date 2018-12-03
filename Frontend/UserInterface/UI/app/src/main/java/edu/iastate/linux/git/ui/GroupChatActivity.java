@@ -22,6 +22,7 @@ public class GroupChatActivity extends AppCompatActivity {
     TextView group;
     TextView output;
     EditText sendMSG;
+    private int groupID;
     private WebSocketClient cc;
 
     @Override
@@ -29,7 +30,7 @@ public class GroupChatActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_group_chat);
 
-
+        groupID = GroupConversationsActivity.sharedPreferences.getInt(GroupConversationsActivity.selectedConversation, -1);
         sendChat = findViewById(R.id.sendTXTButton);
         output = findViewById(R.id.chatDisplayTXT);
         sendMSG = findViewById(R.id.sendMSGedittext);
@@ -45,7 +46,7 @@ public class GroupChatActivity extends AppCompatActivity {
 
                 //URL that will be used to access the Socket server
                 //TODO add on Group's ID for specific friend
-                String w = URLConstants.GROUP_URL + CurrentLoggedInUser.getInstance(getApplicationContext()).getUser().getId() + "/111";
+                String w = URLConstants.GROUP_URL + CurrentLoggedInUser.getInstance(getApplicationContext()).getUser().getId() + "/" + groupID;
                 //String w = "ws://echo.websocket.org";
 
                 try {

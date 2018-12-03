@@ -130,7 +130,7 @@ public class UProfileChangeActivity extends AppCompatActivity {
                 Intent i3 = new Intent(UProfileChangeActivity.this, GoogleMapActivity.class);
                 startActivity(i3);
                 return(true);
-            case R.id.chatroom:
+            case R.id.groupchatroom:
                 Intent i5 = new Intent(UProfileChangeActivity.this, ChatRoom.class);
                 startActivity(i5);
                 return(true);

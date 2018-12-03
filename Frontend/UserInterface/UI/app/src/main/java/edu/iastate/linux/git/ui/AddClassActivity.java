@@ -22,7 +22,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class AddClassActivity extends AppCompatActivity {
-    TextView startTime, className;
+    TextView startTime, endTime, className;
     Button update;
     RadioGroup rg;
     RadioButton rb;
@@ -33,6 +33,7 @@ public class AddClassActivity extends AppCompatActivity {
         setContentView(R.layout.activity_add_class);
 
         startTime = findViewById(R.id.classStartText);
+        endTime = findViewById(R.id.classEndText);
         className = findViewById(R.id.classNameText);
         update = findViewById(R.id.changeButton);
         rg = findViewById(R.id.rgroup);
@@ -41,14 +42,15 @@ public class AddClassActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                timeStart = startTime.getText().toString();
+               timeEnd = endTime.getText().toString();
                cname = className.getText().toString();
                 rb = findViewById(rg.getCheckedRadioButtonId());
                 weekDay = String.valueOf(rb.getText());
-                if (timeStart.length() > 0 && cname.length() > 0)
+                if (timeStart.length() > 0 && timeEnd.length() > 0 && cname.length() > 0)
                 {
                     addClass();
                     startTime.setText("");
-
+                    endTime.setText("");
                     className.setText("");
                 }
                 else {
@@ -64,12 +66,12 @@ public class AddClassActivity extends AppCompatActivity {
     {
         try {
             JSONObject tempObj = new JSONObject();
-            tempObj.put("student", CurrentLoggedInUser.getInstance(getApplicationContext()).getUser().getId());
-            tempObj.put("time",timeStart);
-            tempObj.put("subject",cname);
-            tempObj.put("day",weekDay);
-                Log.d("object",tempObj.toString());
-            JsonObjectRequest jsonObject = new JsonObjectRequest(Request.Method.POST, URLConstants.CLASS_DISPLAY_URL, tempObj, new Response.Listener<JSONObject>() {
+            tempObj.put("classname", cname);
+            tempObj.put("starttime",timeStart);
+            tempObj.put("endtime",timeEnd);
+            tempObj.put("weekday",weekDay);
+
+            JsonObjectRequest jsonObject = new JsonObjectRequest(Request.Method.POST, URLConstants.CLASS_DISPLAY_URL + CurrentLoggedInUser.getInstance(getApplicationContext()).getUser().getId(), tempObj, new Response.Listener<JSONObject>() {
 
                 @Override
                 public void onResponse(JSONObject response) {
@@ -115,8 +117,8 @@ public class AddClassActivity extends AppCompatActivity {
                 Intent i3 = new Intent(AddClassActivity.this, GoogleMapActivity.class);
                 startActivity(i3);
                 return(true);
-            case R.id.chatroom:
-                Intent i5 = new Intent(AddClassActivity.this, ChatRoom.class);
+            case R.id.groupchatroom:
+                Intent i5 = new Intent(AddClassActivity.this, GroupConversationsActivity.class);
                 startActivity(i5);
                 return(true);
             case R.id.userprofile:

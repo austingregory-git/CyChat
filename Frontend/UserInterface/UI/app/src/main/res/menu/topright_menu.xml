@@ -10,10 +10,6 @@
         android:icon="@drawable/ic_home_black_24dp"
         android:title="@string/Settings"
         app:showAsAction="never"/>
-    <item android:id="@+id/chatroom"
-        android:icon="@drawable/ic_home_black_24dp"
-        android:title="@string/chatroom"
-        app:showAsAction="never"/>
     <item android:id="@+id/groupchatroom"
         android:icon="@drawable/ic_home_black_24dp"
         android:title="@string/GroupChat"

@@ -31,26 +31,27 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.security.acl.Group;
 import java.util.ArrayList;
 import java.util.Arrays;
 
 import edu.iastate.linux.git.ui.Utils.ChatAdapter;
+import edu.iastate.linux.git.ui.Utils.GroupChatAdapter;
 import edu.iastate.linux.git.ui.Utils.LetterImageView;
 
 import static edu.iastate.linux.git.ui.MyWeekActivity.selectedDay;
 
 import java.nio.file.attribute.UserPrincipal;
 
-public class HomeActivity extends AppCompatActivity {
+public class GroupConversationsActivity extends AppCompatActivity {
 
     private TextView mTextMessage;
     private RecyclerView rv;
     public static SharedPreferences sharedPreferences;
     public static String selectedConversation = "MY_CONVO";
-    public static ArrayList<String> chatNames = new ArrayList<String>();
-    public static ArrayList<String> chatMsg = new ArrayList<String>();
-    public static ArrayList<String> chatTime = new ArrayList<String>();
-    public static ArrayList<Integer> receiverID = new ArrayList<Integer>();
+    public static ArrayList<String> groupNames = new ArrayList<String>();
+    public static ArrayList<String> groupStringID = new ArrayList<String>();
+    public static ArrayList<Integer> groupID = new ArrayList<Integer>();
     private int chatType;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
@@ -75,7 +76,7 @@ public class HomeActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_home);
+        setContentView(R.layout.activity_group_conversations);
 
         initButtonNavigation();
         initViews();
@@ -92,7 +93,7 @@ public class HomeActivity extends AppCompatActivity {
         homeB.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i1 = new Intent(HomeActivity.this, HomeActivity.class);
+                Intent i1 = new Intent(GroupConversationsActivity.this, HomeActivity.class);
                 startActivity(i1);
             }
         });
@@ -100,7 +101,7 @@ public class HomeActivity extends AppCompatActivity {
         contactsB.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i2 = new Intent(HomeActivity.this, ContactsActivity.class);
+                Intent i2 = new Intent(GroupConversationsActivity.this, ContactsActivity.class);
                 startActivity(i2);
             }
         });
@@ -108,15 +109,15 @@ public class HomeActivity extends AppCompatActivity {
         notifsB.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i3 = new Intent(HomeActivity.this, NotificationsActivity.class);
+                Intent i3 = new Intent(GroupConversationsActivity.this, NotificationsActivity.class);
                 startActivity(i3);
             }
         });
     }
 
     private void initViews() {
-        rv = (RecyclerView) findViewById(R.id.recyclerView);
-        sharedPreferences = getSharedPreferences("MY_CONVO", MODE_PRIVATE);
+        rv = (RecyclerView) findViewById(R.id.recyclerViewGroupChat);
+        sharedPreferences = getSharedPreferences("MY_GROUP", MODE_PRIVATE);
         LinearLayoutManager llm = new LinearLayoutManager(getApplicationContext());
         rv.setLayoutManager(llm);
     }
@@ -127,7 +128,7 @@ public class HomeActivity extends AppCompatActivity {
 
         //String newURL = "http://www.json-generator.com/api/json/get/bVRpsiJaOG?indent=2";
         //String testURL = "http://pastebin.com/raw/Em972E5s";
-        String newURL = "http://proj309-ds-01.misc.iastate.edu:8080/friend/" + CurrentLoggedInUser.getInstance(getApplicationContext()).getUser().getId();
+        String newURL = "http://proj309-ds-01.misc.iastate.edu:8080/group/" + CurrentLoggedInUser.getInstance(getApplicationContext()).getUser().getId();
         RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
         JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, newURL, null,
                 new Response.Listener<JSONArray>() {
@@ -137,17 +138,12 @@ public class HomeActivity extends AppCompatActivity {
                         try {
                             for(int i=0; i<response.length(); i++) {
                                 JSONObject obj = response.getJSONObject(i);
-                                if(!chatNames.contains(obj.getString("name")) /*&& (obj.getString("name").length() != 0)*/) {
-                                    chatNames.add(obj.getString("name"));
+                                if(!groupNames.contains(obj.getString("name")) /*&& (obj.getString("name").length() != 0)*/) {
+                                    groupNames.add(obj.getString("name"));
                                 }
-                                if(!chatMsg.contains(obj.getString("username")) /*&& (obj.getString("username").length() != 0)*/) {
-                                    chatMsg.add(obj.getString("username"));
-                                }
-                                if(!chatTime.contains(obj.getString("email")) /*&& (obj.getString("email").length() != 0)*/) {
-                                    chatTime.add(obj.getString("email"));
-                                }
-                                if(!receiverID.contains(obj.getInt("id"))) {
-                                    receiverID.add(obj.getInt("id"));
+                                if(!groupID.contains(obj.getInt("id"))) {
+                                    groupID.add(obj.getInt("id"));
+                                    groupStringID.add(Integer.toString(obj.getInt("id")));
                                 }
 
                             }
@@ -170,25 +166,14 @@ public class HomeActivity extends AppCompatActivity {
         requestQueue.add(request);
 
 
-        ChatAdapter mAdapter = new ChatAdapter(HomeActivity.this, chatNames, chatMsg, chatTime, chatType);
+        GroupChatAdapter mAdapter = new GroupChatAdapter(GroupConversationsActivity.this, groupNames, groupStringID);
         rv.setAdapter(mAdapter);
 
-        mAdapter.setOnItemClickListener(new ChatAdapter.ClickListener() {
+        mAdapter.setOnItemClickListener(new GroupChatAdapter.ClickListener() {
             @Override
-            public void OnItemClick(int position, int chatType, View v) {
-                switch(chatType) {
-                    case 0: {
-                        sharedPreferences.edit().putInt(selectedConversation, receiverID.get(position)).apply();
-                        startActivity(new Intent(HomeActivity.this, ChatRoom.class));
-                        break;
-                    }
-                    case 1: {
-                        sharedPreferences.edit().putInt(selectedConversation, receiverID.get(position)).apply();
-                        startActivity(new Intent(HomeActivity.this, GroupChatActivity.class));
-                        break;
-                    }
-                    default: break;
-                }
+            public void OnItemClick(int position, View v) {
+                sharedPreferences.edit().putInt(selectedConversation, groupID.get(position)).apply();
+                startActivity(new Intent(GroupConversationsActivity.this, GroupChatActivity.class));
             }
         });
 
@@ -266,19 +251,19 @@ public class HomeActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch(item.getItemId()) {
             case R.id.settings:
-                Intent i1 = new Intent(HomeActivity.this, SettingsActivity.class);
+                Intent i1 = new Intent(GroupConversationsActivity.this, SettingsActivity.class);
                 startActivity(i1);
                 return(true);
             case R.id.options:
-                Intent i2 = new Intent(HomeActivity.this, OptionsActivity.class);
+                Intent i2 = new Intent(GroupConversationsActivity.this, OptionsActivity.class);
                 startActivity(i2);
                 return(true);
             case R.id.map:
-                Intent i3 = new Intent(HomeActivity.this, GoogleMapActivity.class);
+                Intent i3 = new Intent(GroupConversationsActivity.this, GoogleMapActivity.class);
                 startActivity(i3);
                 return(true);
             case R.id.schedule:
-                Intent i4 = new Intent(HomeActivity.this, ScheduleActivity.class);
+                Intent i4 = new Intent(GroupConversationsActivity.this, ScheduleActivity.class);
                 startActivity(i4);
                 return(true);
             case R.id.exit:
@@ -286,15 +271,15 @@ public class HomeActivity extends AppCompatActivity {
                 System.exit(0);
                 return(true);
             case R.id.log_out:
-                Intent i5 = new Intent(HomeActivity.this, LoginActivity.class);
+                Intent i5 = new Intent(GroupConversationsActivity.this, LoginActivity.class);
                 startActivity(i5);
                 return(true);
             case R.id.userprofile:
-                Intent i6 = new Intent(HomeActivity.this,UserProfileActivity.class);
+                Intent i6 = new Intent(GroupConversationsActivity.this,UserProfileActivity.class);
                 startActivity(i6);
                 return(true);
             case R.id.groupchatroom:
-                Intent i7 = new Intent(HomeActivity.this, GroupConversationsActivity.class);
+                Intent i7 = new Intent(GroupConversationsActivity.this, GroupConversationsActivity.class);
                 startActivity(i7);
                 return(true);
         }

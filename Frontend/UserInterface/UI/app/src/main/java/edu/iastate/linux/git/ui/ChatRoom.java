@@ -52,7 +52,20 @@ public class ChatRoom extends AppCompatActivity {
         client = new OkHttpClient();
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
         output.setMovementMethod(new ScrollingMovementMethod());
-
+       /* start.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                start();
+            }
+        });
+        sendChat.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view){
+                String msg = sendMSG.getText().toString();
+                sendMSG.setText("");
+                websocket.send()
+            }
+        });*/
 
        //trying instasocket
 
@@ -61,7 +74,7 @@ public class ChatRoom extends AppCompatActivity {
         //URL that will be used to access the Socket server
         //TODO add on reciever's ID for specific friend
         String w = URLConstants.SOCKET_URL + CurrentLoggedInUser.getInstance(getApplicationContext()).getUser().getId() + "/" + recID;
-
+        //String w = "ws://echo.websocket.org";
         Log.d("url",w);
 
         try {
@@ -225,8 +238,8 @@ public class ChatRoom extends AppCompatActivity {
                 Intent i3 = new Intent(ChatRoom.this, GoogleMapActivity.class);
                 startActivity(i3);
                 return(true);
-            case R.id.chatroom:
-                Intent i5 = new Intent(ChatRoom.this, ChatRoom.class);
+            case R.id.groupchatroom:
+                Intent i5 = new Intent(ChatRoom.this, GroupConversationsActivity.class);
                 startActivity(i5);
                 return(true);
             case R.id.exit:
