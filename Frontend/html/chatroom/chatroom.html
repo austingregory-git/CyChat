@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Cychat chatroom</title>
+    </head>
+    <body>
+
+        <table>
+            <tr>
+                <td colspan="2">
+                    <input type="text" id="current_user" placeholder="User ID"/>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <input type="text" id="friend_user" placeholder="Friend ID"/>
+                </td>
+            </tr>
+            <button type="button" onclick="connect();" >Connect</button>
+            <tr>
+                <td>
+                    <textarea readonly="true" rows="10" cols="80" id="log"></textarea>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <input type="text" size="51" id="msg" placeholder="Message"/>
+                    <button type="button" onclick="send();" >Send</button>
+                </td>
+            </tr>
+        </table>
+    </body>
+
+    <script src="chatroom.js"></script>
+
+</html>

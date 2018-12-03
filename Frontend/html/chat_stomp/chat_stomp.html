@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Cychat sign up</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.3.0/sockjs.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.js"></script>
+    <script src="chat_stomp.js"></script>
+</head>
+<body>
+<h1> Cychat sign up </h1><br/>
+
+<div class="form-group">
+                    <label for="connect">WebSocket connection:</label>
+                    <button id="connect" class="btn btn-default" type="submit">Connect</button>
+                    <button id="disconnect" class="btn btn-default" type="submit" disabled="disabled">Disconnect
+                    </button>
+                </div>
+
+<div>	
+
+
+	Sender ID:
+		<input type="text" name="Senderid" id="senderid" value = ""><br/><br/>
+	Reciver Id:
+		<input type="text" name="Reciverid" id="reciverid"><br/><br/>
+	Message:
+		<input type="text" name="Message" id="message"><br/><br/>
+
+        <button id = "Submit" type="submit">send</button><br/><br/>
+</div>     
+       	
+       	<div class="row">
+        <div class="col-md-12">
+            <table id="conversation" class="table table-striped">
+                <thead>
+                <tr>
+                    <th>Greetings</th>
+                </tr>
+                </thead>
+                <tbody id="greetings">
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+
+
+</body>
+</html>
