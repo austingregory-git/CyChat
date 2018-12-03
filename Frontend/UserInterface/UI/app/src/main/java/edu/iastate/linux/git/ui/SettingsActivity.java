@@ -94,6 +94,10 @@ public class SettingsActivity extends AppCompatActivity {
                 Intent i4 = new Intent(SettingsActivity.this, ScheduleActivity.class);
                 startActivity(i4);
                 return(true);
+            case R.id.userprofile:
+                Intent i6 = new Intent(SettingsActivity.this,UserProfileActivity.class);
+                startActivity(i6);
+                return(true);
             case R.id.exit:
                 finish();
                 System.exit(0);

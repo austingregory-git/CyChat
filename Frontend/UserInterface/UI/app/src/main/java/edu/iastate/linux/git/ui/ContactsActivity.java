@@ -6,6 +6,13 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
+import android.text.method.ScrollingMovementMethod;
+import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -20,12 +27,19 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
+<<<<<<< HEAD
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
 
+=======
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.StringRequest;
+>>>>>>> aac5fcb10e5176c70433856d6fd0ba8b4187eb4d
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -37,6 +51,13 @@ import java.util.Collections;
 import edu.iastate.linux.git.ui.Utils.LetterImageView;
 
 public class ContactsActivity extends AppCompatActivity {
+
+    private TextView friendslist;
+    private String temp = "";
+    private Button addFriend;
+    private TextView friendIDNumber;
+    private String friendTempNum = "";
+
 
     private TextView mTextMessage;
     private RecyclerView rv;
@@ -68,8 +89,8 @@ public class ContactsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_contacts);
 
         initButtonNavigation();
-        initViews();
-        initListView();
+        //initViews();
+        //initListView();
 
     }
 
@@ -77,6 +98,33 @@ public class ContactsActivity extends AppCompatActivity {
         ImageButton homeB = (ImageButton) findViewById(R.id.homeButton);
         ImageButton contactsB = (ImageButton) findViewById(R.id.contactsButton);
         ImageButton notifsB = (ImageButton) findViewById(R.id.notificationsButton);
+        addFriend = findViewById(R.id.addFriendButton);
+        friendIDNumber = findViewById(R.id.friendIDEditText);
+
+        friendslist = (TextView)findViewById(R.id.friendDisplay);
+        friendslist.setMovementMethod(new ScrollingMovementMethod());
+        displayFriends();
+
+        addFriend.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                friendTempNum = friendIDNumber.getText().toString();
+                if(friendTempNum.length() > 0)
+                {
+                    addNewFriend();
+                    friendIDNumber.setText("");
+
+                    displayFriends();
+                }
+                else
+                    {
+                        Toast.makeText(getApplicationContext(), "Add their ID number!", Toast.LENGTH_SHORT).show();
+                     }
+
+            }
+        });
+
+
 
         homeB.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -103,6 +151,44 @@ public class ContactsActivity extends AppCompatActivity {
         });
     }
 
+
+    private void displayFriends() {
+        friendslist.setText("");
+
+        String newURL = URLConstants.FRIEND_DISPLAY_URL + CurrentLoggedInUser.getInstance(getApplicationContext()).getUser().getId();
+        JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, newURL, null,
+                new Response.Listener<JSONArray>() {
+                    @Override
+                    public void onResponse(JSONArray response) {
+                        try {
+                            JSONArray jsonArray = response;
+                            for (int i = 0; i < jsonArray.length(); i++) {
+                                JSONObject employee = jsonArray.getJSONObject(i);
+                                temp += "Friend " + i + ": \n" + "    UserID:" + employee.getInt("id") + "\n" + "    UserName: " + employee.getString("username") + "\n" +
+                                        "    UserType: " + employee.getString("type") + "\n" + "    UserEmail: " + employee.getString("email") + "\n" + "    Name: " + employee.getString("name") + "\n\n\n";
+                                Log.d("employee", employee.toString());
+
+                            }
+                            friendslist.setText(temp);
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        } catch (IllegalStateException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }, new Response.ErrorListener()
+
+        {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
+
+            }
+        });
+        VolleySingleton.getInstance(ContactsActivity.this).addToRequestQue(request);
+    }
+        /*
     private void initViews() {
         rv = (RecyclerView) findViewById(R.id.recyclerViewContacts);
         LinearLayoutManager llm = new LinearLayoutManager(getApplicationContext());
@@ -158,6 +244,7 @@ public class ContactsActivity extends AppCompatActivity {
         rv.setAdapter(mAdapter);
     }
 
+
     public class ContactsAdapter extends RecyclerView.Adapter<ContactsAdapter.MyViewHolder> {
 
         private Context context;
@@ -208,7 +295,8 @@ public class ContactsActivity extends AppCompatActivity {
 
             }
         }
-    }
+
+    }*/
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -235,6 +323,10 @@ public class ContactsActivity extends AppCompatActivity {
                 Intent i4 = new Intent(ContactsActivity.this, ScheduleActivity.class);
                 startActivity(i4);
                 return(true);
+            case R.id.userprofile:
+                Intent i6 = new Intent(ContactsActivity.this,UserProfileActivity.class);
+                startActivity(i6);
+                return(true);
             case R.id.exit:
                 finish();
                 System.exit(0);
@@ -246,4 +338,27 @@ public class ContactsActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+
+
+    private void addNewFriend()
+    {
+
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, URLConstants.ADD_FRIEND + CurrentLoggedInUser.getInstance(getApplicationContext()).getUser().getId() + "/" + friendTempNum,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        // Display the first 500 characters of the response string.
+                        Toast.makeText(getApplicationContext(), "Friend added!", Toast.LENGTH_SHORT).show();
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(getApplicationContext(), "Your friend couldn't be found!", Toast.LENGTH_LONG).show();
+            }
+        });
+
+
+                VolleySingleton.getInstance(ContactsActivity.this).addToRequestQue(stringRequest);
+    }
+
 }

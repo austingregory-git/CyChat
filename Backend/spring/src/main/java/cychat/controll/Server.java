@@ -6,6 +6,8 @@ import java.util.Optional;
 import java.util.ArrayList;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Configurable;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import cychat.chathistory.ChatHistory;
@@ -18,6 +20,7 @@ import cychat.userInfor.UserInfor;
 import cychat.userInfor.User_data;
 
 @Service
+@Configurable
 public class Server {
 	
 	@Autowired
@@ -155,9 +158,10 @@ public class Server {
 		return temp;
 	}
 	
-	public List<ChatHistory> SearchHistory(ChatHistory sender , ChatHistory reciver)
+	public void testsave(String temp)
 	{
-		return null;
+		ChatHistory ch = new ChatHistory(temp,820,22,"11");
+		chat.save(ch);
 	}
 	
 	public List<Group> findG(int Groupid)
@@ -168,6 +172,16 @@ public class Server {
 	public void SaveGroupHistory(Group g)
 	{
 		G.save(g);
+	}
+
+	public List<UserInfor> FindbyName(String name) {
+		
+		return null;
+	}
+	
+	public List<ChatHistory> getSenderMessage(int id)
+	{
+		return chat.getmessage(id);
 	}
 
 }

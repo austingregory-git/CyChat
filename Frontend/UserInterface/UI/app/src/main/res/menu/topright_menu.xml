@@ -10,14 +10,23 @@
         android:icon="@drawable/ic_home_black_24dp"
         android:title="@string/Settings"
         app:showAsAction="never"/>
+    <item android:id="@+id/chatroom"
+        android:icon="@drawable/ic_home_black_24dp"
+        android:title="@string/chatroom"
+        app:showAsAction="never"/>
+
     <item android:id="@+id/map"
         android:icon="@drawable/ic_home_black_24dp"
         android:title="@string/Map"
         app:showAsAction="never"/>
     <item android:id="@+id/schedule"
         android:icon="@drawable/ic_home_black_24dp"
-        android:title="@string/Schedule"
+        android:title="@string/schedule"
         app:showAsAction="never"/>
+    <item android:id="@+id/userprofile"
+    android:icon="@drawable/ic_home_black_24dp"
+    android:title="UserProfile"
+    app:showAsAction="never"/>
     <item android:id="@+id/exit"
         android:icon="@drawable/ic_home_black_24dp"
         android:title="@string/Exit"

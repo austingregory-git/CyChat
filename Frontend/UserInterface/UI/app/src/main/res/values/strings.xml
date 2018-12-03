@@ -17,7 +17,8 @@
     <string name="Log_Out">Log Out</string>
     <string name="Map">Map</string>
     <string name="title_activity_google_map">Map</string>
-    <string name="Schedule">Schedule</string>
+    <string name="schedule">Schedule</string>
+    <string name="chatroom">ChatRoom</string>
     <string name="customize">Customize</string>
     <string name="show_dialog">Show Dialog</string>
     <string name="undo">Undo</string>

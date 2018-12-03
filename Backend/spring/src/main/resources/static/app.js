@@ -46,38 +46,38 @@ function onConnect()
 	
 	//alert(temp);
 
-	//var temp = sender.toString() + "/" + reciver.toString();
+	var temp = sender.toString() + "/" + reciver.toString();
 	
 	//alert(temp);
 	
-//	stomp.subscribe("/topic/greet/" + sender + "/" + reciver ,function (name) {
-//		
-//		if((name.body).indexOf("There are no user") != -1)
-//		{
-//			alert(name.body);
-//			disconnect();
-//		}
-//	
-//		if((name.body).indexOf("are Not Friend") != -1)
-//		{
-//			alert(name.body);
-//			disconnect();
-//		}
-//		
-//		var temp = (name.body).split("+");
-//		
-//		for(var i in temp)
-//		{
-//			showName(temp[i]);	
-//		}
-//		
-//		
-//		
-//	});
+	stomp.subscribe("/topic/greet/" + sender + "/" + reciver ,function (name) {
+		
+		if((name.body).indexOf("There are no user") != -1)
+		{
+			alert(name.body);
+			disconnect();
+		}
 	
-//	stomp.subscribe("/topic/g." + ur,function (name) {
-//		showName(name.body);
-//	});	
+		if((name.body).indexOf("are Not Friend") != -1)
+		{
+			alert(name.body);
+			disconnect();
+		}
+		
+		var temp = (name.body).split("+");
+		
+		for(var i in temp)
+		{
+			showName(temp[i]);	
+		}
+		
+		
+		
+	});
+	
+	stomp.subscribe("/topic/g." + ur,function (name) {
+		showName(name.body);
+	});	
 	
 	stomp.subscribe("/topic/chat/" + $("#reciverid").val() , function(name)
 	{	
@@ -89,20 +89,20 @@ function onConnect()
 		}
 	});	
 	
-	stomp.subscribe("/topic/group." + $("#reciverid").val(),function (name) {
-		showName(name.body);
-	});
+//	stomp.subscribe("/topic/group." + $("#reciverid").val(),function (name) {
+//		showName(name.body);
+//	});
 	
-//	stomp.send("/app/check/" + sender +"/" +reciver,{} , sender.toString() + " " + reciver.toString() );
-	stomp.send("/app/his/" + $("#reciverid").val(), {}, $("#reciverid").val().toString());
+	stomp.send("/app/check/" + sender +"/" +reciver,{} , sender.toString() + " " + reciver.toString() );
+//	stomp.send("/app/his/" + $("#reciverid").val(), {}, $("#reciverid").val().toString());
 }
 
-//function onMess()
-//{
-//	stomp.subscribe("/topic/g." + ur,function (name) {
-//		showName(name.body);
-//	});	
-//}
+function onMess()
+{
+	stomp.subscribe("/topic/g." + ur,function (name) {
+		showName(name.body);
+	});	
+}
 
 function disconnect() {
 	if(stomp !== null)
@@ -118,8 +118,8 @@ function sendMess()
 	var data = 
 		{
 			"message" : $("#message").val(),
-			"sender" : $("#senderid").val(),
-			"groupid" : $("#reciverid").val(),
+			"senderid" : $("#senderid").val(),
+			"reciverid" : $("#reciverid").val(),
 			"time" : startTime()
 		}
 	
@@ -197,7 +197,7 @@ $(function () {
     });*/
     $( "#connect" ).click(function() { connect();});
     $( "#disconnect" ).click(function() { disconnect(); });
-    $( "#Submit" ).click(function() { sendG(); });
+    $( "#Submit" ).click(function() { sendMess(); });
     $("#test").click(function(){showName("haha")});
 }
 );

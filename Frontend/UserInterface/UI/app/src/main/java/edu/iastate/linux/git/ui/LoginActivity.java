@@ -32,10 +32,15 @@ public class LoginActivity extends AppCompatActivity {
     private TextView mTextMessage;
     String friendID;
     TextView userName, password;
-    Button login, register;
+    Button login, register,pwrecover;
     Spinner menu;
+<<<<<<< HEAD
     // String url = "http://proj309-ds-01.misc.iastate.edu:8080/user";
     boolean flag = false;
+=======
+
+     boolean flag = false;
+>>>>>>> aac5fcb10e5176c70433856d6fd0ba8b4187eb4d
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +52,16 @@ public class LoginActivity extends AppCompatActivity {
         password = findViewById(R.id.passwordLogin);
         login = (Button) findViewById(R.id.loginButton);
         register = (Button) findViewById(R.id.registrationButton);
+        pwrecover = findViewById(R.id.emailButton);
+
+        pwrecover.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view){
+                Intent i1 = new Intent(LoginActivity.this, PasswordRecoveryActivity.class);
+                 startActivity(i1);
+
+            }
+        });
 
 
         login.setOnClickListener(new View.OnClickListener() {
@@ -115,6 +130,7 @@ public class LoginActivity extends AppCompatActivity {
         return friendID;
     }
     */
+
 
 
     public boolean properLogin()

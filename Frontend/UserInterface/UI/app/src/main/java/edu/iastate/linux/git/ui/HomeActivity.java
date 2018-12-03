@@ -39,6 +39,8 @@ import edu.iastate.linux.git.ui.Utils.LetterImageView;
 
 import static edu.iastate.linux.git.ui.MyWeekActivity.selectedDay;
 
+import java.nio.file.attribute.UserPrincipal;
+
 public class HomeActivity extends AppCompatActivity {
 
     private TextView mTextMessage;
@@ -110,7 +112,7 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     private void initViews() {
-        rv = (RecyclerView) findViewById(R.id.recyclerView);
+        //rv = (RecyclerView) findViewById(R.id.recyclerView);
         sharedPreferences = getSharedPreferences("MY_CONVO", MODE_PRIVATE);
         LinearLayoutManager llm = new LinearLayoutManager(getApplicationContext());
         rv.setLayoutManager(llm);
@@ -288,6 +290,10 @@ public class HomeActivity extends AppCompatActivity {
             case R.id.log_out:
                 Intent i5 = new Intent(HomeActivity.this, LoginActivity.class);
                 startActivity(i5);
+                return(true);
+            case R.id.userprofile:
+                Intent i6 = new Intent(HomeActivity.this,UserProfileActivity.class);
+                startActivity(i6);
                 return(true);
         }
         return super.onOptionsItemSelected(item);

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="edu.iastate.linux.git.ui">
 
     <!--
@@ -16,7 +17,8 @@
         android:label="CyChat"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        tools:replace="android:label">
         <activity
             android:name=".LoginActivity"
             android:label="CyChat">
@@ -77,6 +79,12 @@
             android:name=".GoogleMapActivity"
             android:label="@string/title_activity_google_map" />
         <activity android:name=".UserProfileActivity" />
+
+        <activity android:name=".ChatRoom" />
+        <activity android:name=".UProfileChangeActivity" />
+        <activity android:name=".AddClassActivity" />
+        <activity android:name=".PasswordRecoveryActivity" />
+        <activity android:name=".GroupChatActivity"></activity>
         <activity android:name=".ScheduleActivity" />
         <activity android:name=".MyWeekActivity" />
         <activity android:name=".CalendarActivity" />
@@ -84,6 +92,7 @@
         <activity android:name=".MyDayActivity" />
         <activity android:name=".CaldroidActivity" />
         <activity android:name=".ChatActivity"></activity>
+
     </application>
 
 </manifest>
