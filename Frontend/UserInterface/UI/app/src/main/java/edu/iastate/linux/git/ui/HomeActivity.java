@@ -112,7 +112,7 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     private void initViews() {
-        //rv = (RecyclerView) findViewById(R.id.recyclerView);
+        rv = (RecyclerView) findViewById(R.id.recyclerView);
         sharedPreferences = getSharedPreferences("MY_CONVO", MODE_PRIVATE);
         LinearLayoutManager llm = new LinearLayoutManager(getApplicationContext());
         rv.setLayoutManager(llm);

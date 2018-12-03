@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
+import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
@@ -39,7 +40,6 @@ public class RegistrationActivity extends AppCompatActivity {
     private TextView userID;
     RadioGroup rg;
     RadioButton rb;
-<<<<<<< HEAD
     // private String url = "http://proj309-ds-01.misc.iastate.edu:8080/user";
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -60,9 +60,7 @@ public class RegistrationActivity extends AppCompatActivity {
             return false;
         }
     };
-=======
 
->>>>>>> aac5fcb10e5176c70433856d6fd0ba8b4187eb4d
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -78,11 +76,8 @@ public class RegistrationActivity extends AppCompatActivity {
         regB.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-<<<<<<< HEAD
-=======
                 Intent i1 = new Intent(RegistrationActivity.this, WelcomeActivity.class);
                 startActivity(i1);
->>>>>>> aac5fcb10e5176c70433856d6fd0ba8b4187eb4d
                 registerUser();
 
             }

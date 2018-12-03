@@ -34,13 +34,8 @@ public class LoginActivity extends AppCompatActivity {
     TextView userName, password;
     Button login, register,pwrecover;
     Spinner menu;
-<<<<<<< HEAD
-    // String url = "http://proj309-ds-01.misc.iastate.edu:8080/user";
     boolean flag = false;
-=======
 
-     boolean flag = false;
->>>>>>> aac5fcb10e5176c70433856d6fd0ba8b4187eb4d
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

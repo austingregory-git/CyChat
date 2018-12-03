@@ -27,19 +27,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
-<<<<<<< HEAD
+
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
-import com.android.volley.toolbox.Volley;
-
-=======
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.StringRequest;
->>>>>>> aac5fcb10e5176c70433856d6fd0ba8b4187eb4d
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
