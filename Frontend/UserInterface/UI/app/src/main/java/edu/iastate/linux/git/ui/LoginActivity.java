@@ -34,8 +34,13 @@ public class LoginActivity extends AppCompatActivity {
     TextView userName, password;
     Button login, register,pwrecover;
     Spinner menu;
+<<<<<<< HEAD
+    // String url = "http://proj309-ds-01.misc.iastate.edu:8080/user";
+    boolean flag = false;
+=======
 
      boolean flag = false;
+>>>>>>> aac5fcb10e5176c70433856d6fd0ba8b4187eb4d
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,10 +72,10 @@ public class LoginActivity extends AppCompatActivity {
                 Intent i1 = new Intent(LoginActivity.this, HomeActivity.class);
                 startActivity(i1);
                 if (properLogin()) {
-                   // flag = false;
+                    // flag = false;
 
-                    //Intent i1 = new Intent(LoginActivity.this, HomeActivity.class);
-                    //startActivity(i1);
+                    Intent i2 = new Intent(LoginActivity.this, HomeActivity.class);
+                    startActivity(i2);
                 }
                 else{
                     //Toast.makeText(getApplicationContext(), "Make sure you're using a valid username and password", Toast.LENGTH_LONG).show();
@@ -88,6 +93,44 @@ public class LoginActivity extends AppCompatActivity {
         });
 
     }
+    /*
+    public String getFriendID(){
+
+        final String friendName = "";
+        JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, URLConstants.JSON_URL, null,
+                new Response.Listener<JSONArray>() {
+                    @Override
+                    public void onResponse(JSONArray response) {
+                        try {
+                            JSONArray jsonArray = response;
+                            for(int i = 0; i < jsonArray.length(); i++){
+                                JSONObject employee = jsonArray.getJSONObject(i);
+                                //Log.d("object",employee.toString());
+                                if (friendName.equals(employee.getString("name"))) {
+                                    friendID = Integer.toString(employee.getInt("id"));
+
+
+                                }
+
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }, new Response.ErrorListener()
+
+        {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
+
+            }
+        });
+        VolleySingleton.getInstance(LoginActivity.this).addToRequestQue(request);
+        return friendID;
+    }
+    */
+
 
 
     public boolean properLogin()
@@ -139,9 +182,9 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
         VolleySingleton.getInstance(LoginActivity.this).addToRequestQue(request);
-    return flag;
+        return flag;
 
     }
-    }
+}
 
 

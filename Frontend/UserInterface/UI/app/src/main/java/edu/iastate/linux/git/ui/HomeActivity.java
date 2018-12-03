@@ -20,6 +20,17 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -36,6 +47,9 @@ public class HomeActivity extends AppCompatActivity {
     private RecyclerView rv;
     public static SharedPreferences sharedPreferences;
     public static String selectedConversation;
+    public static ArrayList<String> chatNames = new ArrayList<String>();
+    public static ArrayList<String> chatMsg = new ArrayList<String>();
+    public static ArrayList<String> chatTime = new ArrayList<String>();
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -105,10 +119,51 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     private void initListView() {
-        String[] chatNames = getResources().getStringArray(R.array.chatNames);
-        String[] chatMsg = getResources().getStringArray(R.array.chatMsg);
+        //String[] chatNames = getResources().getStringArray(R.array.chatNames);
+        //String[] chatMsg = getResources().getStringArray(R.array.chatMsg);
 
-        ChatAdapter mAdapter = new ChatAdapter(HomeActivity.this, chatNames, chatMsg);
+        String newURL = "http://www.json-generator.com/api/json/get/bVRpsiJaOG?indent=2";
+        //String testURL = "http://pastebin.com/raw/Em972E5s";
+        RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
+        JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, newURL, null,
+                new Response.Listener<JSONArray>() {
+                    @Override
+                    public void onResponse(JSONArray response) {
+
+                        try {
+                            for(int i=0; i<response.length(); i++) {
+                                JSONObject obj = response.getJSONObject(i);
+                                if(!chatNames.contains(obj.getString("Name"))) {
+                                    chatNames.add(obj.getString("Name"));
+                                }
+                                if(!chatMsg.contains(obj.getString("Message"))) {
+                                    chatMsg.add(obj.getString("Message"));
+                                }
+                                if(!chatTime.contains(obj.getString("Time"))) {
+                                    chatTime.add(obj.getString("Time"));
+                                }
+
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                        catch (IllegalStateException e){
+                            e.printStackTrace();
+                        }
+                    }
+                }, new Response.ErrorListener()
+
+        {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
+
+            }
+        });
+        requestQueue.add(request);
+
+
+        ChatAdapter mAdapter = new ChatAdapter(HomeActivity.this, chatNames, chatMsg, chatTime);
         rv.setAdapter(mAdapter);
 
         mAdapter.setOnItemClickListener(new ChatAdapter.ClickListener() {

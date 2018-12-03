@@ -39,7 +39,30 @@ public class RegistrationActivity extends AppCompatActivity {
     private TextView userID;
     RadioGroup rg;
     RadioButton rb;
+<<<<<<< HEAD
+    // private String url = "http://proj309-ds-01.misc.iastate.edu:8080/user";
+    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
+            = new BottomNavigationView.OnNavigationItemSelectedListener() {
 
+        @Override
+        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+            switch (item.getItemId()) {
+                case R.id.navigation_home:
+                    mTextMessage.setText(R.string.title_home);
+                    return true;
+                case R.id.navigation_dashboard:
+                    mTextMessage.setText(R.string.title_dashboard);
+                    return true;
+                case R.id.navigation_notifications:
+                    mTextMessage.setText(R.string.title_notifications);
+                    return true;
+            }
+            return false;
+        }
+    };
+=======
+
+>>>>>>> aac5fcb10e5176c70433856d6fd0ba8b4187eb4d
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,8 +78,11 @@ public class RegistrationActivity extends AppCompatActivity {
         regB.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+<<<<<<< HEAD
+=======
                 Intent i1 = new Intent(RegistrationActivity.this, WelcomeActivity.class);
                 startActivity(i1);
+>>>>>>> aac5fcb10e5176c70433856d6fd0ba8b4187eb4d
                 registerUser();
 
             }
