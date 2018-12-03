@@ -198,11 +198,11 @@ public class HomeActivity extends AppCompatActivity {
     }
 
 
-    /*public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.MyViewHolder> {
+    public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.MyViewHolder> {
 
         private Context context;
         private String[] chatNames, chatMsg;
-        public static ClickListener clickListener;
+        public static edu.iastate.linux.git.ui.Utils.ChatAdapter.ClickListener clickListener;
 
         public ChatAdapter(Context context, String[] names, String[] msg) {
             this.context = context;
@@ -210,7 +210,7 @@ public class HomeActivity extends AppCompatActivity {
             this.chatMsg = msg;
         }
 
-        public void setOnItemClickListener(ClickListener clickListener) {
+        public void setOnItemClickListener(edu.iastate.linux.git.ui.Utils.ChatAdapter.ClickListener clickListener) {
             ChatAdapter.clickListener = clickListener;
         }
 
@@ -256,7 +256,7 @@ public class HomeActivity extends AppCompatActivity {
                 clickListener.onItemClick(getAdapterPosition(), v);
             }
         }
-    }*/
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

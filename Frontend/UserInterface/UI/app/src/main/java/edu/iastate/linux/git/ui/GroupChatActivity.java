@@ -45,7 +45,7 @@ public class GroupChatActivity extends AppCompatActivity {
 
                 //URL that will be used to access the Socket server
                 //TODO add on Group's ID for specific friend
-                String w = URLConstants.SOCKET_URL + CurrentLoggedInUser.getInstance(getApplicationContext()).getUser().getId();
+                String w = URLConstants.GROUP_URL + CurrentLoggedInUser.getInstance(getApplicationContext()).getUser().getId() + "/111";
                 //String w = "ws://echo.websocket.org";
 
                 try {
