@@ -3,19 +3,29 @@ package cychat.controll;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Configurable;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import cychat.chathistory.ChatHistory;
 import cychat.chathistory.History;
+import cychat.course.Course;
+import cychat.course.CourseList;
 import cychat.friend.Friend;
 import cychat.friend.FriendList;
 import cychat.group.Group;
 import cychat.group.Groupchat;
+import cychat.image.Image;
+import cychat.image.ImageSave;
+import cychat.room.Room;
+import cychat.room.RoomList;
 import cychat.userInfor.UserInfor;
 import cychat.userInfor.User_data;
 
@@ -35,6 +45,14 @@ public class Server {
 	@Autowired 
 	private Groupchat G;
 	
+	@Autowired
+	private CourseList C;
+	
+	@Autowired
+	private RoomList R; 
+	
+	@Autowired
+	private ImageSave IS;
 	
 	public List<UserInfor> show()
 	{
@@ -87,7 +105,7 @@ public class Server {
 		String temp = "Successful added";
 		try
 		{
-			if(data.findById(Sender).get() != null && data.findById(Reciver).get()!=null)
+			if((data.findById(Sender).get() != null && data.findById(Reciver).isPresent()) || R.findById(Reciver).get() !=null)
 			{
 				Friend f = new Friend(Sender,Reciver);
 				FL.save(f);
@@ -130,7 +148,12 @@ public class Server {
 		
 		for(int i = 0 ; i < temp.size() ; i++)
 		{
-			fds.add(data.findById(temp.get(i).getTo()).get());
+			
+			if(temp.get(i).getTo() != id && data.findById(temp.get(i).getTo()).isPresent())
+				fds.add(data.findById(temp.get(i).getTo()).get());
+			else if(data.findById(temp.get(i).getFrom()).isPresent())
+				fds.add(data.findById(temp.get(i).getFrom()).get());
+
 		}
 		
 		return fds;
@@ -183,8 +206,92 @@ public class Server {
 	{
 		return chat.getmessage(id);
 	}
+	
+	public List<Course> getCourses(int student)
+	{
+		return C.findBystudentID(student);
+	}
+	
+	public void addCourse(Course temp)
+	{
+		C.save(temp);
+	}
+	
+	public void addG(int person , int group)
+	{
+		FL.save(new Friend(person , group));
+	}
 
+	public List<Room> findGroup(int id)
+	{
+		List<Friend> temp = new ArrayList<>();
+
+		temp = FL.findFriend(id);
+
+		List<Room> fds = new ArrayList<>();
+
+		
+		for (int i = 0; i < temp.size(); i++) {
+
+			if (R.findById(temp.get(i).getTo()).isPresent())
+				fds.add(R.findById(temp.get(i).getTo()).get());
+			else if (R.findById(temp.get(i).getFrom()).isPresent())
+				fds.add(R.findById(temp.get(i).getFrom()).get());
+
+		}
+
+		return fds;
+
+	}
+	
+	public List<Room> ShowR()
+	{
+		List<Room> temp = new ArrayList<>();
+		R.findAll().forEach(temp :: add);
+		return temp;
+	}
+	
+	public void SaveI(Image temp)
+	{
+		IS.save(temp);
+	}
+	
+	public void saveImage() throws Exception
+	{
+		ClassPathResource backImgFile = new ClassPathResource("image/chart1.png");
+		byte[] arrayPic = new byte[(int) backImgFile.contentLength()];
+		backImgFile.getInputStream().read(arrayPic);
+		Image blackImage = new Image(1, "chart1", "png", arrayPic);
+		
+		// image 2
+		ClassPathResource blueImgFile = new ClassPathResource("image/chart2.png");
+		arrayPic = new byte[(int) blueImgFile.contentLength()];
+		blueImgFile.getInputStream().read(arrayPic);
+		Image blueImage = new Image(2, "char2", "png", arrayPic);
+		
+		// store image to MySQL via SpringJPA
+		IS.save(blackImage);
+		IS.save(blueImage);
+		
+		 //retrieve image from MySQL via SpringJPA
+		for(Image imageModel : IS.findAll()){
+			Files.write(Paths.get("save/" + imageModel.getName() + "." + imageModel.getType()), imageModel.getPic());
+		}
+	}
+	
+	public Image showImage()
+	{
+		return IS.findById(1).get();
+	}
+	
+	public void saveRoom(Room temp)
+	{
+		R.save(temp);
+	}
 }
+	
+	
+
 
 
 

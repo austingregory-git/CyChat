@@ -34,7 +34,7 @@ public class Group {
 	}
 	
 	public Group(int id, String name, String time, String message, int sender) {
-		this.id = id;
+		this.groupid = id;
 		this.name = name;
 		this.time = time;
 		this.message = message;

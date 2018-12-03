@@ -1,4 +1,3 @@
-
 var datajson;
 
 function signin() {
@@ -14,29 +13,28 @@ function validation(iduser) {
         report_error("User ID is invalid");
     }
     else {
-        var url = 'http://proj309-ds-01.misc.iastate.edu:8080/database/';
+        var url = 'http://proj309-ds-01.misc.iastate.edu:8080/database/find_id_';
         var user_url = url + iduser;
 
         //var json_obj = JSON.parse(getJSON(user_url));
 		
         var json_obj;
-		try{
-			var json_obj= getJSON_object(user_url);
+        try
+        {
+            json_obj= getJSON_object(user_url);
 		}
-		catch{
+        catch
+        {
 			return false;
 		}
 
         if (jQuery.isEmptyObject(json_obj))
         {
-            alert('user not registered');
             report_error("user not registered");
         }
         else
         {
-            //window.open("", "../chat/chat.html");
-
-            var newWindow = window.open("./chatroom/chatroom.html");
+            window.open("../chatroom/chatroom.html");
 			return true;
             //newWindow.document.getElementById("list").value = "ppppppppppppppp";
             //newWindow.document.write(<p id="friendlist"> ppppp</p>);
@@ -57,7 +55,7 @@ function getJSON(url){
     var httpreq = new XMLHttpRequest();
     httpreq.open("GET", url, false);
     httpreq.send(null);
-    return httpreq.responseText;          
+    return httpreq.responseText;
 }
 
 function isNumber(str) {

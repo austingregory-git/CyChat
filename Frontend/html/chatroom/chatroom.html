@@ -1,36 +1,52 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>Cychat chatroom</title>
-    </head>
-    <body>
 
-        <table>
-            <tr>
-                <td colspan="2">
-                    <input type="text" id="current_user" placeholder="User ID"/>
-                </td>
-            </tr>
-            <tr>
-                <td colspan="2">
-                    <input type="text" id="friend_user" placeholder="Friend ID"/>
-                </td>
-            </tr>
-            <button type="button" onclick="connect();" >Connect</button>
-            <tr>
-                <td>
-                    <textarea readonly="true" rows="10" cols="80" id="log"></textarea>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <input type="text" size="51" id="msg" placeholder="Message"/>
-                    <button type="button" onclick="send();" >Send</button>
-                </td>
-            </tr>
-        </table>
-    </body>
+<head>
+    <title>Cychat chatroom</title>
+</head>
 
-    <script src="chatroom.js"></script>
+<script src="chatroom.js"></script>
+<script src="node_modules/image-to-base64/image-to-base64.min.js"></script>
+
+<body>
+
+    <table>
+        <tr>
+            <td colspan="2">
+                <input type="text" id="current_user" placeholder="User ID" />
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <input type="text" id="friend_user" placeholder="Friend ID" />
+            </td>
+        </tr>
+        <button type="button" onclick="connect();">Connect</button>
+        <tr>
+            <td>
+                <input type="text" size="51" id="msg" placeholder="Message" />
+                <button type="button" onclick="send();">Send Text</button>
+                <button type="button" onclick="sendImage();">Send Image</button>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <textarea readonly="true" rows="10" cols="80" id="log"></textarea></br></br>
+                <!-- <canvas id="myCanvas" width="300" height="200" style="border:1px solid #d3d3d3;"></canvas> -->
+                </br></br>
+                <img id="itemPreview" src="https://www.w3.org/People/mimasa/test/imgformat/img/w3c_home.png">
+                
+                <div>
+                    <p>Red dot</p>
+                    <img id="imgsend" src="data:image/png;base64, iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO
+                                        9TXL0Y4OHwAAAABJRU5ErkJggg==" alt="Red dot" /></br></br>
+                    <img id="imgg" src="data:image/png;base64,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">
+                </div>
+
+            </td>
+        </tr>
+    </table>
+
+</body>
 
 </html>

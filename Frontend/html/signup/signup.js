@@ -57,7 +57,7 @@ function post(iduser, email, username, password, name, type)
 
 	var data = JSON.stringify
 	({
-        "iduser"           : iduser,
+        "id"           : iduser,
         "email"            : String(email),
 		"username"         : String(username),
 		"password"         : String(password),
@@ -65,6 +65,7 @@ function post(iduser, email, username, password, name, type)
         "type"             : String(type)
 	});
 	xhr.send(data);
+	console.log(data);
 }
 
 function get(iduser, email, username, password, name, type)
@@ -73,7 +74,7 @@ function get(iduser, email, username, password, name, type)
 	var xhr = new XMLHttpRequest();
 	var url = "url?data=" + encodeURIComponent(JSON.stringify(
 	{
-        "iduser"           : iduser,
+        "id"           : iduser,
         "email"            : email,
 		"username"         : username,
 		"password"         : password,
@@ -92,7 +93,7 @@ function get(iduser, email, username, password, name, type)
 					    json.name);
 		}
 	};
-	xhr.send();
+	var send = xhr.send();
 }
 
 function feedback()

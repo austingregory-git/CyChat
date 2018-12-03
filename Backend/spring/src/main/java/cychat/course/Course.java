@@ -10,48 +10,68 @@ import javax.persistence.Table;
 @Table(name = "course") 
 public class Course {
 	
+	@Column(name = "id")
 	@Id @GeneratedValue
 	private int id;
 	
-	@Column(name = "name")
-	private String name;
+	@Column(name = "student")
+	private int student;
 	
-	@Column(name = "students")
-	private String students;	
+	@Column(name = "subject")
+	private String subject;
+	
+	@Column(name = "time")
+	private String time;
+	
+	@Column(name = "day")
+	private String day;
 	
 	public Course()
 	{}
-	
-	public Course(int id, String name, String students) {
+
+	public Course(int student, String subject, String time, String day) {
 		super();
-		this.id = id;
-		this.name = name;
-		this.students = students;
+		this.student = student;
+		this.subject = subject;
+		this.time = time;
+		this.day = day;
 	}
 
-	public int getId() {
-		return id;
+	public int getStudent() {
+		return student;
 	}
 
-	public void setId(int id) {
-		this.id = id;
+	public void setStudent(int student) {
+		this.student = student;
 	}
 
-	public String getName() {
-		return name;
+	public String getSubject() {
+		return subject;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setSubject(String subject) {
+		this.subject = subject;
 	}
 
-	public String getStudents() {
-		return students;
+	public String getTime() {
+		return time;
 	}
 
-	public void setStudents(String students) {
-		this.students = students;
+	public void setTime(String time) {
+		this.time = time;
 	}
+
+	public String getDay() {
+		return day;
+	}
+
+	public void setDay(String day) {
+		this.day = day;
+	}
+
+	
+	
+	
 	 
 	
 	

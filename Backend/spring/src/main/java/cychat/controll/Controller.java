@@ -15,7 +15,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import cychat.chathistory.ChatHistory;
+import cychat.course.Course;
 import cychat.group.Group;
+import cychat.image.Image;
+import cychat.room.Room;
 import cychat.userInfor.UserInfor;
 
 @RestController
@@ -41,9 +44,10 @@ public class Controller {
 		return Userver.show();	
 	}
 	
-	@RequestMapping("/database/{id}")
+	@RequestMapping("/database/find_id_{id}")
 	public Optional<UserInfor> Find(@PathVariable int id)
 	{
+	
 		return Userver.Find(id);
 	}
 	
@@ -88,6 +92,12 @@ public class Controller {
 		return Userver.getSenderMessage(id);
 	}
 	
+	@RequestMapping("/group/{id}/{Gid}")
+	public void addGroup(@PathVariable int id , @PathVariable int Gid)
+	{
+		Userver.addG(id, Gid);
+	}
+	
 //	
 //	@RequestMapping("/database/Ave")
 //	public int getAveAge()
@@ -120,7 +130,7 @@ public class Controller {
 	}
 	
 	
-	@RequestMapping("/database/{User}")
+	@RequestMapping("/chat/{User}")
 	public List<ChatHistory> ShowFriend(@PathVariable String s)
 	{
 		String[] ss = s.split(" ");
@@ -129,6 +139,49 @@ public class Controller {
 		int reciver = Integer.parseInt(ss[1]);
 		
 		return Userver.listHistory(reciver , sender);
+	}
+	
+	@RequestMapping("/subject/{id}")
+	public List<Course> findCourse(@PathVariable int id)
+	{
+		return Userver.getCourses(id);
+	}
+	
+	@RequestMapping(method=RequestMethod.POST , value = "/subject")
+	public void addCourse(@RequestBody Course temp)
+	{
+		Userver.addCourse(temp);
+	}
+	
+	@RequestMapping("/rooms")
+	public List<Room> showRoom()
+	{
+		return Userver.ShowR();
+	}
+	
+	
+	@RequestMapping("/group/{id}")
+	public List<Room> findGroup(@PathVariable int id)
+	{
+		return Userver.findGroup(id);
+	}
+	
+	@RequestMapping(method = RequestMethod.POST , value = "/create/room")
+	public void createroom(@RequestBody Room temp)
+	{
+		Userver.saveRoom(temp);
+	}
+	
+	@RequestMapping("/image")
+	public void saveImage() throws Exception
+	{
+		Userver.saveImage();
+	}
+	
+	@RequestMapping("/show/image")
+	public Image ShowImage()
+	{
+		return Userver.showImage();
 	}
 	
 	@MessageMapping("/check/{id}/{idd}")
