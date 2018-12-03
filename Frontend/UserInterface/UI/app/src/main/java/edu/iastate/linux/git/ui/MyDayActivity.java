@@ -135,7 +135,8 @@ public class MyDayActivity extends AppCompatActivity {
 
         //String newURL = "http://www.json-generator.com/api/json/get/ceyeFecdCG?indent=2";
         //String newURL = "http://www.json-generator.com/api/json/get/cdORCPfemq?indent=2";
-        String newURL = "http://www.json-generator.com/api/json/get/cuuTfuQWcy?indent=2";
+        //String newURL = "http://www.json-generator.com/api/json/get/cuuTfuQWcy?indent=2";
+        String newURL = "http://proj309-ds-01.misc.iastate.edu:8080/subject/" + CurrentLoggedInUser.getInstance(getApplicationContext()).getUser().getId();
         //String testURL = "http://pastebin.com/raw/Em972E5s";
         RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
         JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, newURL, null,
@@ -146,61 +147,61 @@ public class MyDayActivity extends AppCompatActivity {
                         try {
                             for(int i=0; i<response.length(); i++) {
                                 JSONObject obj = response.getJSONObject(i);
-                                String day = obj.getString("Day");
-                                if(day.equalsIgnoreCase("Monday")) {
-                                    if(!mondaySub.contains(obj.getString("Subject"))) {
-                                        mondaySub.add(obj.getString("Subject"));
+                                String day = obj.getString("day");
+                                if(day.equalsIgnoreCase("monday")) {
+                                    if(!mondaySub.contains(obj.getString("subject"))) {
+                                        mondaySub.add(obj.getString("subject"));
                                     }
-                                    if(!mondayTime.contains(obj.getString("Time"))) {
-                                        mondayTime.add(obj.getString("Time"));
+                                    if(!mondayTime.contains(obj.getString("time"))) {
+                                        mondayTime.add(obj.getString("time"));
                                     }
                                 }
-                                else if(day.equalsIgnoreCase("Tuesday")) {
-                                    if(!tuesdaySub.contains(obj.getString("Subject"))) {
-                                        tuesdaySub.add(obj.getString("Subject"));
+                                else if(day.equalsIgnoreCase("tuesday")) {
+                                    if(!tuesdaySub.contains(obj.getString("subject"))) {
+                                        tuesdaySub.add(obj.getString("subject"));
                                     }
-                                    if(!tuesdayTime.contains(obj.getString("Time"))) {
-                                        tuesdayTime.add(obj.getString("Time"));
+                                    if(!tuesdayTime.contains(obj.getString("time"))) {
+                                        tuesdayTime.add(obj.getString("time"));
                                     }
                                 }
                                 else if(day.equalsIgnoreCase("Wednesday")) {
-                                    if(!wednesdaySub.contains(obj.getString("Subject"))) {
-                                        wednesdaySub.add(obj.getString("Subject"));
+                                    if(!wednesdaySub.contains(obj.getString("subject"))) {
+                                        wednesdaySub.add(obj.getString("subject"));
                                     }
-                                    if(!wednesdayTime.contains(obj.getString("Time"))) {
-                                        wednesdayTime.add(obj.getString("Time"));
+                                    if(!wednesdayTime.contains(obj.getString("time"))) {
+                                        wednesdayTime.add(obj.getString("time"));
                                     }
                                 }
                                 else if(day.equalsIgnoreCase("Thursday")) {
-                                    if(!thursdaySub.contains(obj.getString("Subject"))) {
-                                        thursdaySub.add(obj.getString("Subject"));
+                                    if(!thursdaySub.contains(obj.getString("subject"))) {
+                                        thursdaySub.add(obj.getString("subject"));
                                     }
-                                    if(!thursdayTime.contains(obj.getString("Time"))) {
-                                        thursdayTime.add(obj.getString("Time"));
+                                    if(!thursdayTime.contains(obj.getString("time"))) {
+                                        thursdayTime.add(obj.getString("time"));
                                     }
                                 }
                                 else if(day.equalsIgnoreCase("Friday")) {
-                                    if(!fridaySub.contains(obj.getString("Subject"))) {
-                                        fridaySub.add(obj.getString("Subject"));
+                                    if(!fridaySub.contains(obj.getString("subject"))) {
+                                        fridaySub.add(obj.getString("subject"));
                                     }
-                                    if(!fridayTime.contains(obj.getString("Time"))) {
-                                        fridayTime.add(obj.getString("Time"));
+                                    if(!fridayTime.contains(obj.getString("time"))) {
+                                        fridayTime.add(obj.getString("time"));
                                     }
                                 }
                                 else if(day.equalsIgnoreCase("Saturday")) {
-                                    if(!saturdaySub.contains(obj.getString("Subject"))) {
-                                        saturdaySub.add(obj.getString("Subject"));
+                                    if(!saturdaySub.contains(obj.getString("subject"))) {
+                                        saturdaySub.add(obj.getString("subject"));
                                     }
-                                    if(!saturdayTime.contains(obj.getString("Time"))) {
-                                        saturdayTime.add(obj.getString("Time"));
+                                    if(!saturdayTime.contains(obj.getString("time"))) {
+                                        saturdayTime.add(obj.getString("time"));
                                     }
                                 }
                                 else if(day.equalsIgnoreCase("Sunday")) {
-                                    if(!sundaySub.contains(obj.getString("Subject"))) {
-                                        sundaySub.add(obj.getString("Subject"));
+                                    if(!sundaySub.contains(obj.getString("subject"))) {
+                                        sundaySub.add(obj.getString("subject"));
                                     }
-                                    if(!sundayTime.contains(obj.getString("Time"))) {
-                                        sundayTime.add(obj.getString("Time"));
+                                    if(!sundayTime.contains(obj.getString("time"))) {
+                                        sundayTime.add(obj.getString("time"));
                                     }
                                 }
                             }
@@ -254,8 +255,11 @@ public class MyDayActivity extends AppCompatActivity {
             sel_time = (ArrayList<String>) sundayTime.clone();
         }
 
-        SimpleAdapter sa = new SimpleAdapter(this, sel_day, sel_time);
-        lv.setAdapter(sa);
+        if(sel_day != null && sel_time != null) {
+            SimpleAdapter sa = new SimpleAdapter(this, sel_day, sel_time);
+            lv.setAdapter(sa);
+        }
+
 
     }
 
@@ -342,6 +346,10 @@ public class MyDayActivity extends AppCompatActivity {
             case R.id.log_out:
                 Intent i5 = new Intent(MyDayActivity.this, LoginActivity.class);
                 startActivity(i5);
+                return(true);
+            case R.id.userprofile:
+                Intent i6 = new Intent(MyDayActivity.this, UserProfileActivity.class);
+                startActivity(i6);
                 return(true);
         }
         return super.onOptionsItemSelected(item);

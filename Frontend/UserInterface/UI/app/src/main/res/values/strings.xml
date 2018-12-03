@@ -22,6 +22,7 @@
     <string name="customize">Customize</string>
     <string name="show_dialog">Show Dialog</string>
     <string name="undo">Undo</string>
+    <string name="GroupChat">Group Chat</string>
 
     <string-array name="scheduleArray">
         <item> My Week </item>

@@ -19,12 +19,14 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.MyViewHolder> 
     //private String[] chatNames, chatMsg;
     private ArrayList<String> chatNames, chatMsg, chatTime;
     private static ClickListener clickListener;
+    private int chatType;
 
-    public ChatAdapter(Context context, ArrayList<String> names, ArrayList<String> msg, ArrayList<String> time) {
+    public ChatAdapter(Context context, ArrayList<String> names, ArrayList<String> msg, ArrayList<String> time, int chatType) {
         this.context = context;
         this.chatNames = names;
         this.chatMsg = msg;
         this.chatTime = time;
+        this.chatType = chatType;
     }
 
     public void setOnItemClickListener(ClickListener clickListener) {
@@ -43,11 +45,13 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.MyViewHolder> 
 
     @Override
     public void onBindViewHolder(@NonNull ChatAdapter.MyViewHolder holder, int position) {
-        holder.name.setText(chatNames.get(position));
-        holder.msg.setText(chatMsg.get(position));
-        holder.time.setText(chatTime.get(position));
-        holder.liv.setOval(true);
-        holder.liv.setLetter(chatNames.get(position).charAt(0));
+        if(chatNames.size() != 0 && chatMsg.size() != 0 && chatTime.size() != 0) {
+            holder.name.setText(chatNames.get(position));
+            holder.msg.setText(chatMsg.get(position));
+            holder.time.setText(chatTime.get(position));
+            holder.liv.setOval(true);
+            holder.liv.setLetter(chatNames.get(position).charAt(0));
+        }
     }
 
     @Override
@@ -73,11 +77,11 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.MyViewHolder> 
 
         @Override
         public void onClick(View v) {
-            clickListener.OnItemClick(getAdapterPosition(), v);
+            clickListener.OnItemClick(getAdapterPosition(), chatType, v);
         }
     }
 
     public interface ClickListener {
-        void OnItemClick(int position, View v);
+        void OnItemClick(int position, int chatType, View v);
     }
 }

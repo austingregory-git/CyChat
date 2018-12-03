@@ -102,6 +102,10 @@ public class NotificationsActivity extends AppCompatActivity {
                 Intent i5 = new Intent(NotificationsActivity.this, LoginActivity.class);
                 startActivity(i5);
                 return(true);
+            case R.id.userprofile:
+                Intent i6 = new Intent(NotificationsActivity.this, UserProfileActivity.class);
+                startActivity(i6);
+                return(true);
         }
         return super.onOptionsItemSelected(item);
     }

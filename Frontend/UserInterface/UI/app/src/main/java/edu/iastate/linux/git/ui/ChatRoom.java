@@ -36,6 +36,7 @@ public class ChatRoom extends AppCompatActivity {
     Button sendChat;
     TextView output;
     EditText sendMSG;
+    private int recID;
     private WebSocketClient cc;
     private OkHttpClient client;
     //private StompClient stompclient;
@@ -44,13 +45,27 @@ public class ChatRoom extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat_room);
-
+        recID = HomeActivity.sharedPreferences.getInt(HomeActivity.selectedConversation, -1);
         sendChat = findViewById(R.id.sendTXTButton);
         output = findViewById(R.id.chatDisplayTXT);
         sendMSG = findViewById(R.id.sendMSGedittext);
         client = new OkHttpClient();
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
         output.setMovementMethod(new ScrollingMovementMethod());
+       /* start.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                start();
+            }
+        });
+        sendChat.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view){
+                String msg = sendMSG.getText().toString();
+                sendMSG.setText("");
+                websocket.send()
+            }
+        });*/
 
        //trying instasocket
 
@@ -58,7 +73,7 @@ public class ChatRoom extends AppCompatActivity {
 
         //URL that will be used to access the Socket server
         //TODO add on reciever's ID for specific friend
-        String w = URLConstants.SOCKET_URL + CurrentLoggedInUser.getInstance(getApplicationContext()).getUser().getId() + "/112";
+        String w = URLConstants.SOCKET_URL + CurrentLoggedInUser.getInstance(getApplicationContext()).getUser().getId() + "/" + recID;
         //String w = "ws://echo.websocket.org";
         Log.d("url",w);
 
@@ -75,9 +90,33 @@ public class ChatRoom extends AppCompatActivity {
                 public void onMessage(String msg)
                 {
                     Log.d("stuff", "run() returned: " + msg);
-                    String s = output.getText().toString();
-                    //Do I need to clear sendMSG here as welL?
-                    output.setText(s + "--: " + msg + "\n");
+                    String s;
+                    //String[] fromMsgArr = msg.split(" ");
+                    int i = 0;
+                    int j = 0;
+                    int fromID;
+                    while (i < msg.length() && !Character.isDigit(msg.charAt(i))) {
+                        i++;
+                    }
+                    while (j < msg.length() && Character.isDigit(msg.charAt(j))) {
+                        j++;
+                    }
+                    fromID = Integer.parseInt(msg.substring(i, j));
+                    Log.d("fromID", Integer.toString(fromID));
+                    if(recID == fromID || fromID == CurrentLoggedInUser.getInstance(getApplicationContext()).getUser().getId() ) {
+                        s = output.getText().toString();
+                        Log.d("recID == fromID", s);
+                        output.setText(s + msg + "\n");
+                    }
+                    else {
+                        //s = Integer.toString(CurrentLoggedInUser.getInstance(getApplicationContext()).getUser().getId());
+                        s = "";
+                        Log.d("recID != fromID", s);
+                    }
+                    Log.d("msg", msg);
+
+                    //Do I need to clear sendMSG here as well?
+
 
                 }
 
@@ -85,6 +124,7 @@ public class ChatRoom extends AppCompatActivity {
                 public void onClose(int code, String reason, boolean remote)
                 {
                     Log.d("CLOSE", "onClose() returned:" + " is connecting");
+                    cc.close();
                 }
 
                 @Override

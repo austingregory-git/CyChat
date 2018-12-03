@@ -199,6 +199,10 @@ public class MyWeekActivity extends AppCompatActivity {
                 Intent i5 = new Intent(MyWeekActivity.this, LoginActivity.class);
                 startActivity(i5);
                 return(true);
+            case R.id.userprofile:
+                Intent i6 = new Intent(MyWeekActivity.this, UserProfileActivity.class);
+                startActivity(i6);
+                return(true);
         }
         return super.onOptionsItemSelected(item);
     }

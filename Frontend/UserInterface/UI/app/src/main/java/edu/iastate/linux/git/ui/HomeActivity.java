@@ -9,7 +9,6 @@ import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -28,17 +27,10 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
 
-import org.java_websocket.WebSocket;
-import org.java_websocket.client.WebSocketClient;
-import org.java_websocket.drafts.Draft;
-import org.java_websocket.drafts.Draft_6455;
-import org.java_websocket.handshake.ServerHandshake;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.net.URI;
-import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -53,12 +45,13 @@ public class HomeActivity extends AppCompatActivity {
 
     private TextView mTextMessage;
     private RecyclerView rv;
-    private WebSocketClient cc;
     public static SharedPreferences sharedPreferences;
-    public static String selectedConversation;
+    public static String selectedConversation = "MY_CONVO";
     public static ArrayList<String> chatNames = new ArrayList<String>();
     public static ArrayList<String> chatMsg = new ArrayList<String>();
     public static ArrayList<String> chatTime = new ArrayList<String>();
+    public static ArrayList<Integer> receiverID = new ArrayList<Integer>();
+    private int chatType;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -88,54 +81,7 @@ public class HomeActivity extends AppCompatActivity {
         initViews();
         initListView();
 
-        //testing instasocket
-        Draft[] drafts = {new Draft_6455()};
 
-        //URL that will be used to access the Socket server
-        //TODO add on reciever's ID for specific friend
-        String w = URLConstants.SOCKET_URL + CurrentLoggedInUser.getInstance(getApplicationContext()).getUser().getId();
-        //String w = "ws://echo.websocket.org";
-        Log.d("url",w);
-
-        try {
-            Log.d("Socket:","Trying socket");
-            //cc = new WebSocketClient(new URI(w),drafts[0]);
-            cc = new WebSocketClient(new URI(w),(Draft) drafts[0]) {
-                @Override
-                public void onOpen(ServerHandshake serverHandshake) {
-                    Log.d("OPEN", "run() returned: " + "is connecting");
-                }
-
-                @Override
-                public void onMessage(String msg)
-                {
-                    Log.d("stuff", "run() returned: " + msg);
-                    //handle response here
-                    //String s = output.getText().toString();
-                    //Do I need to clear sendMSG here as welL?
-                    //output.setText(s + "--: " + msg + "\n");
-
-                }
-
-                @Override
-                public void onClose(int code, String reason, boolean remote)
-                {
-                    Log.d("CLOSE", "onClose() returned:" + " failed at connecting");
-                }
-
-                @Override
-                public void onError(Exception e)
-                {
-                    Log.d("Exception: ", e.toString());
-                }
-            };
-        }
-        catch (URISyntaxException e)
-        {
-            Log.d("Exception", e.getMessage().toString());
-            e.printStackTrace();
-        }
-        cc.connect();
     }
 
     private void initButtonNavigation() {
@@ -179,8 +125,9 @@ public class HomeActivity extends AppCompatActivity {
         //String[] chatNames = getResources().getStringArray(R.array.chatNames);
         //String[] chatMsg = getResources().getStringArray(R.array.chatMsg);
 
-        String newURL = "http://www.json-generator.com/api/json/get/bVRpsiJaOG?indent=2";
+        //String newURL = "http://www.json-generator.com/api/json/get/bVRpsiJaOG?indent=2";
         //String testURL = "http://pastebin.com/raw/Em972E5s";
+        String newURL = "http://proj309-ds-01.misc.iastate.edu:8080/friend/" + CurrentLoggedInUser.getInstance(getApplicationContext()).getUser().getId();
         RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
         JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, newURL, null,
                 new Response.Listener<JSONArray>() {
@@ -190,14 +137,17 @@ public class HomeActivity extends AppCompatActivity {
                         try {
                             for(int i=0; i<response.length(); i++) {
                                 JSONObject obj = response.getJSONObject(i);
-                                if(!chatNames.contains(obj.getString("Name"))) {
-                                    chatNames.add(obj.getString("Name"));
+                                if(!chatNames.contains(obj.getString("name")) /*&& (obj.getString("name").length() != 0)*/) {
+                                    chatNames.add(obj.getString("name"));
                                 }
-                                if(!chatMsg.contains(obj.getString("Message"))) {
-                                    chatMsg.add(obj.getString("Message"));
+                                if(!chatMsg.contains(obj.getString("username")) /*&& (obj.getString("username").length() != 0)*/) {
+                                    chatMsg.add(obj.getString("username"));
                                 }
-                                if(!chatTime.contains(obj.getString("Time"))) {
-                                    chatTime.add(obj.getString("Time"));
+                                if(!chatTime.contains(obj.getString("email")) /*&& (obj.getString("email").length() != 0)*/) {
+                                    chatTime.add(obj.getString("email"));
+                                }
+                                if(!receiverID.contains(obj.getInt("id"))) {
+                                    receiverID.add(obj.getInt("id"));
                                 }
 
                             }
@@ -220,31 +170,21 @@ public class HomeActivity extends AppCompatActivity {
         requestQueue.add(request);
 
 
-        ChatAdapter mAdapter = new ChatAdapter(HomeActivity.this, chatNames, chatMsg, chatTime);
+        ChatAdapter mAdapter = new ChatAdapter(HomeActivity.this, chatNames, chatMsg, chatTime, chatType);
         rv.setAdapter(mAdapter);
 
         mAdapter.setOnItemClickListener(new ChatAdapter.ClickListener() {
             @Override
-            public void OnItemClick(int position, View v) {
-                switch(position) {
+            public void OnItemClick(int position, int chatType, View v) {
+                switch(chatType) {
                     case 0: {
-                        startActivity(new Intent(HomeActivity.this, ChatActivity.class));
-                        sharedPreferences.edit().putString(selectedConversation, "AustinMessages").apply();
+                        sharedPreferences.edit().putInt(selectedConversation, receiverID.get(position)).apply();
+                        startActivity(new Intent(HomeActivity.this, ChatRoom.class));
                         break;
                     }
                     case 1: {
-                        startActivity(new Intent(HomeActivity.this, ChatActivity.class));
-                        sharedPreferences.edit().putString(selectedConversation, "NateMessages").apply();
-                        break;
-                    }
-                    case 2: {
-                        startActivity(new Intent(HomeActivity.this, ChatActivity.class));
-                        sharedPreferences.edit().putString(selectedConversation, "XiuyuanMessages").apply();
-                        break;
-                    }
-                    case 3: {
-                        startActivity(new Intent(HomeActivity.this, ChatActivity.class));
-                        sharedPreferences.edit().putString(selectedConversation, "ZhiMessages").apply();
+                        sharedPreferences.edit().putInt(selectedConversation, receiverID.get(position)).apply();
+                        startActivity(new Intent(HomeActivity.this, GroupChatActivity.class));
                         break;
                     }
                     default: break;
@@ -352,6 +292,10 @@ public class HomeActivity extends AppCompatActivity {
             case R.id.userprofile:
                 Intent i6 = new Intent(HomeActivity.this,UserProfileActivity.class);
                 startActivity(i6);
+                return(true);
+            case R.id.groupchatroom:
+                Intent i7 = new Intent(HomeActivity.this, GroupChatActivity.class);
+                startActivity(i7);
                 return(true);
         }
         return super.onOptionsItemSelected(item);

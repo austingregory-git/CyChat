@@ -92,6 +92,10 @@ public class GoogleMapActivity extends AppCompatActivity implements OnMapReadyCa
                 Intent i5 = new Intent(GoogleMapActivity.this, LoginActivity.class);
                 startActivity(i5);
                 return(true);
+            case R.id.userprofile:
+                Intent i6 = new Intent(GoogleMapActivity.this, UserProfileActivity.class);
+                startActivity(i6);
+                return(true);
         }
         return super.onOptionsItemSelected(item);
     }
