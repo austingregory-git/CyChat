@@ -5,15 +5,29 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class OptionsActivity extends AppCompatActivity {
 
-    private TextView mTextMessage;
+    private TextView mTextMessage, uidentry,groupname,groupid;
+    private String ustatus, identry,grpname,grpid;
+    private Button creategroup, usergroupadd;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -43,6 +57,42 @@ public class OptionsActivity extends AppCompatActivity {
         ImageButton homeB = (ImageButton) findViewById(R.id.homeButton);
         ImageButton contactsB = (ImageButton) findViewById(R.id.contactsButton);
         ImageButton notifsB = (ImageButton) findViewById(R.id.notificationsButton);
+        uidentry = findViewById(R.id.userIDTxt);
+        groupname = findViewById(R.id.groupNameTXT);
+        groupid = findViewById(R.id.groupIDTxt);
+        creategroup = findViewById(R.id.createGroupButton);
+        usergroupadd = findViewById(R.id.addUserButton);
+        ustatus = CurrentLoggedInUser.getInstance(getApplicationContext()).getUser().getUserType();
+        creategroup.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                grpname = groupname.getText().toString();
+                grpid = groupid.getText().toString();
+                if(ustatus.equals("Professor") && grpname.length() >= 0 && grpid.length() >= 0){
+                    createRoom();
+                    groupname.setText("");
+                    groupid.setText("");
+                }
+                else{
+                    Toast.makeText(OptionsActivity.this, "Fill out group name and ID fields. Professors only!", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+        usergroupadd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                identry = uidentry.getText().toString();
+                grpid = groupid.getText().toString();
+                if((ustatus.equals("Professor") || (ustatus.equals("TA"))) && identry.length() >= 0 && grpid.length() >= 0){
+                        addToGroup();
+                        uidentry.setText("");
+                        groupid.setText("");
+                }
+                else{
+                    Toast.makeText(OptionsActivity.this, "Fill out group and user ID fields. No students!", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
 
         homeB.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -109,4 +159,60 @@ public class OptionsActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
-}
+    private void createRoom(){
+        //what to send here?
+        try{
+            final JSONObject registerRoom = new JSONObject();
+            registerRoom.put("id",Integer.parseInt(grpid) );
+            registerRoom.put("name", grpname);
+            registerRoom.put("creater",CurrentLoggedInUser.getInstance(getApplicationContext()).getUser().getId());
+            registerRoom.put("manager","");
+
+            JsonObjectRequest jsonObject = new JsonObjectRequest(Request.Method.POST, URLConstants.JSON_URL,registerRoom , new Response.Listener<JSONObject>() {
+
+            @Override
+            public void onResponse(JSONObject response) {
+                Log.d("Danrysresponse",response.toString());
+                Toast.makeText(getApplicationContext(), "Response: " + response.toString(), Toast.LENGTH_SHORT).show();
+            }
+
+
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
+                Log.d("Nateserror",error.toString());
+                // Toast.makeText(RegistrationActivity.this, "Error...", Toast.LENGTH_SHORT).show();
+            }
+        });
+            VolleySingleton.getInstance(OptionsActivity.this).addToRequestQue(jsonObject);
+        }
+        catch (JSONException e)
+        {
+            e.printStackTrace();
+        }
+
+
+    }
+    private void addToGroup()
+    {
+        //TODO fix
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, URLConstants.ADD_FRIEND + CurrentLoggedInUser.getInstance(getApplicationContext()).getUser().getId() + "/"  ,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        // Display the first 500 characters of the response string.
+                        Toast.makeText(getApplicationContext(), "Friend added!", Toast.LENGTH_SHORT).show();
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(getApplicationContext(), "Your friend couldn't be found!", Toast.LENGTH_LONG).show();
+            }
+        });
+
+
+        VolleySingleton.getInstance(OptionsActivity.this).addToRequestQue(stringRequest);
+    }
+    }
+
