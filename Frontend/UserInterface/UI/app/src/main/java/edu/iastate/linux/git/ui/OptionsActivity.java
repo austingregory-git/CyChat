@@ -8,12 +8,16 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class OptionsActivity extends AppCompatActivity {
 
-    private TextView mTextMessage;
+    private TextView mTextMessage,studIDinput,grpIDinput,groupname;
+    private Button addStud,addGroup;
+    private String utype, studID,grpID,group;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -40,6 +44,39 @@ public class OptionsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_options);
 
+        studIDinput = findViewById(R.id.studentIDTxt);
+        grpIDinput = findViewById(R.id.groupIDText);
+        groupname = findViewById(R.id.groupNameText);
+        addStud = findViewById(R.id.addStudentBtn);
+        addGroup = findViewById(R.id.createGroupButton);
+        utype = CurrentLoggedInUser.getInstance(getApplicationContext()).getUser().getUserType();
+        addStud.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                grpID = grpIDinput.getText().toString();
+                studID = studIDinput.getText().toString();
+                if(utype.equals("TA") || utype.equals("Professor") && !areEmpty(grpID,studID)){
+
+                }
+                else{
+                    Toast.makeText(getApplicationContext(), "You don't have authorization to do that!", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+        addGroup.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                grpID = grpIDinput.getText().toString();
+                group = groupname.getText().toString();
+                if(utype.equals("Professor") && !areEmpty(grpID,group)){
+
+                }
+                else{
+                    Toast.makeText(getApplicationContext(), "You don't have authorization to do that!", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
         ImageButton homeB = (ImageButton) findViewById(R.id.homeButton);
         ImageButton contactsB = (ImageButton) findViewById(R.id.contactsButton);
         ImageButton notifsB = (ImageButton) findViewById(R.id.notificationsButton);
@@ -67,6 +104,13 @@ public class OptionsActivity extends AppCompatActivity {
                 startActivity(i3);
             }
         });
+    }
+
+    private boolean areEmpty(String s, String y){
+        if (s.length() >= 0 && y.length() >= 0){
+            return false;
+        }
+        return true;
     }
 
     @Override

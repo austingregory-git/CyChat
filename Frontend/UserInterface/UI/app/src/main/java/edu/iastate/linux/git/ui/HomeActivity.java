@@ -9,6 +9,7 @@ import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -27,10 +28,17 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
 
+import org.java_websocket.WebSocket;
+import org.java_websocket.client.WebSocketClient;
+import org.java_websocket.drafts.Draft;
+import org.java_websocket.drafts.Draft_6455;
+import org.java_websocket.handshake.ServerHandshake;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -45,6 +53,7 @@ public class HomeActivity extends AppCompatActivity {
 
     private TextView mTextMessage;
     private RecyclerView rv;
+    private WebSocketClient cc;
     public static SharedPreferences sharedPreferences;
     public static String selectedConversation;
     public static ArrayList<String> chatNames = new ArrayList<String>();
@@ -79,6 +88,54 @@ public class HomeActivity extends AppCompatActivity {
         initViews();
         initListView();
 
+        //testing instasocket
+        Draft[] drafts = {new Draft_6455()};
+
+        //URL that will be used to access the Socket server
+        //TODO add on reciever's ID for specific friend
+        String w = URLConstants.SOCKET_URL + CurrentLoggedInUser.getInstance(getApplicationContext()).getUser().getId();
+        //String w = "ws://echo.websocket.org";
+        Log.d("url",w);
+
+        try {
+            Log.d("Socket:","Trying socket");
+            //cc = new WebSocketClient(new URI(w),drafts[0]);
+            cc = new WebSocketClient(new URI(w),(Draft) drafts[0]) {
+                @Override
+                public void onOpen(ServerHandshake serverHandshake) {
+                    Log.d("OPEN", "run() returned: " + "is connecting");
+                }
+
+                @Override
+                public void onMessage(String msg)
+                {
+                    Log.d("stuff", "run() returned: " + msg);
+                    //handle response here
+                    //String s = output.getText().toString();
+                    //Do I need to clear sendMSG here as welL?
+                    //output.setText(s + "--: " + msg + "\n");
+
+                }
+
+                @Override
+                public void onClose(int code, String reason, boolean remote)
+                {
+                    Log.d("CLOSE", "onClose() returned:" + " failed at connecting");
+                }
+
+                @Override
+                public void onError(Exception e)
+                {
+                    Log.d("Exception: ", e.toString());
+                }
+            };
+        }
+        catch (URISyntaxException e)
+        {
+            Log.d("Exception", e.getMessage().toString());
+            e.printStackTrace();
+        }
+        cc.connect();
     }
 
     private void initButtonNavigation() {

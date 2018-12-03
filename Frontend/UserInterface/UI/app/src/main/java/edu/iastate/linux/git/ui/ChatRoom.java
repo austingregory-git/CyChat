@@ -51,20 +51,6 @@ public class ChatRoom extends AppCompatActivity {
         client = new OkHttpClient();
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
         output.setMovementMethod(new ScrollingMovementMethod());
-       /* start.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                start();
-            }
-        });
-        sendChat.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View view){
-                String msg = sendMSG.getText().toString();
-                sendMSG.setText("");
-                websocket.send()
-            }
-        });*/
 
        //trying instasocket
 
