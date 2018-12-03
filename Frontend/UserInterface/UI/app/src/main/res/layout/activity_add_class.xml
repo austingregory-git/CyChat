@@ -9,8 +9,8 @@
 
     <RadioGroup
         android:id="@+id/rgroup"
-        android:layout_width="122dp"
-        android:layout_height="102dp"
+        android:layout_width="123dp"
+        android:layout_height="129dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
@@ -58,6 +58,20 @@
             android:layout_weight="1"
             android:text="Friday" />
 
+        <RadioButton
+            android:id="@+id/radioButton6"
+            android:layout_width="125dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Saturday" />
+
+        <RadioButton
+            android:id="@+id/radioButton7"
+            android:layout_width="125dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Sunday" />
+
     </RadioGroup>
 
     <EditText
@@ -85,8 +99,8 @@
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="232dp"
         android:ems="10"
-        android:hint="Enter Class Start Time"
-        android:inputType="time"
+        android:hint="Enter Class Time"
+        android:inputType="textPersonName"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
@@ -106,23 +120,5 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/classStartText"
         app:layout_constraintVertical_bias="0.724" />
-
-    <EditText
-        android:id="@+id/classEndText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
-        android:ems="10"
-        android:hint="Enter Class End Time"
-        android:inputType="time"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.503"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/classStartText"
-        app:layout_constraintVertical_bias="0.165" />
 
 </android.support.constraint.ConstraintLayout>

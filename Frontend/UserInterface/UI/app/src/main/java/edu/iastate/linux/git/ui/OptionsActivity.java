@@ -168,7 +168,7 @@ public class OptionsActivity extends AppCompatActivity {
             registerRoom.put("creater",CurrentLoggedInUser.getInstance(getApplicationContext()).getUser().getId());
             registerRoom.put("manager","");
 
-            JsonObjectRequest jsonObject = new JsonObjectRequest(Request.Method.POST, URLConstants.JSON_URL,registerRoom , new Response.Listener<JSONObject>() {
+            JsonObjectRequest jsonObject = new JsonObjectRequest(Request.Method.POST, URLConstants.CREATE_GROUP_URL,registerRoom , new Response.Listener<JSONObject>() {
 
             @Override
             public void onResponse(JSONObject response) {
@@ -197,7 +197,8 @@ public class OptionsActivity extends AppCompatActivity {
     private void addToGroup()
     {
         //TODO fix
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, URLConstants.ADD_FRIEND + CurrentLoggedInUser.getInstance(getApplicationContext()).getUser().getId() + "/"  ,
+
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, URLConstants.ADD_FRIEND + identry + "/" + grpid  ,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
