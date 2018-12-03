@@ -1,8 +1,11 @@
 package edu.iastate.linux.git.ui;
 
+import android.util.Log;
+
 public class User {
     private int id;
     private String userName, realName, userPassword, userType, userEmail;
+    public String friendstring;
 
     public User(int id, String username, String password, String type,String email, String realName)
     {
@@ -44,10 +47,11 @@ public class User {
     {
         return userType;
     }
-    public void setEmail(String x){
-        this.userEmail = x;
+    public void changeFriend(String s){
+        this.friendstring = s;
+        Log.d("friend",friendstring);
     }
-    public void setPassword(String x){
-        this.userPassword = x;
+    public String getFriend(){
+        return friendstring;
     }
 }

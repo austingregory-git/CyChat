@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">UI</string>
+    <string name="app_name">CyChat</string>
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
@@ -14,7 +14,206 @@
     <string name="Settings">Settings</string>
     <string name="Options">Options</string>
     <string name="Exit">Exit</string>
-    <string name="Log_Out">Log_Out</string>
+    <string name="Log_Out">Log Out</string>
     <string name="Map">Map</string>
     <string name="title_activity_google_map">Map</string>
+    <string name="schedule">Schedule</string>
+    <string name="chatroom">ChatRoom</string>
+    <string name="customize">Customize</string>
+    <string name="show_dialog">Show Dialog</string>
+    <string name="undo">Undo</string>
+
+    <string-array name="scheduleArray">
+        <item> My Week </item>
+        <item> Calendar </item>
+        <item> Events near me </item>
+    </string-array>
+
+    <string-array name="descriptionArray">
+        <item> Check out your day-by-day schedule! </item>
+        <item> Check out your calendar </item>
+        <item> Check out events near you (in progress) </item>
+    </string-array>
+
+    <string-array name="chatNames">
+        <item> Austin </item>
+        <item> Nathan </item>
+        <item> Xiuyuan </item>
+        <item> Zhi </item>
+    </string-array>
+
+    <string-array name="chatMsg">
+        <item> Hey! </item>
+        <item> Sup bro </item>
+        <item> Howdy :) </item>
+        <item> Greetings! </item>
+    </string-array>
+
+    <string-array name="contactNames">
+        <item> Austin </item>
+        <item> Nathan </item>
+        <item> Xiuyuan </item>
+        <item> Zhi </item>
+        <item> Tim </item>
+        <item> Jim </item>
+        <item> Tom </item>
+        <item> Shelby </item>
+    </string-array>
+
+    <string-array name="contactDet">
+        <item> agregory </item>
+        <item> nirmiter </item>
+        <item> xguo </item>
+        <item> zwang </item>
+        <item> tswag </item>
+        <item> jjupiter </item>
+        <item> tswang </item>
+        <item> solson </item>
+    </string-array>
+
+    <string-array name="AustinMessages">
+        <item> Hey bro, </item>
+        <item> This is the 2nd msg </item>
+        <item> 3rd! </item>
+        <item> 4th </item>
+        <item> 5th </item>
+        <item> big ballers </item>
+        <item> swag </item>
+        <item> last msg </item>
+    </string-array>
+
+    <string-array name="NateMessages">
+        <item> Yo its nate, </item>
+        <item> 2nd ;) </item>
+        <item> 3rd! </item>
+        <item> 4th </item>
+        <item> 5th </item>
+        <item> big money </item>
+        <item> swag </item>
+        <item> last msg </item>
+    </string-array>
+
+    <string-array name="XiuyuanMessages">
+        <item> SUP! </item>
+        <item> 2nd!!!!! </item>
+        <item> 3rd! </item>
+        <item> 4th </item>
+        <item> 5th </item>
+        <item> big cash </item>
+        <item> swag </item>
+        <item> last msg </item>
+    </string-array>
+
+    <string-array name="ZhiMessages">
+        <item> howdy there partner, </item>
+        <item> 2 </item>
+        <item> 3rd! </item>
+        <item> 4th </item>
+        <item> 5th </item>
+        <item> big soup </item>
+        <item> swag </item>
+        <item> last msg </item>
+    </string-array>
+
+    <string-array name="weekArray">
+        <item> Monday </item>
+        <item> Tuesday </item>
+        <item> Wednesday </item>
+        <item> Thursday </item>
+        <item> Friday </item>
+        <item> Saturday </item>
+        <item> Sunday </item>
+    </string-array>
+
+    <string-array name="Monday">
+        <item> CPRE 308 </item>
+        <item> PHIL 366 </item>
+        <item> Break </item>
+        <item> COM S 309 </item>
+    </string-array>
+
+    <string-array name="Tuesday">
+        <item> ENGL 309 </item>
+        <item> Break </item>
+        <item> COM S 309 Recitation </item>
+        <item> Work </item>
+    </string-array>
+
+    <string-array name="Wednesday">
+        <item> CPRE 308 </item>
+        <item> PHIL 366 </item>
+        <item> Break </item>
+        <item> COM S 309 </item>
+        <item> Work </item>
+    </string-array>
+
+    <string-array name="Thursday">
+        <item> ENGL 309 </item>
+        <item> Break </item>
+        <item> CPRE 308 Lab </item>
+        <item> Work </item>
+    </string-array>
+
+    <string-array name="Friday">
+        <item> CPRE 308 </item>
+        <item> PHIL 366 </item>
+        <item> Break </item>
+        <item> COM S 309 </item>
+    </string-array>
+
+    <string-array name="Saturday">
+        <item> Work </item>
+        <item> Chill </item>
+    </string-array>
+
+    <string-array name="Sunday">
+        <item> Chill </item>
+        <item> Homework </item>
+    </string-array>
+
+    <string-array name="mondayTime">
+        <item> 12:10pm-1:00pm </item>
+        <item> 1:10pm-2:00pm </item>
+        <item> 2:00pm-3:00pm </item>
+        <item> 3:10pm-4:00pm </item>
+    </string-array>
+
+    <string-array name="tuesdayTime">
+        <item> 12:40pm-2:00pm </item>
+        <item> 2:10pm-3:00pm </item>
+        <item> 3:10pm-4:00pm </item>
+        <item> 5:45pm-7:45pm </item>
+    </string-array>
+
+    <string-array name="wednesdayTime">
+        <item> 12:10pm-1:00pm </item>
+        <item> 1:10pm-2:00pm </item>
+        <item> 2:00pm-3:00pm </item>
+        <item> 3:10pm-4:00pm </item>
+        <item> 5:45pm-7:45pm </item>
+    </string-array>
+
+    <string-array name="thursdayTime">
+        <item> 12:40pm-2:00pm </item>
+        <item> 2:10pm-3:00pm </item>
+        <item> 3:10pm-5:30pm </item>
+        <item> 5:45pm-7:45pm </item>
+    </string-array>
+
+    <string-array name="fridayTime">
+        <item> 12:10pm-1:00pm </item>
+        <item> 1:10pm-2:00pm </item>
+        <item> 2:00pm-3:00pm </item>
+        <item> 3:10pm-4:00pm </item>
+    </string-array>
+
+    <string-array name="saturdayTime">
+        <item> 7:00am-11:00am </item>
+        <item> 12:00pm-8:00pm </item>
+    </string-array>
+
+    <string-array name="sundayTime">
+        <item> 10:00am-6:00pm </item>
+        <item> 6:00pm-10:00pm </item>
+    </string-array>
 </resources>

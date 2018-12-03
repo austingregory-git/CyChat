@@ -63,7 +63,6 @@
         <activity
             android:name=".NotificationsActivity"
             android:label="@string/title_activity_notifications" />
-
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
@@ -80,11 +79,20 @@
             android:name=".GoogleMapActivity"
             android:label="@string/title_activity_google_map" />
         <activity android:name=".UserProfileActivity" />
+
         <activity android:name=".ChatRoom" />
         <activity android:name=".UProfileChangeActivity" />
         <activity android:name=".AddClassActivity" />
         <activity android:name=".PasswordRecoveryActivity" />
         <activity android:name=".GroupChatActivity"></activity>
+        <activity android:name=".ScheduleActivity" />
+        <activity android:name=".MyWeekActivity" />
+        <activity android:name=".CalendarActivity" />
+        <activity android:name=".EventsActivity" />
+        <activity android:name=".MyDayActivity" />
+        <activity android:name=".CaldroidActivity" />
+        <activity android:name=".ChatActivity"></activity>
+
     </application>
 
 </manifest>

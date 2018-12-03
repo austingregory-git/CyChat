@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
-import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
@@ -30,7 +29,7 @@ import org.json.JSONObject;
 import java.io.UnsupportedEncodingException;
 
 public class RegistrationActivity extends AppCompatActivity {
-     TextView mTextMessage;
+    TextView mTextMessage;
     private static final String PROTOCOL_CHARSET = "utf-8";
     private TextView  realName;
     private TextView  userName;
@@ -40,26 +39,7 @@ public class RegistrationActivity extends AppCompatActivity {
     private TextView userID;
     RadioGroup rg;
     RadioButton rb;
-   // private String url = "http://proj309-ds-01.misc.iastate.edu:8080/user";
-    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
-            = new BottomNavigationView.OnNavigationItemSelectedListener() {
 
-        @Override
-        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-            switch (item.getItemId()) {
-                case R.id.navigation_home:
-                    mTextMessage.setText(R.string.title_home);
-                    return true;
-                case R.id.navigation_dashboard:
-                    mTextMessage.setText(R.string.title_dashboard);
-                    return true;
-                case R.id.navigation_notifications:
-                    mTextMessage.setText(R.string.title_notifications);
-                    return true;
-            }
-            return false;
-        }
-    };
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -75,7 +55,9 @@ public class RegistrationActivity extends AppCompatActivity {
         regB.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                    registerUser();
+                Intent i1 = new Intent(RegistrationActivity.this, WelcomeActivity.class);
+                startActivity(i1);
+                registerUser();
 
             }
         });
@@ -103,7 +85,39 @@ public class RegistrationActivity extends AppCompatActivity {
             return;
         }
 
+        /*
+        if (TextUtils.isDigitsOnly(Integer.toString(iD)))
+        {
+            Log.d("identity",Integer.toString(iD));
+            userID.setError("Please enter an integer");
+            userID.requestFocus();
+            return;
+        }
+        if (TextUtils.isEmpty(username)) {
+            userName.setError("Please enter username");
+            userName.requestFocus();
+            return;
+        }
 
+        if (TextUtils.isEmpty(password)) {
+            userPass.setError("Please enter your email");
+            userPass.requestFocus();
+            return;
+        }
+
+        if (TextUtils.isEmpty(Integer.toString(userage)) || isStringInt(Integer.toString(userage)) )
+        {
+            userAge.setError("Please enter an integer");
+            userAge.requestFocus();
+            return;
+        }
+
+        if (TextUtils.isEmpty(realname)) {
+            realName.setError("Enter your real name ");
+            realName.requestFocus();
+            return;
+        }
+        */
         try{
             final JSONObject registerUser = new JSONObject();
             registerUser.put("id", iD);
@@ -118,12 +132,12 @@ public class RegistrationActivity extends AppCompatActivity {
             //creating a new user object
             User user = new User
                     (
-                    registerUser.getInt("id"),
-                    registerUser.getString("username"),
-                    registerUser.getString("password"),
-                    registerUser.getString("email"),
-                    registerUser.getString("type"),
-                    registerUser.getString("name")
+                            registerUser.getInt("id"),
+                            registerUser.getString("username"),
+                            registerUser.getString("password"),
+                            registerUser.getString("email"),
+                            registerUser.getString("type"),
+                            registerUser.getString("name")
                     );
             Log.d("email",user.getEmail().getClass().getName());
             Log.d("email",registerUser.getString("email").getClass().getName());
@@ -136,29 +150,29 @@ public class RegistrationActivity extends AppCompatActivity {
             //Now for the object request
             JsonObjectRequest jsonObject = new JsonObjectRequest(Request.Method.POST, URLConstants.JSON_URL, registerUser, new Response.Listener<JSONObject>() {
 
-                                @Override
-                                public void onResponse(JSONObject response) {
-                                    Log.d("Danrysresponse",response.toString());
-                                    Toast.makeText(getApplicationContext(), "Response: " + response.toString(), Toast.LENGTH_SHORT).show();
-                                }
+                @Override
+                public void onResponse(JSONObject response) {
+                    Log.d("Danrysresponse",response.toString());
+                    Toast.makeText(getApplicationContext(), "Response: " + response.toString(), Toast.LENGTH_SHORT).show();
+                }
 
 
-                            }, new Response.ErrorListener() {
-                                @Override
-                                public void onErrorResponse(VolleyError error) {
-                                    error.printStackTrace();
-                                    Log.d("Nateserror",error.toString());
-                                   // Toast.makeText(RegistrationActivity.this, "Error...", Toast.LENGTH_SHORT).show();
-                                }
-                            });
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    error.printStackTrace();
+                    Log.d("Nateserror",error.toString());
+                    // Toast.makeText(RegistrationActivity.this, "Error...", Toast.LENGTH_SHORT).show();
+                }
+            });
             VolleySingleton.getInstance(RegistrationActivity.this).addToRequestQue(jsonObject);
         }
         catch (JSONException e)
         {
             e.printStackTrace();
         }
-        Intent i1 = new Intent(RegistrationActivity.this, WelcomeActivity.class);
-        startActivity(i1);
+        // Intent i1 = new Intent(RegistrationActivity.this, WelcomeActivity.class);
+        //startActivity(i1);
 
     }
 
@@ -176,4 +190,3 @@ public class RegistrationActivity extends AppCompatActivity {
     }
 
 }
-

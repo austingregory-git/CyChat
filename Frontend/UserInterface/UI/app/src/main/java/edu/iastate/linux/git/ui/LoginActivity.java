@@ -34,6 +34,7 @@ public class LoginActivity extends AppCompatActivity {
     TextView userName, password;
     Button login, register,pwrecover;
     Spinner menu;
+
      boolean flag = false;
 
     @Override
@@ -63,13 +64,13 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View view) {
 
                 //Adding this so we can progress while server is down, else delete and default to the conditional
-               // Intent i1 = new Intent(LoginActivity.this, HomeActivity.class);
-               // startActivity(i1);
+                Intent i1 = new Intent(LoginActivity.this, HomeActivity.class);
+                startActivity(i1);
                 if (properLogin()) {
                    // flag = false;
 
-                    Intent i1 = new Intent(LoginActivity.this, HomeActivity.class);
-                    startActivity(i1);
+                    //Intent i1 = new Intent(LoginActivity.this, HomeActivity.class);
+                    //startActivity(i1);
                 }
                 else{
                     //Toast.makeText(getApplicationContext(), "Make sure you're using a valid username and password", Toast.LENGTH_LONG).show();

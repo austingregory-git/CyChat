@@ -1,95 +1,204 @@
-var stompClient = null;
-var socket = null;
-var shortName = "";
+var stomp = null;
+var sender;
+var reciver;
+var ur;
 
-function setConnected(connected) {
-    $("#connect").prop("disabled", connected);
-    $("#disconnect").prop("disabled", !connected);
-    if (connected) {
-        $("#conversation").show();
-    }
-    else {
-        $("#conversation").hide();
-    }
-    $("#chatMessages").html("");
-}
 
-function connect() {
-    // create the SockJS WebSocket-like object
-	socket = new SockJS('/landon-stomp-chat');
+function setup(check)
+{
+	$("#connect").prop("disabled",check);
+	$("#disconnect").prop("disabled",!check);
+	$("#senderid").prop("disabled",check);
+	$("#reciverid").prop("disabled",check);
 	
-	// specify that we're using the STOMP protocol on the socket
-    stompClient = Stomp.over(socket);
-    
-    // implement the behavior we want whenever the client connects to the server (-or- user connects to chat app client by joining a group)
-    stompClient.connect({}, function (frame) {
-        setConnected(true);
-        console.log('Connected: ' + frame);
-        
-        // subscribe to topic and create the callback function that handles updates from the server
-        stompClient.subscribe("/topic/guestnames", function (greeting) {
-        	showJoinedName(JSON.parse(greeting.body).content);
-        });
-        
-        stompClient.subscribe("/topic/guestchats", function (greeting) {
-            showMessage(JSON.parse(greeting.body).content);
-        });
-        
-        stompClient.subscribe('', function (greeting) {
-        		showTyping(JSON.parse(greeting.body).content);
-        });
-        
-        sendName();
-    });
-    
+	if(check)
+	{
+		$("#conversation").show();
+	}
+	else {
+		$("#conversation").hide();	
+	}
+	$("#greetings").html("");
 }
+
+function connect()
+{
+	sender = document.getElementById("senderid").value;
+	
+	reciver = document.getElementById("reciverid").value;
+	
+	var socket = new SockJS('/ws');
+	stomp = Stomp.over(socket);
+	stomp.connect(
+	{},onConnect);
+
+}
+
+function onConnect()
+{	
+	setup(true);
+	
+	ur = make(sender,reciver);
+	
+	//alert(temp);
+	
+	ur = ur.toString();
+	
+	//alert(temp);
+
+	//var temp = sender.toString() + "/" + reciver.toString();
+	
+	//alert(temp);
+	
+//	stomp.subscribe("/topic/greet/" + sender + "/" + reciver ,function (name) {
+//		
+//		if((name.body).indexOf("There are no user") != -1)
+//		{
+//			alert(name.body);
+//			disconnect();
+//		}
+//	
+//		if((name.body).indexOf("are Not Friend") != -1)
+//		{
+//			alert(name.body);
+//			disconnect();
+//		}
+//		
+//		var temp = (name.body).split("+");
+//		
+//		for(var i in temp)
+//		{
+//			showName(temp[i]);	
+//		}
+//		
+//		
+//		
+//	});
+	
+//	stomp.subscribe("/topic/g." + ur,function (name) {
+//		showName(name.body);
+//	});	
+	
+	stomp.subscribe("/topic/chat/" + $("#reciverid").val() , function(name)
+	{	
+		var temp = (name.body).split("+");
+		
+		for(var i in temp)
+		{
+			showName(temp[i]);
+		}
+	});	
+	
+	stomp.subscribe("/topic/group." + $("#reciverid").val(),function (name) {
+		showName(name.body);
+	});
+	
+//	stomp.send("/app/check/" + sender +"/" +reciver,{} , sender.toString() + " " + reciver.toString() );
+	stomp.send("/app/his/" + $("#reciverid").val(), {}, $("#reciverid").val().toString());
+}
+
+//function onMess()
+//{
+//	stomp.subscribe("/topic/g." + ur,function (name) {
+//		showName(name.body);
+//	});	
+//}
 
 function disconnect() {
-    if (stompClient !== null) {
-    	$("#members").append("<tr><td>" + shortName + " is offline</td></tr>");
-        stompClient.disconnect();
-    }
-    setConnected(false);
-    console.log("Disconnected");
+	if(stomp !== null)
+	{
+		stomp.disconnect();	
+	}
+	setup(false);
 }
 
-function showTyping(message) {
-	$("#typingUpdates").html("<tr><td>Someone is typing...</td></tr>");
-}
-
-function sendMessage() {
-  stompClient.send("/app/guestchat", {}, JSON.stringify({'message': $("#message").val()}));
-}
-
-function showMessage(message) {
-    $("#chatMessages").append("<tr><td>" + message + "</td></tr>");
-    $("#typingUpdates").html("<tr><td>&nbsp;</td></tr>");
-    $("#message").val("");
-}
+function sendMess()
+{
 	
-function sendName() {
-    stompClient.send("/app/guestjoin", {}, JSON.stringify({'message': $("#shortName").val()}));
+	var data = 
+		{
+			"message" : $("#message").val(),
+			"sender" : $("#senderid").val(),
+			"groupid" : $("#reciverid").val(),
+			"time" : startTime()
+		}
+	
+	stomp.send("/app/all."+ ur,{},JSON.stringify(data));
 }
 
-function showJoinedName(message) {
-	shortName = message;
-    $("#members").append("<tr><td>" + message + " is online</td></tr>");
+function sendName() {
+	
+	
+	var data = 
+	{
+		"id"       : $("#userid").val(),
+		"username" : $("#username").val(),
+		"password" : $("#password").val(),
+		"email"      : $("#email").val(),
+		"name"     : $("#name").val()
+	};
+
+	stomp.send("/app/check",{},JSON.stringify(data));
+	
 }
+
+function sendG()
+{
+	var data = 
+		{
+			"message" : $("#message").val(),
+			"groupid" : 444,
+			"sender"  : $("#senderid").val(),
+			"name"	  : "hh",
+			"time"	  : startTime(),
+		}
+	
+	stomp.send("/app/group." + $("#reciverid").val(),{},JSON.stringify(data));
+}
+
+function showName(temp) {
+	$("#conversation").append("<tr><td>" + temp + "</td></tr>");
+}
+
+
+function make(a,b)
+{
+	a = parseInt(a);
+	b = parseInt(b);
+	
+	return a+b;
+}
+
+function checkTime(i) {
+	  if (i < 10) {
+	    i = "0" + i;
+	  }
+	  return i;
+	}
+
+function startTime() {
+  var today = new Date();
+  var h = today.getHours();
+  var m = today.getMinutes();
+  var s = today.getSeconds();
+  // add a zero in front of numbers<10
+  m = checkTime(m);
+  s = checkTime(s);
+  var temp = h + ":" + m + ":" + s;
+	  
+  return temp;
+}
+
+//Type of the main function
 
 $(function () {
-    $("form").on('submit', function (e) {
+   /* $("form").on('submit', function (e) {
         e.preventDefault();
-    });
-    
-    $( "#connect" ).click(function() { connect(); });
-    
+    });*/
+    $( "#connect" ).click(function() { connect();});
     $( "#disconnect" ).click(function() { disconnect(); });
-    
-    $( "#send" ).click(function() { sendMessage(); });
-    
-    $("#message").keyup(function (e)  {
-		// Send "is typing" message to server after keystrokes detected
-		stompClient.send("", {}, JSON.stringify({'message': $("#message").val()}));
-	});
-});
+    $( "#Submit" ).click(function() { sendG(); });
+    $("#test").click(function(){showName("haha")});
+}
+);
 
