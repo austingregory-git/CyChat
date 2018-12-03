@@ -197,67 +197,6 @@ public class HomeActivity extends AppCompatActivity {
 
     }
 
-
-    public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.MyViewHolder> {
-
-        private Context context;
-        private String[] chatNames, chatMsg;
-        public static edu.iastate.linux.git.ui.Utils.ChatAdapter.ClickListener clickListener;
-
-        public ChatAdapter(Context context, String[] names, String[] msg) {
-            this.context = context;
-            this.chatNames = names;
-            this.chatMsg = msg;
-        }
-
-        public void setOnItemClickListener(edu.iastate.linux.git.ui.Utils.ChatAdapter.ClickListener clickListener) {
-            ChatAdapter.clickListener = clickListener;
-        }
-
-        @NonNull
-        @Override
-        public ChatAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-            // inflate the item Layout
-            View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.chat_item, parent, false);
-            MyViewHolder vh = new MyViewHolder(v); // pass the view to View Holder
-
-            return vh;
-        }
-
-        @Override
-        public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-            holder.name.setText(chatNames[position]);
-            holder.msg.setText(chatMsg[position]);
-            holder.liv.setOval(true);
-            holder.liv.setLetter(chatNames[position].charAt(0));
-        }
-
-        @Override
-        public int getItemCount() {
-            return chatNames.length;
-        }
-
-        public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-            public TextView name;// init the item view's
-            public TextView msg;
-            public LetterImageView liv;
-            public MyViewHolder(View itemView) {
-                super(itemView);
-                itemView.setOnClickListener(this);
-                // get the reference of item view's
-                name = (TextView) itemView.findViewById(R.id.textChatName);
-                msg = (TextView) itemView.findViewById(R.id.textChatMsg);
-                liv = (LetterImageView) itemView.findViewById(R.id.imageChat);
-
-            }
-
-            @Override
-            public void onClick(View v) {
-                clickListener.onItemClick(getAdapterPosition(), v);
-            }
-        }
-    }
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.topright_menu, menu);
